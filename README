@@ -1,3 +1,6 @@
+This file uses the c++11 for compilation. If you are using other version it may create problem
+
+
 make # for compiling the code. 
 # It output three *.raw file and  assignment_01 as executable.
 
