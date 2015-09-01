@@ -1,0 +1,302 @@
+#include "object.hpp"
+extern GLuint shaderProgram;
+
+
+Object::Object()
+{
+    xrot = 0; yrot = 0; zrot = 0;
+    xtln = 0; ytln = 0; ztln = 0;
+    currentZ = 0.0;
+}
+
+void Object::zIncrease()
+{
+        currentZ = currentZ+0.1;
+        if (currentZ >=MAX_SIZE_Z) currentZ = MAX_SIZE_Z;
+}
+
+void Object::zDecrease()
+{
+        currentZ -=0.1;
+        if (currentZ <=-MAX_SIZE_Z) currentZ = -MAX_SIZE_Z;
+}
+
+glm::vec4 Object::getPoint()
+{
+    glm::vec4 temp;
+    temp[0] = currentX;
+    temp[1] = currentY;
+    temp[2] = currentZ;
+    temp[3] = 1;
+    return temp;
+}
+
+glm::vec4 Object::getColor()
+{
+    glm::vec4 temp;
+    temp[0] = rand()%1000/1000.0;   
+    temp[1] = rand()%1000/1000.0;   
+    temp[2] = rand()%1000/1000.0;   
+    temp[3] = 1;
+    return temp;  
+}
+
+void Object::updateXY(GLFWwindow * window,double X,double Y)
+{
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+     
+    currentX = (X/width -0.5)*2*MAX_SIZE_X ;
+    currentY = -(Y/height -0.5)*2*MAX_SIZE_Y ;
+}
+
+void Object::push()
+{
+    std::cout<<"XYZ " << getPoint()[0] <<" " << getPoint()[1] << 
+" " << getPoint()[2]<<"\n";
+    pointStack.push_back(getPoint());
+    colorStack.push_back(getColor());
+    createTriangles();
+}
+
+void Object::pop()
+{
+    if (pointStack.size() >0)
+    {
+        pointStack.pop_back();
+        colorStack.pop_back();
+    }
+    createTriangles();
+}
+
+void Object::createTriangles()
+{
+    int stackSize;
+    stackSize = pointStack.size();
+    triangleArraySize = 0;
+    if (stackSize >=3)
+    {
+        if (trianglePoint != NULL)
+        {
+                delete trianglePoint;
+                delete triangleColor;
+        }
+        triangleArraySize = 3*(stackSize/3);
+        trianglePoint = new glm::vec4[triangleArraySize];
+        triangleColor = new glm::vec4[triangleArraySize];
+    }
+    else
+    {
+        return;
+    } 
+    int triangleIt = 0;
+    glm::vec4 tempVec ={0,0,0,0};
+    for (int i=0; i < triangleArraySize;i++)
+    {   
+        triangleColor[triangleIt] = colorStack[i];
+        trianglePoint[triangleIt++] = pointStack[i];
+        tempVec = tempVec + pointStack[i];
+    }
+    centroid[0] = tempVec[0]/(float)triangleArraySize;
+    centroid[1] = tempVec[1]/(float)triangleArraySize;
+    centroid[2] = tempVec[2]/(float)triangleArraySize;
+}
+
+void Object::createConTriangles()
+{
+    int stackSize;
+    stackSize = pointStack.size();
+    triangleArraySize = 0;
+    if (stackSize >=3)
+    {
+        triangleArraySize = 3*(stackSize-2);
+        trianglePoint = new glm::vec4[triangleArraySize];
+        triangleColor = new glm::vec4[triangleArraySize];
+    }
+    else
+    {
+        return;
+    } 
+    int triangleIt = 0;
+    for (int i=0; i < stackSize-2;i++)
+    {   
+        triangleColor[triangleIt] = colorStack[i];
+        trianglePoint[triangleIt++] = pointStack[i];
+        triangleColor[triangleIt] = colorStack[i+1];
+        trianglePoint[triangleIt++] = pointStack[i+1];
+        triangleColor[triangleIt] = colorStack[i+2];
+        trianglePoint[triangleIt++] = pointStack[i+2];
+    }
+}
+
+void Object::initVboVao()
+{
+    glGenVertexArrays (1, &vao);
+    //Set it as the current array to be used by binding it
+    glBindVertexArray (vao);
+    //Ask GL for a Vertex Buffer Object (vbo)
+    glGenBuffers (1, &vbo);
+    //Set it as the current buffer to be used by binding it
+    glBindBuffer (GL_ARRAY_BUFFER, vbo);
+    //Copy the points into the current buffer
+    glBufferData (GL_ARRAY_BUFFER, 
+            2000000,
+            NULL, GL_DYNAMIC_DRAW);
+
+}
+void Object::setVboVao()
+{
+    int tempSize = sizeof(trianglePoint[0])*triangleArraySize;
+    glBufferSubData( GL_ARRAY_BUFFER, 0, tempSize,
+            trianglePoint );
+    glBufferSubData( GL_ARRAY_BUFFER, tempSize,
+            tempSize, triangleColor);
+    uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+
+}
+
+void Object::draw()
+{
+    setVboVao();
+    //std::cout << triangleArraySize << std::endl;
+    size_t tempSize = sizeof(trianglePoint[0])*triangleArraySize;
+    glUseProgram( shaderProgram );
+    GLuint vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
+    glEnableVertexAttribArray( vPosition );
+    glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0,
+            BUFFER_OFFSET(0) );
+
+    GLuint vColor = glGetAttribLocation( shaderProgram, "vColor" );
+    glEnableVertexAttribArray( vColor );
+    glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, 
+            BUFFER_OFFSET(tempSize));
+    glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(transMatrix));
+    glDrawArrays(GL_TRIANGLES,0,triangleArraySize);
+}
+
+void Object::createMat()
+{
+    transMatrix = glm::translate(glm::mat4(1.0f), centroid);
+    transMatrix = glm::rotate(transMatrix, xrot, glm::vec3(1.0f,0.0f,0.0f));
+    transMatrix = glm::rotate(transMatrix, yrot, glm::vec3(0.0f,1.0f,0.0f));
+    transMatrix = glm::rotate(transMatrix, zrot, glm::vec3(0.0f,0.0f,1.0f));
+    glm::vec3 tmat = {xtln,ytln,ztln };
+    transMatrix = glm::translate(transMatrix,tmat);
+    transMatrix = glm::translate(transMatrix, -centroid);
+}
+
+void Object::reset()
+{
+    xrot = 0; yrot = 0; zrot = 0;
+    xtln = 0; ytln = 0; ztln = 0;
+    glm::vec4 tempVec ={0,0,0,0};
+    for (int i=0; i < triangleArraySize;i++)
+    {   
+        tempVec = tempVec + pointStack[i];
+    }
+    tempVec[0] = tempVec[0]/(float)triangleArraySize;
+    tempVec[1] = tempVec[1]/(float)triangleArraySize;
+    tempVec[2] = tempVec[2]/(float)triangleArraySize;
+    for (int i=0; i < triangleArraySize;i++)
+    {   
+        pointStack[i]=pointStack[i]-tempVec;
+        pointStack[i][3] = 1;
+    }
+    createTriangles();
+    createMat();
+}
+void Object::savefile()
+{
+    std::cout << "Enter the Filename\n";
+    std::string filename;
+    std::cin >> filename;
+    std::ofstream fs(filename);
+    if (!fs.is_open())
+    {
+        std::cout << "Unable to open file\n";
+        fs.close();
+        return;
+    }  
+    for (int i = 0; i <triangleArraySize;i++)
+    {
+        fs << trianglePoint[i][0];
+        fs <<","; 
+        fs << trianglePoint[i][1];
+        fs <<","; 
+        fs << trianglePoint[i][2];
+        fs <<",";
+        fs << triangleColor[i][0];
+        fs <<",";
+        fs << triangleColor[i][1];
+        fs <<",";
+        fs << triangleColor[i][2];
+        fs <<std::endl;
+    }
+    fs.close();
+    std::cout << "File Saved:"<< filename <<"\n";
+}
+
+void Object::readfile()
+{
+    std::cout << "Enter the Filename\n";
+    std::string filename;
+    std::cin >> filename;
+    std::ifstream fs(filename);
+    if (!fs.is_open())
+    {
+        std::cout << "Unable to open file\n";
+        fs.close();
+        return;
+    }  
+    while(fs.good())
+    {
+        std::string cline;
+        fs >> cline;
+        glm::vec4 cPoint,cColor;
+        if (cline =="") continue;
+        parseline(cline,cPoint,cColor);
+        pointStack.push_back(cPoint);
+        colorStack.push_back(cColor);
+    }
+    createTriangles();
+    createMat();
+}
+
+void Object::parseline(std::string line,glm::vec4 &cPoint,
+        glm::vec4 &cColor)
+{
+    std::string delimiter = ",";
+    std::string token;
+    for (int i =0;i<3;i++)
+    {
+        auto pos = line.find(delimiter);
+        token = line.substr(0, pos);
+        cPoint[i] = std::stof(token);   
+        line.erase(0, pos + delimiter.length());
+    }
+    for (int i =0;i<3;i++)
+    {
+        auto pos = line.find(delimiter);
+        token = line.substr(0, pos);
+        cColor[i] = std::stof(token);   
+        line.erase(0, pos + delimiter.length());
+    }
+    cPoint[3]=1;
+    cColor[3]=1;
+}
+
+void Object::rotate( float delx, float dely, float delz)
+{
+    xrot = xrot+delx*M_PI/30;
+    yrot = yrot+dely*M_PI/30;
+    zrot = zrot+delz*M_PI/30;
+    createMat();
+}
+
+void Object::translate( float delx, float dely, float delz)
+{
+    xtln = xtln+delx/40;
+    ytln = ytln+dely/40;
+    ztln = ztln+delz/40;
+    createMat();
+}

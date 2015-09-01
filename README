@@ -1,0 +1,7 @@
+make # for compiling the code. 
+# It output three *.raw file and  assignment_01 as executable.
+
+./assignment_01  # for Running the program
+optirun ./assignment_01 # for running the in optimus system 
+
+#See index.html for more details

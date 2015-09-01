@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <style>
+body {
+    margin-right: 6cm;
+    margin-left: 6cm;
+}
+img {
+    height: 10cm;
+    width: 5cm;
+}
+        </style>
+        <title>
+            Computer Graphics Assignment 1 Report
+        </title>
+    </head>
+    <body>
+        <center>
+            <h2> Computer Graphics </h2>
+            <h3> Assigment 1</h3>
+        </center>
+        <p align=justify>This page describes about the first assigment of computer Graphics. The code has been tested on GL Version: 4.5.0 NVIDIA 352.30. 
+        </p>
+        <p align=justify>
+        It starts from main.cpp. It creates a window of size 640 x640.
+        It consist of gl_framework.cpp and gl_framework.hpp that handles
+        the mouse, keybord and error. The 'assign1_vshader.glsl' is the
+        vertex shader file. It handles the rotation of the images. There
+        is also one fragment shader that just return whatever input it
+        gets without modification. These shader file are managed by
+        shader_util.cpp.  
+        </p>
+
+        <p align=justify>
+        The main thing handling all the thing is object.cpp. It does 
+        work from drawing on screen, creating tranformation matrix to 
+        reading and saving to and from files.
+        </p>   
+
+        <p align=justify>
+        The objects are read from .raw files. The raw are are generated
+        from .cpp files. Below I have shown all the rendered images.
+        </p>   
+        <center>
+        <img src = "images/pen1.png">
+        <img src = "images/pen2.png">
+        <img src = "images/pen3.png">
+        <br>
+        PEN IMAGES
+        <br>
+        <br>
+        <img src = "images/headp1.png">
+        <img src = "images/headp2.png">
+        <img src = "images/headp3.png">
+        <br>
+        HEADPHONE IMAGES
+        <br>
+        <br>
+        <img src = "images/bat1.png">
+        <img src = "images/bat2.png">
+        <img src = "images/bat3.png">
+        <br>
+        BAT IMAGES
+        <footer>
+            <p>
+            Work of:  Anshuman Kumar<br>
+            <a href="mailto:anshu266man@gmail.com">anshu266man@gmail.com</a></p>
+        </footer>
+    </body>
