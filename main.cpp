@@ -7,7 +7,7 @@
 #include "gl_framework.hpp"
 #include "shader_util.hpp"
 #include "object.hpp"
-
+#include "scene.hpp"
 GLuint shaderProgram;
 
 Object object1;
@@ -24,6 +24,7 @@ void initBufferGL()
 
     shaderProgram = csX75::CreateProgramGL(shaderList);
     glUseProgram( shaderProgram );
+    
     currentObject->initVboVao();
 }
 
@@ -31,12 +32,13 @@ void renderGL()
 {
      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-     currentObject->draw();
+    // currentObject->draw();
 
 }
 int main(int argc, char** argv)
 {
     std::cout << "Assignment1\n";
+    Scene scene1(3);
     if (!glfwInit())
     {
         std::cerr << "Unable to start GLFW\n";
@@ -66,11 +68,14 @@ int main(int argc, char** argv)
             myglf::framebuffer_size_callback);
     myglf::initGL();
     initBufferGL();
+    scene1.parseFile("myscene.scn");
     while(!glfwWindowShouldClose(window))
     {
         renderGL();
+        scene1.draw();
         glfwPollEvents();
         glfwSwapBuffers(window);
+        
     }
     glfwTerminate();
     return 0;

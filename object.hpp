@@ -22,8 +22,10 @@
 
 class Object
 {
+    std::string name;
     float currentZ,currentX,currentY;
     float xrot,yrot,zrot,xtln,ytln,ztln;
+    float xscale,yscale,zscale;
     glm::vec4 currentPosition;
     glm::vec4 *trianglePoint;
     glm::vec4 *triangleColor;
@@ -36,6 +38,7 @@ class Object
     glm::mat4 transMatrix;
     public:
     Object();
+    void givename(std::string);
     void updateXY(GLFWwindow *window, double X, double Y);
     void push();
     void pop();
@@ -48,14 +51,16 @@ class Object
     void initVboVao();
     void setVboVao();
     void draw();
-    void savefile();
-    void readfile();
+    void savefile(std::string tempname = "NOTHING");
+    void readfile(std::string tempname = "NOTHING");
     void parseline(std::string temp,glm::vec4 &cPoint,
                 glm::vec4 &cColor);
     void rotate(float  delx, float dely, float delz);
     void translate(float  delx, float dely, float delz);
+    void resize(float sx,float sy,float sz);
     void createMat();
     void reset();
+
 };
 
 #endif

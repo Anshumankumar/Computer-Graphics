@@ -5,10 +5,16 @@ extern GLuint shaderProgram;
 Object::Object()
 {
     xrot = 0; yrot = 0; zrot = 0;
+    xscale = 1; yscale = 1; zscale = 1;
     xtln = 0; ytln = 0; ztln = 0;
     currentZ = 0.0;
+    name = "default";
 }
 
+void Object::givename(std::string tempName)
+{
+    name = tempName;
+}
 void Object::zIncrease()
 {
         currentZ = currentZ+0.1;
@@ -132,13 +138,9 @@ void Object::createConTriangles()
 void Object::initVboVao()
 {
     glGenVertexArrays (1, &vao);
-    //Set it as the current array to be used by binding it
     glBindVertexArray (vao);
-    //Ask GL for a Vertex Buffer Object (vbo)
     glGenBuffers (1, &vbo);
-    //Set it as the current buffer to be used by binding it
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
-    //Copy the points into the current buffer
     glBufferData (GL_ARRAY_BUFFER, 
             2000000,
             NULL, GL_DYNAMIC_DRAW);
@@ -158,7 +160,7 @@ void Object::setVboVao()
 void Object::draw()
 {
     setVboVao();
-    //std::cout << triangleArraySize << std::endl;
+    //std::cout <<name <<": "  << triangleArraySize << std::endl;
     size_t tempSize = sizeof(trianglePoint[0])*triangleArraySize;
     glUseProgram( shaderProgram );
     GLuint vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
@@ -183,6 +185,8 @@ void Object::createMat()
     glm::vec3 tmat = {xtln,ytln,ztln };
     transMatrix = glm::translate(transMatrix,tmat);
     transMatrix = glm::translate(transMatrix, -centroid);
+    tmat = {xscale,yscale,zscale };
+    transMatrix = glm::scale(transMatrix,tmat);
 }
 
 void Object::reset()
@@ -205,11 +209,15 @@ void Object::reset()
     createTriangles();
     createMat();
 }
-void Object::savefile()
-{
-    std::cout << "Enter the Filename\n";
+void Object::savefile(std::string tempname)
+{   
     std::string filename;
-    std::cin >> filename;
+    if(tempname == "NOTHING")
+    {
+        std::cout << "Enter the Filename\n";
+        std::cin >> filename;
+    }
+    else filename = tempname;
     std::ofstream fs(filename);
     if (!fs.is_open())
     {
@@ -236,15 +244,19 @@ void Object::savefile()
     std::cout << "File Saved:"<< filename <<"\n";
 }
 
-void Object::readfile()
+void Object::readfile(std::string tempname)
 {
-    std::cout << "Enter the Filename\n";
     std::string filename;
-    std::cin >> filename;
+    if(tempname == "NOTHING")
+    {
+        std::cout << "Enter the Filename\n";
+        std::cin >> filename;
+    }
+    else filename = tempname;
     std::ifstream fs(filename);
     if (!fs.is_open())
     {
-        std::cout << "Unable to open file\n";
+        std::cout << "Unable to open raw file\n";
         fs.close();
         return;
     }  
@@ -287,16 +299,24 @@ void Object::parseline(std::string line,glm::vec4 &cPoint,
 
 void Object::rotate( float delx, float dely, float delz)
 {
-    xrot = xrot+delx*M_PI/30;
-    yrot = yrot+dely*M_PI/30;
-    zrot = zrot+delz*M_PI/30;
+    xrot = xrot+delx;
+    yrot = yrot+dely;
+    zrot = zrot+delz;
     createMat();
 }
 
 void Object::translate( float delx, float dely, float delz)
 {
-    xtln = xtln+delx/40;
-    ytln = ytln+dely/40;
-    ztln = ztln+delz/40;
+    xtln = xtln+delx;
+    ytln = ytln+dely;
+    ztln = ztln+delz;
+    createMat();
+}
+
+void Object::resize(float sx,float sy,float sz)
+{
+    xscale = sx;
+    yscale = sy;
+    zscale = sz;
     createMat();
 }

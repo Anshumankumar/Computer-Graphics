@@ -64,29 +64,29 @@ namespace myglf
         else if (mode == MODE_MODELLING)
             std::cout << "Current Mode: MODELLING\n";
         else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-            currentObject->rotate(0, -1.0,0);
+            currentObject->rotate(0, -0.1,0);
         else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
-            currentObject->rotate(0, +1.0,0);
+            currentObject->rotate(0, +0.1,0);
         else if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-            currentObject->rotate(-1.0,0.0,0);
+            currentObject->rotate(-0.1,0.0,0);
         else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
-            currentObject->rotate(1.0,0 ,0);
+            currentObject->rotate(0.1,0 ,0);
         else if (key == GLFW_KEY_PAGE_UP && action == GLFW_PRESS)
-            currentObject->rotate(0,0,-1.0);
+            currentObject->rotate(0,0,-0.1);
         else if (key == GLFW_KEY_PAGE_DOWN && action == GLFW_PRESS)
-            currentObject->rotate(0,0,1.0);
+            currentObject->rotate(0,0,0.1);
         else if (key == GLFW_KEY_W && action == GLFW_PRESS)
-            currentObject->translate(0, -1.0,0);
+            currentObject->translate(0, -0.05,0);
         else if (key == GLFW_KEY_S && action == GLFW_PRESS)
-            currentObject->translate(0, +1.0,0);
+            currentObject->translate(0,0.05,0);
         else if (key == GLFW_KEY_A && action == GLFW_PRESS)
-            currentObject->translate(-1.0,0.0,0);
+            currentObject->translate(-0.05,0.0,0);
         else if (key == GLFW_KEY_D && action == GLFW_PRESS)
-            currentObject->translate(1.0,0 ,0);
+            currentObject->translate(0.05,0 ,0);
         else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
-            currentObject->translate(0,0,-1.0);
+            currentObject->translate(0,0,-0.05);
         else if (key == GLFW_KEY_X && action == GLFW_PRESS)
-            currentObject->translate(0,0,1.0);
+            currentObject->translate(0,0,0.05);
     }
 
     void mouse_button_callback(GLFWwindow* window, int button, int action,
