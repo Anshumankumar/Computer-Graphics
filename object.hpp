@@ -35,7 +35,9 @@ class Object
     std::deque<glm::vec4> colorStack;
     GLuint vbo, vao;
     GLuint uModelViewMatrix;
+    protected:
     glm::mat4 transMatrix;
+    glm::mat4 outsideTransform;
     public:
     Object();
     void givename(std::string);
@@ -50,7 +52,7 @@ class Object
     void createConTriangles();
     void initVboVao();
     void setVboVao();
-    void draw();
+    virtual void draw();
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");
     void parseline(std::string temp,glm::vec4 &cPoint,
@@ -58,9 +60,11 @@ class Object
     void rotate(float  delx, float dely, float delz);
     void translate(float  delx, float dely, float delz);
     void resize(float sx,float sy,float sz);
-    void createMat();
+    virtual void createMat();
     void reset();
-
+    void applyOutsideTransform(glm::mat4 t);
+    void drawPointLines();
+    virtual void changeState(int current){};
 };
-
+void printMat(glm::mat4);
 #endif

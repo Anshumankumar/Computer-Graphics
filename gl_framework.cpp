@@ -1,10 +1,11 @@
 #include "gl_framework.hpp"
 #include "object.hpp"
+#include "scene.hpp"
 
 #define MODE_INSPECTION 1
 #define MODE_MODELLING 2
 
-int mode = MODE_MODELLING; 
+int mode = MODE_INSPECTION; 
 extern Object* currentObject;
 
 namespace myglf
@@ -19,7 +20,7 @@ namespace myglf
         glDepthFunc(GL_LESS);
         //Enable depth testing
         glEnable(GL_DEPTH_TEST);
-        std::cout << "Current Mode is: MODELLING\n";
+        std::cout << "Current Mode is: INSPECTION\n";
     }
 
     void error_callback(int error, const char* description)
@@ -60,21 +61,30 @@ namespace myglf
         }
         else if (key == GLFW_KEY_R && action == GLFW_PRESS)
             currentObject->reset();
-
-        else if (mode == MODE_MODELLING)
+        else if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+            currentObject->changeState(Scene::VCS);
+        else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+            currentObject->changeState(Scene::CCS);
+        else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+            currentObject->changeState(Scene::NDCS);
+        else if (key == GLFW_KEY_4 && action == GLFW_PRESS)
+            currentObject->changeState(Scene::DCS);
+        else if (key == GLFW_KEY_0 && action == GLFW_PRESS)
+            currentObject->changeState(Scene::WCS);
+        else if (mode == MODE_MODELLING && action ==GLFW_PRESS)
             std::cout << "Current Mode: MODELLING\n";
         else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-            currentObject->rotate(0, -0.1,0);
+            currentObject->rotate(0, -M_PI/24,0);
         else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
-            currentObject->rotate(0, +0.1,0);
+            currentObject->rotate(0, +M_PI/24,0);
         else if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-            currentObject->rotate(-0.1,0.0,0);
+            currentObject->rotate(-M_PI/24,0.0,0);
         else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
-            currentObject->rotate(0.1,0 ,0);
+            currentObject->rotate(M_PI/24,0 ,0);
         else if (key == GLFW_KEY_PAGE_UP && action == GLFW_PRESS)
-            currentObject->rotate(0,0,-0.1);
+            currentObject->rotate(0,0,-M_PI/24);
         else if (key == GLFW_KEY_PAGE_DOWN && action == GLFW_PRESS)
-            currentObject->rotate(0,0,0.1);
+            currentObject->rotate(0,0,M_PI/24);
         else if (key == GLFW_KEY_W && action == GLFW_PRESS)
             currentObject->translate(0, -0.05,0);
         else if (key == GLFW_KEY_S && action == GLFW_PRESS)

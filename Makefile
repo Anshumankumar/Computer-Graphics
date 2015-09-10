@@ -6,8 +6,8 @@ LDFLAGS=-L/usr/local/lib
 CPPFLAGS=-I/usr/local/include -std=c++11
 
 BIN1=asssigment_O1
-SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp scene.cpp
-INCLUDES= gl_framework.hpp object.hpp shader_util.hpp scene.hpp
+SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp scene.cpp utils.cpp
+INCLUDES= gl_framework.hpp object.hpp shader_util.hpp scene.hpp utils.hpp
 
 all: $(BIN1) pen.raw bat.raw headPhone.raw
 

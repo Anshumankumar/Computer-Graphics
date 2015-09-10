@@ -9,12 +9,20 @@ Object::Object()
     xtln = 0; ytln = 0; ztln = 0;
     currentZ = 0.0;
     name = "default";
+    outsideTransform = glm::mat4(1.0f);
+}
+
+void Object::applyOutsideTransform(glm::mat4 t)
+{
+    outsideTransform = t;
+    createMat();
 }
 
 void Object::givename(std::string tempName)
 {
     name = tempName;
 }
+
 void Object::zIncrease()
 {
         currentZ = currentZ+0.1;
@@ -148,20 +156,12 @@ void Object::initVboVao()
 }
 void Object::setVboVao()
 {
-    int tempSize = sizeof(trianglePoint[0])*triangleArraySize;
+    auto tempSize = sizeof(trianglePoint[0])*triangleArraySize;
     glBufferSubData( GL_ARRAY_BUFFER, 0, tempSize,
             trianglePoint );
     glBufferSubData( GL_ARRAY_BUFFER, tempSize,
             tempSize, triangleColor);
     uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
-
-}
-
-void Object::draw()
-{
-    setVboVao();
-    //std::cout <<name <<": "  << triangleArraySize << std::endl;
-    size_t tempSize = sizeof(trianglePoint[0])*triangleArraySize;
     glUseProgram( shaderProgram );
     GLuint vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
     glEnableVertexAttribArray( vPosition );
@@ -173,20 +173,50 @@ void Object::draw()
     glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, 
             BUFFER_OFFSET(tempSize));
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(transMatrix));
+
+}
+
+void Object::drawPointLines()
+{
+    setVboVao();
+    glDrawArrays(GL_LINES,0,triangleArraySize-1);
+    glDrawArrays(GL_POINTS,triangleArraySize-1,triangleArraySize);
+}
+void Object::draw()
+{
+    setVboVao();
+    //std::cout <<name <<": "  << triangleArraySize << std::endl;
     glDrawArrays(GL_TRIANGLES,0,triangleArraySize);
+}
+
+void printMat(glm::mat4 a)
+{
+    for ( int i = 0; i < 4;i++)
+    {
+        for ( int j = 0; j < 4;j++)
+            std::cout << a[i][j] <<" ";
+        std::cout << std::endl; 
+    }   
 }
 
 void Object::createMat()
 {
-    transMatrix = glm::translate(glm::mat4(1.0f), centroid);
+    glm::vec3 tmat;
+    glm::mat4 transMatrix2;
+    transMatrix = glm::translate(glm::mat4(1.0f), -centroid);
     transMatrix = glm::rotate(transMatrix, xrot, glm::vec3(1.0f,0.0f,0.0f));
     transMatrix = glm::rotate(transMatrix, yrot, glm::vec3(0.0f,1.0f,0.0f));
     transMatrix = glm::rotate(transMatrix, zrot, glm::vec3(0.0f,0.0f,1.0f));
-    glm::vec3 tmat = {xtln,ytln,ztln };
-    transMatrix = glm::translate(transMatrix,tmat);
-    transMatrix = glm::translate(transMatrix, -centroid);
+    
+    transMatrix2 = glm::translate(glm::mat4(0.1f), centroid);
+    transMatrix = transMatrix2*transMatrix;
+    tmat = {xtln,ytln,ztln };
+    transMatrix2 = glm::translate(glm::mat4(1.0f),tmat);
+// printMat(transMatrix2);
+    transMatrix = transMatrix2*transMatrix;
     tmat = {xscale,yscale,zscale };
     transMatrix = glm::scale(transMatrix,tmat);
+    transMatrix = outsideTransform*transMatrix;
 }
 
 void Object::reset()

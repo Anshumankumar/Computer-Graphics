@@ -10,8 +10,9 @@
 #include "scene.hpp"
 GLuint shaderProgram;
 
+Scene scene1(3);
 Object object1;
-Object * currentObject = &object1;
+Object * currentObject = &scene1;
 
 void initBufferGL()
 {
@@ -38,7 +39,6 @@ void renderGL()
 int main(int argc, char** argv)
 {
     std::cout << "Assignment1\n";
-    Scene scene1(3);
     if (!glfwInit())
     {
         std::cerr << "Unable to start GLFW\n";

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+
 void filestore(std::ofstream & fs,float x,float y,float z,float cx,float cy, float cz)
 {
     fs << x;
