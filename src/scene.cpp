@@ -29,6 +29,7 @@ Scene::Scene(int noOfObjects)
 
 void Scene::parseFile(std::string filename)
 {
+    filename = "../" +filename;
     std::ifstream fs(filename);
     if(!fs.is_open())
     {
@@ -108,7 +109,7 @@ void Scene::parseFile(std::string filename)
 }
 void Scene::makeFrustum()
 {
-    std::string filename = "frustum.raw";
+    std::string filename = "../models/frustum.raw";
     std::ofstream fs(filename);
     if(!fs.is_open())
     {

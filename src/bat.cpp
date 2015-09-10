@@ -20,7 +20,7 @@ void filestore(std::ofstream & fs,float x,float y,float z,float cx,float cy, flo
 
 int main()
 {
-    std::string filename = "bat.raw";
+    std::string filename = "../models/bat.raw";
     std::ofstream fs(filename);
     float x,y,z;
     float cx,cy,cz;

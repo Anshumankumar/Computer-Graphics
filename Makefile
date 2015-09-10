@@ -3,28 +3,36 @@ GLEWLIB= -lGLEW
 GLFWLIB = -lglfw
 LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB)
 LDFLAGS=-L/usr/local/lib 
-CPPFLAGS=-I/usr/local/include -std=c++11
-
-BIN1=asssigment_O1
+IN_DIR= include/
+SRC_DIR = src/
+CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11
+BIN1=build/assignment_O2
 SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp scene.cpp utils.cpp
-INCLUDES= gl_framework.hpp object.hpp shader_util.hpp scene.hpp utils.hpp
+SRCS = $(SRCS1:%=$(SRC_DIR)%)
+INCLUDES1= gl_framework.hpp object.hpp shader_util.hpp scene.hpp utils.hpp
+INCLUDES = $(INCLUDES1:%=$(IN_DIR)%)
 
-all: $(BIN1) pen.raw bat.raw headPhone.raw
+SRC1 = $(SRC_DIR)pen.cpp
+SRC2 = $(SRC_DIR)bat.cpp
+SRC3 = $(SRC_DIR)headPhone.cpp
 
-$(BIN1): $(SRCS1) $(INCLUDES)
-	g++ $(CPPFLAGS) $(SRCS1) -o $(BIN1) $(LDFLAGS) $(LIBS)
 
-pen.raw: pen.cpp
-	g++ -std=c++11 pen.cpp -o pen
-	./pen
+all: $(BIN1) models/pen.raw models/bat.raw models/headPhone.raw
 
-bat.raw: bat.cpp
-	g++ -std=c++11 bat.cpp -o bat
-	./bat
+$(BIN1): $(SRCS) $(INCLUDES)
+	g++ $(CPPFLAGS) $(SRCS) -o $(BIN1) $(LDFLAGS) $(LIBS)
 
-headPhone.raw: headPhone.cpp
-	g++ -std=c++11 headPhone.cpp -o headPhone
-	./headPhone
+models/pen.raw: $(SRC1)
+	g++ -std=c++11 $(SRC1) -o build/pen
+	(cd build; ./pen)
+
+models/bat.raw: $(SRC2)
+	g++ -std=c++11  $(SRC2) -o build/bat
+	(cd build; ./bat)
+
+models/headPhone.raw: $(SRC3)
+	g++ -std=c++11 $(SRC3) -o build/headPhone
+	(cd build; ./headPhone)
 
 clean:
-	rm -f *~ *.o $(BIN1) $(BIN2) *.raw pen bat headPhone
+	rm -f build/*

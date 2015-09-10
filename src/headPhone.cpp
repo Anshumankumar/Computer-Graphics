@@ -65,7 +65,7 @@ void circle (std::ofstream &fs, float x,float radius,
 }
 int main()
 {
-    std::string filename = "headPhone.raw";
+    std::string filename = "../models/headPhone.raw";
     std::ofstream fs(filename);
     float x,y,z;
     float cx,cy,cz;

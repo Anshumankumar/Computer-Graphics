@@ -248,6 +248,7 @@ void Object::savefile(std::string tempname)
         std::cin >> filename;
     }
     else filename = tempname;
+    filename = "../models/" +filename;
     std::ofstream fs(filename);
     if (!fs.is_open())
     {
@@ -283,6 +284,7 @@ void Object::readfile(std::string tempname)
         std::cin >> filename;
     }
     else filename = tempname;
+    filename = "../models/" +filename;
     std::ifstream fs(filename);
     if (!fs.is_open())
     {
