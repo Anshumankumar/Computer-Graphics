@@ -42,6 +42,7 @@ class Scene:public Object
     void wcsToVcs();
     void vcsToCcs();
     void ccsToNdcs();
+    void ndcsToDcs(double,double,double,double);
     void makeFrustum();
     public:
     Scene(int noOfObjects);

@@ -104,6 +104,8 @@ void Scene::parseFile(std::string filename)
     wcsToVcs();
     vcsToCcs();
     ccsToNdcs();
+    ccsToNdcs();
+    ndcsToDcs(1.6,-1.6,0.9,-0.9);
     makeFrustum();
     createMat();
 }
@@ -224,6 +226,16 @@ void Scene::wcsToVcs()
     }  
 
 }
+void Scene::ndcsToDcs(double rw,double lw,double tw,double bw)
+{
+    matNdcsToDcs[0][0] = (rw-lw)/2.0;
+    matNdcsToDcs[1][1] = (tw-bw)/2.0;
+    matNdcsToDcs[2][2] = -1/2.0;
+    matNdcsToDcs[3][0] = (rw+lw)/2.0;
+    matNdcsToDcs[3][1] = (tw+bw)/2.0;
+    matNdcsToDcs[3][2] = 1/2.0;
+    matNdcsToDcs[3][3] = 1.0;
+}
 
 void Scene::ccsToNdcs()
 {
@@ -238,6 +250,7 @@ void Scene::vcsToCcs()
     matVcsToCcs[1][1] = 2*distanceNear/(lenTop-lenBottom);
 
     matVcsToCcs[3][3] = 1;
+    matVcsToCcs[2][2] = 1;
     matVcsToCcs[2][3] = 0;
     matVcsToCcs[2][0] = (lenRight+lenLeft)/(lenRight-lenLeft);
     matVcsToCcs[2][1] = (lenTop+lenBottom)/(lenTop-lenBottom);
