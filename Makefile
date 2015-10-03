@@ -5,7 +5,7 @@ LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB)
 LDFLAGS=-L/usr/local/lib 
 IN_DIR= include/
 SRC_DIR = src/
-CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11
+CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++14
 BIN1=build/assignment_O2
 SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp scene.cpp utils.cpp
 SRCS = $(SRCS1:%=$(SRC_DIR)%)
@@ -16,13 +16,20 @@ SRC1 = $(SRC_DIR)pen.cpp
 SRC2 = $(SRC_DIR)bat.cpp
 SRC3 = $(SRC_DIR)headPhone.cpp
 
+SRCTEST1 = test.cpp utils.cpp
+SRCTEST = $(SRCTEST1:%=$(SRC_DIR)%)
 
-all: $(BIN1) models/pen.raw models/bat.raw models/headPhone.raw
+BINTEST = build/test
+
+all: $(BIN1) $(BINTEST) models/pen.raw models/bat.raw models/headPhone.raw  
+
+$(BINTEST):$(SRCTEST) $(INCLUDES)
+	g++ $(CPPFLAGS) $(SRCTEST) -o $(BINTEST) $(LDFLAGS) $(LIBS)
 
 $(BIN1): $(SRCS) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCS) -o $(BIN1) $(LDFLAGS) $(LIBS)
 
-models/pen.raw: $(SRC1)
+models/pen.raw: $(SRC1) 
 	g++ -std=c++11 $(SRC1) -o build/pen
 	(cd build; ./pen)
 

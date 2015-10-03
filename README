@@ -1,10 +1,15 @@
-This file uses the c++11 for compilation. If you are using other version it may create problem
+#This file uses the c++11 for compilation. If you are using other version it may create problem
+# The executable is in build directory
+make #for compiling the code. 
+
+chmod +x run.sh 
+./run.sh  #Running the program
+optirun ./run.sh #Running the program in optimus system
+
+# You can go to build directory and run
+cd build
+./assignment_02  # for Running the program
+optirun ./assignment_02 # for running the in optimus system 
 
 
-make # for compiling the code. 
-# It output three *.raw file and  assignment_01 as executable.
-
-./assignment_01  # for Running the program
-optirun ./assignment_01 # for running the in optimus system 
-
-#See index.html for more details
+#See http://anshumankumar.github.io/CS475/assignment2.html

@@ -230,7 +230,7 @@ void Scene::ndcsToDcs(double rw,double lw,double tw,double bw)
 {
     matNdcsToDcs[0][0] = (rw-lw)/2.0;
     matNdcsToDcs[1][1] = (tw-bw)/2.0;
-    matNdcsToDcs[2][2] = -1/2.0;
+    matNdcsToDcs[2][2] = 1/2.0;
     matNdcsToDcs[3][0] = (rw+lw)/2.0;
     matNdcsToDcs[3][1] = (tw+bw)/2.0;
     matNdcsToDcs[3][2] = 1/2.0;
