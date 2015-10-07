@@ -5,7 +5,7 @@ LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB)
 LDFLAGS=-L/usr/local/lib 
 IN_DIR= include/
 SRC_DIR = src/
-CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++14
+CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++14 -g
 BIN1=build/assignment_O2
 SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp scene.cpp utils.cpp
 SRCS = $(SRCS1:%=$(SRC_DIR)%)
@@ -21,7 +21,7 @@ SRCTEST = $(SRCTEST1:%=$(SRC_DIR)%)
 
 BINTEST = build/test
 
-all: $(BIN1) $(BINTEST) models/pen.raw models/bat.raw models/headPhone.raw  
+all: $(BIN1) $(BINTEST) models/pen.raw models/bat.raw models/headPhone.raw modelCreator 
 
 $(BINTEST):$(SRCTEST) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCTEST) -o $(BINTEST) $(LDFLAGS) $(LIBS)
@@ -40,6 +40,9 @@ models/bat.raw: $(SRC2)
 models/headPhone.raw: $(SRC3)
 	g++ -std=c++11 $(SRC3) -o build/headPhone
 	(cd build; ./headPhone)
+
+modelCreator: src/modelCreator.cpp src/utils.cpp
+	g++ $(CPPFLAGS) $(LIBS) src/modelCreator.cpp src/utils.cpp -o build/modelCreator
 
 clean:
 	rm -f build/*

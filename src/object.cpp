@@ -9,9 +9,15 @@ Object::Object()
     xtln = 0; ytln = 0; ztln = 0;
     currentZ = 0.0;
     name = "default";
+    trianglePoint = NULL;
+    triangleColor = NULL;
     outsideTransform = glm::mat4(1.0f);
 }
 
+void Object::addChild(Object *child)
+{
+    childArray.push_back(child);
+}
 void Object::applyOutsideTransform(glm::mat4 t)
 {
     outsideTransform = t;
@@ -150,7 +156,7 @@ void Object::initVboVao()
     glGenBuffers (1, &vbo);
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
     glBufferData (GL_ARRAY_BUFFER, 
-            2000000,
+            20000000,
             NULL, GL_DYNAMIC_DRAW);
 
 }
@@ -187,6 +193,10 @@ void Object::draw()
     setVboVao();
     //std::cout <<name <<": "  << triangleArraySize << std::endl;
     glDrawArrays(GL_TRIANGLES,0,triangleArraySize);
+    for (auto& child:childArray)
+    {
+        child->draw();
+    }
 }
 
 void printMat(glm::mat4 a)
@@ -217,6 +227,10 @@ void Object::createMat()
     tmat = {xscale,yscale,zscale };
     transMatrix = glm::scale(transMatrix,tmat);
     transMatrix = outsideTransform*transMatrix;
+    for(auto& child:childArray)
+    {
+        child->applyOutsideTransform(transMatrix);
+    }
 }
 
 void Object::reset()

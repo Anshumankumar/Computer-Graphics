@@ -12,7 +12,7 @@ GLuint shaderProgram;
 
 Scene scene1(3);
 Object object1;
-Object * currentObject = &scene1;
+Object * currentObject = &object1;
 
 void initBufferGL()
 {
@@ -68,11 +68,22 @@ int main(int argc, char** argv)
             myglf::framebuffer_size_callback);
     myglf::initGL();
     initBufferGL();
-    scene1.parseFile("myscene.scn");
+    Object object2;
+    Object object3;
+    Object object4;
+    object2.readfile("humanoid_arm.raw");
+    object3.readfile("humanoid_body.raw");
+    object4.readfile("humanoid_arm.raw");
+    currentObject->addChild(&object2);
+    currentObject->addChild(&object4);
+    currentObject->addChild(&object3);
+    object2.translate(0.6,0,0);
+    object4.translate(-0.6,0,0);
+    //scene1.parseFile("myscene.scn");
     while(!glfwWindowShouldClose(window))
     {
         renderGL();
-        scene1.draw();
+        currentObject->draw();
         glfwPollEvents();
         glfwSwapBuffers(window);
         

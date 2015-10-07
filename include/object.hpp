@@ -35,6 +35,7 @@ class Object
     std::deque<glm::vec4> colorStack;
     GLuint vbo, vao;
     GLuint uModelViewMatrix;
+    std::vector<Object*> childArray;
     protected:
     glm::mat4 transMatrix;
     glm::mat4 outsideTransform;
@@ -65,6 +66,9 @@ class Object
     void applyOutsideTransform(glm::mat4 t);
     void drawPointLines();
     virtual void changeState(int current){};
+    void addChild(Object *child);
+
+
 };
 void printMat(glm::mat4);
 #endif
