@@ -19,7 +19,7 @@ class Humanoid
     Object neck;
     Object Antenna;
     Object leftThigh;
-    Object leftThigh;
+    Object rightThigh;
     Object leftLeg;
     Object rightLeg;
     Object leftFoot;
@@ -29,7 +29,7 @@ class Humanoid
     Humanoid();
     void createHierarchy();
     void draw();
-}
+};
 
 #endif
 

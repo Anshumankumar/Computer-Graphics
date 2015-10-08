@@ -12,6 +12,7 @@ Object::Object()
     triangleColor = NULL;
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
+    initVboVao();
 }
 
 void Object::updateCentroid(glm::vec3 rPoint)

@@ -10,9 +10,8 @@
 #include "scene.hpp"
 GLuint shaderProgram;
 
-Scene scene1(3);
-Object object1;
-Object * currentObject = &object1;
+//Scene scene1(3);
+Object * currentObject;
 
 void initBufferGL()
 {
@@ -26,7 +25,6 @@ void initBufferGL()
     shaderProgram = csX75::CreateProgramGL(shaderList);
     glUseProgram( shaderProgram );
     
-    currentObject->initVboVao();
 }
 
 void renderGL()
@@ -68,6 +66,8 @@ int main(int argc, char** argv)
             myglf::framebuffer_size_callback);
     myglf::initGL();
     initBufferGL();
+    Object object1;
+    currentObject = &object1;
     Object object2;
     Object object3;
     Object object4;

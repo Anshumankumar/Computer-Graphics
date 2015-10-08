@@ -1,11 +1,12 @@
 #include "humanoid.hpp"
 
+extern Object * currentObject;
 Humanoid::Humanoid()
 {
-
+    currentObject = &body;
 }
 
-Humanoid::createHierarchy()
+void Humanoid::createHierarchy()
 {
     glm::vec3 linkBodyLeftArm;
     glm::vec3 linkBodyRightArm;
@@ -38,20 +39,20 @@ Humanoid::createHierarchy()
     glm::vec3 linkLeftFootLeftLeg;
     glm::vec3 linkRightFootRightLeg;
 
-    body.addChild(rightArm,linkBodyRightArm,linkRightArmBody);
-    body.addChild(leftArm,linkBodyleftArm,linkleftArmBody);
-    body.addChild(neck,linkBodyNeck,linkNeckBody);
-    body.addChild(hip,linkBodyHip,linkHipBody);
-    leftArm.addChild(leftHand,linkLeftArmLeftHand,linkLeftHandLeftArm);
-    rightArm.addChild(rightHand,linkRightArmRightHand,linkRightHandRightArm);
-    leftHand.addChild(leftFist,linkLeftHandLeftFist,linkLeftFistLeftHand);
-    rightHand.addChild(rightFist,linkRightHandRightFist,linkRightFistRightHand);
-    hip.addChild(leftThigh,linkHipLeftThigh,linkLeftThighHip);
-    hip.addChild(rightThigh,linkHipRightThigh,linkRightThighHip);
-    leftThigh.addChild(leftLeg,linkLeftThighLeftLeg,linkLeftLegLeftThigh);
-    rightThigh.addChild(rightLeg,linkRightThighRightLeg,linkRightLegRightThigh);
-    leftLeg.addChild(leftFoot,linkLeftLegLeftFoot,linkLeftFootLeftLeg);
-    rightLeg.addChild(rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
+    body.addChild(&rightArm,linkBodyRightArm,linkRightArmBody);
+    body.addChild(&leftArm,linkBodyLeftArm,linkLeftArmBody);
+    body.addChild(&neck,linkBodyNeck,linkNeckBody);
+    body.addChild(&hip,linkBodyHip,linkHipBody);
+    leftArm.addChild(&leftHand,linkLeftArmLeftHand,linkLeftHandLeftArm);
+    rightArm.addChild(&rightHand,linkRightArmRightHand,linkRightHandRightArm);
+    leftHand.addChild(&leftFist,linkLeftHandLeftFist,linkLeftFistLeftHand);
+    rightHand.addChild(&rightFist,linkRightHandRightFist,linkRightFistRightHand);
+    hip.addChild(&leftThigh,linkHipLeftThigh,linkLeftThighHip);
+    hip.addChild(&rightThigh,linkHipRightThigh,linkRightThighHip);
+    leftThigh.addChild(&leftLeg,linkLeftThighLeftLeg,linkLeftLegLeftThigh);
+    rightThigh.addChild(&rightLeg,linkRightThighRightLeg,linkRightLegRightThigh);
+    leftLeg.addChild(&leftFoot,linkLeftLegLeftFoot,linkLeftFootLeftLeg);
+    rightLeg.addChild(&rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
 }
 
 void Humanoid::draw()
