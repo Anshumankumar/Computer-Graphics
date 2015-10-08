@@ -118,12 +118,9 @@ namespace shapes
         PointV::iterator it;
         PointV tempArray;
         pointArray = partEllipsoid(center,a,a,a,color,0.5);
-        std::cout << pointArray.size() <<"\n";
         it = pointArray.end();
         tempArray = circle(center,a,colorbase);
-        std::cout << tempArray.size() <<"\n";
         pointArray.insert(it,tempArray.begin(),tempArray.end());
-        std::cout << pointArray.size();
         return pointArray;
     }
     PointV cuboid (glm::vec3 center,double l, double b, double h,
@@ -256,17 +253,13 @@ namespace move
     {
         glm::vec3 vec;
         point = translate(point,-rPoint[0],-rPoint[1],-rPoint[2]);
-        std::cout << rPoint[0] << " " << rPoint[1] << "\n";
-        std::cout << angX << " " << angY << " "<< angZ<< "\n";
         vec[0] = point.x;
         vec[1] = point.y;
         vec[2] = point.z;
-        std::cout << vec[0] << " " << vec[1] << " " <<vec[2] << "\n";
         vec  = glm::rotateX(vec,(float)angX);
         vec  = glm::rotateY(vec,(float)angY);
         vec  = glm::rotateZ(vec,(float)angZ);
 
-        std::cout << vec[0] << " " << vec[1] << " " <<vec[2] << "\n";
         point.x = vec[0];
         point.y = vec[1];
         point.z = vec[2];

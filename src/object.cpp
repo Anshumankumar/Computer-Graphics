@@ -1,8 +1,10 @@
 #include "object.hpp"
+#define DRAWLINES 1
 extern GLuint shaderProgram;
 
 Object::Object()
 {
+    triangleArraySize = 0;
     xrot = 0; yrot = 0; zrot = 0;
     xscale = 1; yscale = 1; zscale = 1;
     xtln = 0; ytln = 0; ztln = 0;
@@ -207,7 +209,11 @@ void Object::draw()
 {
     setVboVao();
     //std::cout <<name <<": "  << triangleArraySize << std::endl;
+#if DRAWLINES == 0
+    glDrawArrays(GL_TRIANGLES,0,triangleArraySize);
+#else
     glDrawArrays(GL_LINES,0,triangleArraySize);
+#endif
     for (auto& child:childArray)
     {
         child->draw();
