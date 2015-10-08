@@ -1,5 +1,5 @@
 #include "object.hpp"
-#define DRAWLINES 1
+#define DRAWLINES 0
 extern GLuint shaderProgram;
 
 Object::Object()
@@ -234,7 +234,6 @@ void Object::createMat()
 {
     glm::vec3 tmat;
     glm::mat4 transMatrix2;
-    std::cout << centroid[0] <<"\n"; 
     tmat = {xtln,ytln,ztln };
     transMatrix = glm::translate(glm::mat4(1.0f),tmat);
     transMatrix = glm::translate(transMatrix, centroid);
@@ -243,7 +242,7 @@ void Object::createMat()
     transMatrix = glm::rotate(transMatrix, zrot, glm::vec3(0.0f,0.0f,1.0f));
 
     transMatrix = glm::translate(transMatrix,-centroid);
-    printMat(transMatrix2);
+    //printMat(transMatrix2);
     tmat = {xscale,yscale,zscale };
     transMatrix = glm::scale(transMatrix,tmat);
     transMatrix = outsideTransform*transMatrix; 

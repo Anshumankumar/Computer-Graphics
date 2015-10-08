@@ -50,7 +50,17 @@ void createBody()
     std::string filename = "../models/humanoid_body.raw";
     PointV pointV;
     glm::vec3 center1 = {0,0,0};
-    glm::vec3 center2 = {0,0,0.6};
+    glm::vec3 center2 = {0,0,0.8};
+    glm::vec3 color = {1,0.8431,0};
+    pointV = shapes::frustum(center1,center2,0.3,0.3,color,color,color);
+    fileStoreV(filename,pointV);
+}
+void createHip()
+{
+    std::string filename = "../models/humanoid_hip.raw";
+    PointV pointV;
+    glm::vec3 center1 = {0,0,0};
+    glm::vec3 center2 = {0,0,0.3};
     glm::vec3 color = {1,0.8431,0};
     pointV = shapes::frustum(center1,center2,0.3,0.3,color,color,color);
     fileStoreV(filename,pointV);
@@ -61,9 +71,9 @@ void createNeck()
     std::string filename = "../models/humanoid_neck.raw";
     PointV pointV;
     glm::vec3 center1 = {0,0,0};
-    glm::vec3 center2 = {0,0,0.6};
+    glm::vec3 center2 = {0,0,0.1};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.3,0.3,color,color,color);
+    pointV = shapes::frustum(center1,center2,0.15,0.15,color,color,color);
     fileStoreV(filename,pointV);
 }
 
@@ -97,7 +107,7 @@ void createFist()
     PointV pointV;
     glm::vec3 center = {0,0,0};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::sphere(center,0.15,color);;
+    pointV = shapes::sphere(center,0.12,color);;
     fileStoreV(filename,pointV); 
 }
 
@@ -117,7 +127,7 @@ void createHead()
     PointV pointV;
     glm::vec3 center = {0,0,0};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::ellipsoid(center,0.15,0.15,0.15,color);;
+    pointV = shapes::ellipsoid(center,0.25,0.25,0.3,color);;
     fileStoreV(filename,pointV); 
 }
 

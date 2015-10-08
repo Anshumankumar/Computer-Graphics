@@ -9,6 +9,10 @@ Humanoid::Humanoid()
     rightArm.readfile("humanoid_arm.raw");
     rightHand.readfile("humanoid_hand.raw");
     leftHand.readfile("humanoid_hand.raw");
+    neck.readfile("humanoid_neck.raw");
+    head.readfile("humanoid_head.raw");
+    leftFist.readfile("humanoid_fist.raw");
+    rightFist.readfile("humanoid_fist.raw");
 }
 
 void Humanoid::createHierarchy()
@@ -16,21 +20,21 @@ void Humanoid::createHierarchy()
     glm::vec3 linkBodyLeftArm = {-0.3, 0, 0};
     glm::vec3 linkBodyRightArm = {0.3,0,0};
     glm::vec3 linkBodyHip;
-    glm::vec3 linkBodyNeck;
+    glm::vec3 linkBodyNeck = {0,0,0};
     glm::vec3 linkLeftArmBody =  {0.1,0,0};
     glm::vec3 linkRightArmBody = {-0.1,0,0};
     glm::vec3 linkHipBody;
-    glm::vec3 linkNeckBody;
-    glm::vec3 linkNeckHead;
-    glm::vec3 linkHeadNeck;
-    glm::vec3 linkRightArmRightHand = { 0,0,0.5};
-    glm::vec3 linkLeftArmLeftHand = {0,0,0.5};
+    glm::vec3 linkNeckBody={0,0,0.1};
+    glm::vec3 linkNeckHead ={0,0,0};
+    glm::vec3 linkHeadNeck ={0,0,0.2};
+    glm::vec3 linkRightArmRightHand = { 0,0,0.4};
+    glm::vec3 linkLeftArmLeftHand = {0,0,0.4};
     glm::vec3 linkLeftHandLeftArm;
     glm::vec3 linkRightHandRightArm;
-    glm::vec3 linkRightHandRightFist;
-    glm::vec3 linkLeftHandLeftFist;
-    glm::vec3 linkRightFistRightHand;
-    glm::vec3 linkLeftFistLeftHand;
+    glm::vec3 linkRightHandRightFist = {0,0,0.4};
+    glm::vec3 linkLeftHandLeftFist {0,0,0.4};
+    glm::vec3 linkRightFistRightHand = {0,0,-0.15};
+    glm::vec3 linkLeftFistLeftHand = {0,0,-0.15};
     glm::vec3 linkHipLeftThigh;
     glm::vec3 linkHipRightThigh;
     glm::vec3 linkRightThighHip;
@@ -58,10 +62,12 @@ void Humanoid::createHierarchy()
     rightThigh.addChild(&rightLeg,linkRightThighRightLeg,linkRightLegRightThigh);
     leftLeg.addChild(&leftFoot,linkLeftLegLeftFoot,linkLeftFootLeftLeg);
     rightLeg.addChild(&rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
+    neck.addChild(&head,linkNeckHead,linkHeadNeck);
 }
 
 void Humanoid::draw()
 {
     body.draw();
+    leftArm.rotate(M_PI/100,0.0,0.0);
 }
 

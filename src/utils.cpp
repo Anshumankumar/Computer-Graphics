@@ -74,8 +74,8 @@ namespace shapes
     PointV partEllipsoid(glm::vec3 center, double a, double b,
             double c, glm::vec3 color,double factor)
     {
-        int noOfPoints1 = a*100;
-        int noOfPoints2 = a*30;
+        int noOfPoints1 = a*180;
+        int noOfPoints2 = a*90;
         PointV  pointArray;
         pointArray.resize(noOfPoints1*noOfPoints2*6);
         double theta1,theta2;
