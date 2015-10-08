@@ -22,6 +22,7 @@
 
 class Object
 {
+    int rotationFlag;
     std::string name;
     float currentZ,currentX,currentY;
     float xrot,yrot,zrot,xtln,ytln,ztln;
@@ -66,8 +67,8 @@ class Object
     void applyOutsideTransform(glm::mat4 t);
     void drawPointLines();
     virtual void changeState(int current){};
-    void addChild(Object *child);
-
+    void addChild(Object *child,glm::vec3 pP,glm::vec3 cP);
+    void updateCentroid(glm::vec3 rPoint);
 
 };
 void printMat(glm::mat4);

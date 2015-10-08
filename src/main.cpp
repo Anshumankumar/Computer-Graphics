@@ -71,14 +71,21 @@ int main(int argc, char** argv)
     Object object2;
     Object object3;
     Object object4;
-    object2.readfile("humanoid_arm.raw");
-    object3.readfile("humanoid_body.raw");
+    object2.readfile("humanoid_body.raw");
+   // currentObject->readfile("test.raw");
+    object3.readfile("humanoid_arm.raw");
     object4.readfile("humanoid_arm.raw");
-    currentObject->addChild(&object2);
-    currentObject->addChild(&object4);
-    currentObject->addChild(&object3);
-    object2.translate(0.6,0,0);
-    object4.translate(-0.6,0,0);
+    glm::vec3 vec1 = {0.0,0,0}; 
+    glm::vec3 vec2 = {-0.1,0,0}; 
+    glm::vec3 vec3 = {0.1,0,0}; 
+    glm::vec3 vec4 = {0.3,0.0,0.0}; 
+    glm::vec3 vec5 = {-0.3,0,0}; 
+  //  currentObject->updateCentroid(vec4);
+    currentObject->addChild(&object2,vec1,vec1);
+    object2.addChild(&object4,vec4,vec2);
+    object2.addChild(&object3,vec5,vec3);
+    object4.rotate(0,M_PI/4,0);
+    object3.rotate(0,-M_PI/4,0);
     //scene1.parseFile("myscene.scn");
     while(!glfwWindowShouldClose(window))
     {

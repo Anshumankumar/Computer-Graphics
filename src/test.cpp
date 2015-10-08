@@ -12,7 +12,7 @@ int main()
     std::string filename = "../models/test.raw";
     std::ofstream fs(filename);
     std::cout << "YO\n";
-    vecP = shapes::frustum(vecb1,vecb2,0.5,0,vecc,vecc,vec2);
+    vecP = shapes::sphere(vecb1,0.8,vec2);
     std::cout << "YO2\n";
     for (auto point:vecP)
     {

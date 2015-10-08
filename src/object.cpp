@@ -1,7 +1,6 @@
 #include "object.hpp"
 extern GLuint shaderProgram;
 
-
 Object::Object()
 {
     xrot = 0; yrot = 0; zrot = 0;
@@ -12,11 +11,23 @@ Object::Object()
     trianglePoint = NULL;
     triangleColor = NULL;
     outsideTransform = glm::mat4(1.0f);
+    rotationFlag = 1;
 }
 
-void Object::addChild(Object *child)
+void Object::updateCentroid(glm::vec3 rPoint)
+{
+    centroid[0] =   rPoint[0];
+    centroid[1] =   rPoint[1];
+    centroid[2] =   rPoint[2];
+    rotationFlag = 0;
+    createMat();
+}
+
+void Object::addChild(Object *child,glm::vec3 pP, glm::vec3 cP)
 {
     childArray.push_back(child);
+    child->translate(-cP[0]+pP[0],-cP[1]+pP[1],-cP[2]+pP[2]);
+    child->updateCentroid(cP);
 }
 void Object::applyOutsideTransform(glm::mat4 t)
 {
@@ -117,9 +128,12 @@ void Object::createTriangles()
         trianglePoint[triangleIt++] = pointStack[i];
         tempVec = tempVec + pointStack[i];
     }
-    centroid[0] = tempVec[0]/(float)triangleArraySize;
-    centroid[1] = tempVec[1]/(float)triangleArraySize;
-    centroid[2] = tempVec[2]/(float)triangleArraySize;
+    if (rotationFlag == 1)
+    {
+        centroid[0] = tempVec[0]/(float)triangleArraySize;
+        centroid[1] = tempVec[1]/(float)triangleArraySize;
+        centroid[2] = tempVec[2]/(float)triangleArraySize;
+    }
 }
 
 void Object::createConTriangles()
@@ -192,7 +206,7 @@ void Object::draw()
 {
     setVboVao();
     //std::cout <<name <<": "  << triangleArraySize << std::endl;
-    glDrawArrays(GL_TRIANGLES,0,triangleArraySize);
+    glDrawArrays(GL_LINES,0,triangleArraySize);
     for (auto& child:childArray)
     {
         child->draw();
@@ -213,20 +227,19 @@ void Object::createMat()
 {
     glm::vec3 tmat;
     glm::mat4 transMatrix2;
-    transMatrix = glm::translate(glm::mat4(1.0f), -centroid);
+    std::cout << centroid[0] <<"\n"; 
+    tmat = {xtln,ytln,ztln };
+    transMatrix = glm::translate(glm::mat4(1.0f),tmat);
+    transMatrix = glm::translate(transMatrix, centroid);
     transMatrix = glm::rotate(transMatrix, xrot, glm::vec3(1.0f,0.0f,0.0f));
     transMatrix = glm::rotate(transMatrix, yrot, glm::vec3(0.0f,1.0f,0.0f));
     transMatrix = glm::rotate(transMatrix, zrot, glm::vec3(0.0f,0.0f,1.0f));
-    
-    transMatrix2 = glm::translate(glm::mat4(0.1f), centroid);
-    transMatrix = transMatrix2*transMatrix;
-    tmat = {xtln,ytln,ztln };
-    transMatrix2 = glm::translate(glm::mat4(1.0f),tmat);
-// printMat(transMatrix2);
-    transMatrix = transMatrix2*transMatrix;
+
+    transMatrix = glm::translate(transMatrix,-centroid);
+    printMat(transMatrix2);
     tmat = {xscale,yscale,zscale };
     transMatrix = glm::scale(transMatrix,tmat);
-    transMatrix = outsideTransform*transMatrix;
+    transMatrix = outsideTransform*transMatrix; 
     for(auto& child:childArray)
     {
         child->applyOutsideTransform(transMatrix);
