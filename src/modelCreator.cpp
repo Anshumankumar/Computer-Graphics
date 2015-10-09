@@ -18,11 +18,15 @@ void createArm()
     PointV tempV;
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.4};
+    glm::vec3 center3 = {0,0,0.1};
     glm::vec3 color = {1,0.8431,0};
     pointV = shapes::frustum(center1,center2,0.1,0.1,color,color,
             color);
-    tempV = shapes::hemisphere(center2,0.10,color,color);
+    tempV = shapes::sphere(center3,0.141,color);
     PointV::iterator it;
+    it = pointV.begin();
+    pointV.insert(it,tempV.begin(),tempV.end());
+    tempV = shapes::hemisphere(center2,0.10,color,color);
     it = pointV.begin();
     pointV.insert(it,tempV.begin(),tempV.end());
     fileStoreV(filename,pointV);
@@ -61,7 +65,7 @@ void createHip()
     PointV pointV;
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.3};
-    glm::vec3 color = {1,0.8431,0};
+    glm::vec3 color = {1,0.8431,0.2};
     pointV = shapes::frustum(center1,center2,0.3,0.3,color,color,color);
     fileStoreV(filename,pointV);
 }
@@ -117,7 +121,7 @@ void createFoot()
     PointV pointV;
     glm::vec3 center = {0,0,0};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::cuboid(center,0.15,0.15,0.15,color);;
+    pointV = shapes::cuboid(center,0.25,0.25,0.20,color);;
     fileStoreV(filename,pointV); 
 }
 
@@ -148,4 +152,5 @@ int main()
     createLeg();
     createFist();
     createFoot();
+    createHip();
 }

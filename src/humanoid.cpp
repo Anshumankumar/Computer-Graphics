@@ -13,13 +13,22 @@ Humanoid::Humanoid()
     head.readfile("humanoid_head.raw");
     leftFist.readfile("humanoid_fist.raw");
     rightFist.readfile("humanoid_fist.raw");
+    hip.readfile("humanoid_hip.raw");
+    leftThigh.readfile("humanoid_thigh.raw");
+    rightThigh.readfile("humanoid_thigh.raw");
+    leftLeg.readfile("humanoid_leg.raw");
+    rightLeg.readfile("humanoid_leg.raw");
+    rightFoot.readfile("humanoid_foot.raw");
+    leftFoot.readfile("humanoid_foot.raw");
 }
+
+
 
 void Humanoid::createHierarchy()
 {
     glm::vec3 linkBodyLeftArm = {-0.3, 0, 0};
     glm::vec3 linkBodyRightArm = {0.3,0,0};
-    glm::vec3 linkBodyHip;
+    glm::vec3 linkBodyHip = {0,0,0.8};
     glm::vec3 linkBodyNeck = {0,0,0};
     glm::vec3 linkLeftArmBody =  {0.1,0,0};
     glm::vec3 linkRightArmBody = {-0.1,0,0};
@@ -35,18 +44,18 @@ void Humanoid::createHierarchy()
     glm::vec3 linkLeftHandLeftFist {0,0,0.4};
     glm::vec3 linkRightFistRightHand = {0,0,-0.15};
     glm::vec3 linkLeftFistLeftHand = {0,0,-0.15};
-    glm::vec3 linkHipLeftThigh;
-    glm::vec3 linkHipRightThigh;
+    glm::vec3 linkHipLeftThigh= {0.15,0,0.3};
+    glm::vec3 linkHipRightThigh ={-0.15,0,0.3};
     glm::vec3 linkRightThighHip;
     glm::vec3 linkLeftThighHip;
-    glm::vec3 linkRightThighRightLeg;
-    glm::vec3 linkLeftThighLeftLeg;
+    glm::vec3 linkRightThighRightLeg ={0,0,0.6};
+    glm::vec3 linkLeftThighLeftLeg= {0,0,0.6};
     glm::vec3 linkLeftLegLeftThigh;
     glm::vec3 linkRightLegRightThigh;
-    glm::vec3 linkLeftLegLeftFoot;
-    glm::vec3 linkRightLegRightFoot;
-    glm::vec3 linkLeftFootLeftLeg;
-    glm::vec3 linkRightFootRightLeg;
+    glm::vec3 linkLeftLegLeftFoot = {0,0,0.6};
+    glm::vec3 linkRightLegRightFoot ={0,0,0.6};
+    glm::vec3 linkLeftFootLeftLeg={0,0,-0.10};
+    glm::vec3 linkRightFootRightLeg={0,0,-0.10};
 
     body.addChild(&rightArm,linkBodyRightArm,linkRightArmBody);
     body.addChild(&leftArm,linkBodyLeftArm,linkLeftArmBody);
@@ -63,6 +72,8 @@ void Humanoid::createHierarchy()
     leftLeg.addChild(&leftFoot,linkLeftLegLeftFoot,linkLeftFootLeftLeg);
     rightLeg.addChild(&rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
     neck.addChild(&head,linkNeckHead,linkHeadNeck);
+    leftHand.rotate(M_PI/3,0.0,0.0);
+    body.resize(0.5,0.5,0.5);
 }
 
 void Humanoid::draw()
