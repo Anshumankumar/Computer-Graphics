@@ -2,25 +2,32 @@
 
 void filestore(std::ofstream &fs, Point point )
 {
-    filestore(fs,point.x,point.y,point.z,point.cx,point.cy,point.cz);
+    filestore(fs,point.x,point.y,point.z,point.cx,point.cy,point.cz,
+            point.nx,point.ny,point.nz);
 }
 void filestore(std::ofstream &fs,glm::vec4 v,double cx,double cy,double cz)
 {
     filestore(fs,v[0],v[1],v[2],cx,cy,cz);
 }
-void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy, double cz)
+void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy, double cz, double nx  ,double ny, double nz)
 {
-    fs << x;
+    fs << (float)x;
     fs <<",";
-    fs << y;
+    fs << (float)y;
     fs <<",";
-    fs << z;
+    fs << (float)z;
     fs <<",";
-    fs << cx;
+    fs << (float)cx;
     fs <<",";
-    fs << cy;
+    fs << (float)cy;
     fs <<",";
-    fs << cz;
+    fs << (float)cz;
+    fs <<",";
+    fs << (float)nx;
+    fs <<",";
+    fs << (float)ny;
+    fs <<",";
+    fs << (float)nz;
     fs <<std::endl;
 }
 namespace shapes
@@ -40,6 +47,9 @@ namespace shapes
         point.cx = color[0];
         point.cy = color[1];
         point.cz = color[2];
+        point.nx = 0;
+        point.ny = 0;
+        point.nz = 1;
         point.z = center.z;
         int k = 0;
         for (int i = 0;i < noOfPoints; i++)
@@ -69,6 +79,9 @@ namespace shapes
         point.x = center[0] + a*cos(theta)*sin(phi);
         point.y = center[1] + b*sin(theta)*sin(phi);
         point.z = center[2] + c*cos(phi);
+        point.nx = cos(theta)*sin(phi);
+        point.ny = sin(theta)*sin(phi);
+        point.nz = cos(phi);
         return point;   
     }
     PointV partEllipsoid(glm::vec3 center, double a, double b,
@@ -134,6 +147,7 @@ namespace shapes
         
         centerR = {center[0],center[1],center[2]-h/2};
         tempArray = rectangle(centerR,l,b,color);
+        move::rotate(tempArray,M_PI,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
        
@@ -145,19 +159,19 @@ namespace shapes
         
         centerR = {center[0],center[1]-b/2,center[2]};
         tempArray = rectangle(centerR,l,h,color);
-        move::rotate(tempArray,M_PI/2,0,0,centerR);
+        move::rotate(tempArray,-M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         
         centerR = {center[0]+l/2,center[1],center[2]};
-        tempArray = rectangle(centerR,b,h,color);
+        tempArray = rectangle(centerR,h,b,color);
         move::rotate(tempArray,0,M_PI/2,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0]-l/2,center[1],center[2]};
-        tempArray = rectangle(centerR,b,h,color);
-        move::rotate(tempArray,0,M_PI/2,0,centerR);
+        tempArray = rectangle(centerR,h,b,color);
+        move::rotate(tempArray,0,-M_PI/2,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         return pointArray;
@@ -174,6 +188,9 @@ namespace shapes
         point.cx =  color[0];
         point.cy =  color[1];
         point.cz =  color[2];
+        point.nx = 0;
+        point.ny = 0;
+        point.nz = 1;
         return point;
 
     }
@@ -201,12 +218,15 @@ namespace shapes
         pointArray = circle(b1Center,radius1,color1);
         it = pointArray.begin();
         tempArray = circle(b2Center,radius2,color2);
+        move::rotate(tempArray,M_PI,0,0,b2Center);
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         int noOfPoints = radius1*360;
         int k = pointArray.size();
         pointArray.resize(pointArray.size()+noOfPoints*6);
         double theta,theta2;
         Point point;
+        double angle = atan2(radius1-radius2,b1Center[2]-b2Center[2]);
+        point.nz = sin(angle);
         point.cx = colorS[0];
         point.cy = colorS[1];
         point.cz = colorS[2];
@@ -214,8 +234,11 @@ namespace shapes
         {
             theta = i*2*M_PI/noOfPoints;
             theta2 = (i+1)*2*M_PI/noOfPoints;
+
             point.x = b1Center[0] + radius1*cos(theta);
             point.y = b1Center[1] + radius1*sin(theta);
+            point.nx = cos(angle)*cos(theta);
+            point.ny = cos(angle)*sin(theta);
             point.z = b1Center[2];
             pointArray[k++]= point;
             point.x = b2Center[0] + radius2*cos(theta);
@@ -224,14 +247,23 @@ namespace shapes
             pointArray[k++]= point;
             point.x = b2Center[0] + radius2*cos(theta2);
             point.y = b2Center[1] + radius2*sin(theta2);
+            point.nx = cos(angle)*cos(theta2);
+            point.ny = cos(angle)*sin(theta2);
+
             pointArray[k++]= point;
             pointArray[k++]= point;
             point.x = b1Center[0] + radius1*cos(theta);
             point.y = b1Center[1] + radius1*sin(theta);
             point.z = b1Center[2];
+            point.nx = cos(angle)*cos(theta);
+            point.ny = cos(angle)*sin(theta);
+
             pointArray[k++]= point;
             point.x = b1Center[0] + radius1*cos(theta2);
             point.y = b1Center[1] + radius1*sin(theta2);
+            point.nx = cos(angle)*cos(theta2);
+            point.ny = cos(angle)*sin(theta2);
+
             pointArray[k++]= point;
         }
         return pointArray;   
@@ -251,18 +283,30 @@ namespace move
     Point rotate(Point point, double angX, double angY, double angZ,
             glm::vec3 rPoint)
     {
-        glm::vec3 vec;
+        glm::vec3 vec,vecN;
         point = translate(point,-rPoint[0],-rPoint[1],-rPoint[2]);
         vec[0] = point.x;
         vec[1] = point.y;
         vec[2] = point.z;
+        vecN[0] = point.nx;
+        vecN[1] = point.ny;
+        vecN[2] = point.nz;
+
         vec  = glm::rotateX(vec,(float)angX);
         vec  = glm::rotateY(vec,(float)angY);
         vec  = glm::rotateZ(vec,(float)angZ);
+        vecN  = glm::rotateX(vecN,(float)angX);
+        vecN  = glm::rotateY(vecN,(float)angY);
+        vecN  = glm::rotateZ(vecN,(float)angZ);
+
 
         point.x = vec[0];
         point.y = vec[1];
         point.z = vec[2];
+        point.nx = vecN[0];
+        point.ny = vecN[1];
+        point.nz = vecN[2];
+
         point = translate(point,rPoint[0],rPoint[1],rPoint[2]);
         return point;
     }

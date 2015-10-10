@@ -2,6 +2,10 @@
 #define DRAWLINES 0
 extern GLuint shaderProgram;
 
+GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 2.0;
+GLfloat c_up_x = 0.0, c_up_y = 1.0, c_up_z = 0.0;
+GLfloat c_xrot=0.0,c_yrot=0.0,c_zrot=0.0;
+
 Object::Object()
 {
     triangleArraySize = 0;
@@ -15,6 +19,24 @@ Object::Object()
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
     initVboVao();
+
+    glm::mat4 rotation_matrix;
+    glm::mat4 projection_matrix;
+    glm::mat4 c_rotation_matrix;
+    glm::mat4 lookat_matrix;
+    c_rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(c_xrot), glm::vec3(1.0f,0.0f,0.0f));
+    c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_yrot), glm::vec3(0.0f,1.0f,0.0f));
+    c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
+
+    glm::vec4 c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
+    glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
+    lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
+
+
+    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 5.0);
+
+    viewMat = projection_matrix*lookat_matrix;
+
 }
 
 void Object::updateCentroid(glm::vec3 rPoint)
@@ -45,14 +67,14 @@ void Object::givename(std::string tempName)
 
 void Object::zIncrease()
 {
-        currentZ = currentZ+0.1;
-        if (currentZ >=MAX_SIZE_Z) currentZ = MAX_SIZE_Z;
+    currentZ = currentZ+0.1;
+    if (currentZ >=MAX_SIZE_Z) currentZ = MAX_SIZE_Z;
 }
 
 void Object::zDecrease()
 {
-        currentZ -=0.1;
-        if (currentZ <=-MAX_SIZE_Z) currentZ = -MAX_SIZE_Z;
+    currentZ -=0.1;
+    if (currentZ <=-MAX_SIZE_Z) currentZ = -MAX_SIZE_Z;
 }
 
 glm::vec4 Object::getPoint()
@@ -79,7 +101,7 @@ void Object::updateXY(GLFWwindow * window,double X,double Y)
 {
     int width, height;
     glfwGetWindowSize(window, &width, &height);
-     
+
     currentX = (X/width -0.5)*2*MAX_SIZE_X ;
     currentY = -(Y/height -0.5)*2*MAX_SIZE_Y ;
 }
@@ -87,9 +109,10 @@ void Object::updateXY(GLFWwindow * window,double X,double Y)
 void Object::push()
 {
     std::cout<<"XYZ " << getPoint()[0] <<" " << getPoint()[1] << 
-" " << getPoint()[2]<<"\n";
+        " " << getPoint()[2]<<"\n";
     pointStack.push_back(getPoint());
     colorStack.push_back(getColor());
+    normalStack.push_back({0,0,0,0});
     createTriangles();
 }
 
@@ -99,6 +122,7 @@ void Object::pop()
     {
         pointStack.pop_back();
         colorStack.pop_back();
+        normalStack.pop_back();
     }
     createTriangles();
 }
@@ -112,12 +136,14 @@ void Object::createTriangles()
     {
         if (trianglePoint != NULL)
         {
-                delete trianglePoint;
-                delete triangleColor;
+            delete trianglePoint;
+            delete triangleColor;
+            delete triangleNormal;
         }
         triangleArraySize = 3*(stackSize/3);
         trianglePoint = new glm::vec4[triangleArraySize];
         triangleColor = new glm::vec4[triangleArraySize];
+        triangleNormal = new glm::vec4[triangleArraySize];
     }
     else
     {
@@ -180,11 +206,12 @@ void Object::initVboVao()
 void Object::setVboVao()
 {
     auto tempSize = sizeof(trianglePoint[0])*triangleArraySize;
-    glBufferSubData( GL_ARRAY_BUFFER, 0, tempSize,
-            trianglePoint );
-    glBufferSubData( GL_ARRAY_BUFFER, tempSize,
-            tempSize, triangleColor);
+    glBufferSubData( GL_ARRAY_BUFFER, 0, tempSize, trianglePoint );
+    glBufferSubData( GL_ARRAY_BUFFER, tempSize, tempSize, triangleColor);
+    glBufferSubData( GL_ARRAY_BUFFER, 2*tempSize, tempSize, triangleNormal);
     uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
+    normalMatrix = glGetUniformLocation( shaderProgram, "normalMatrix");
+    viewMatrix = glGetUniformLocation( shaderProgram, "viewMatrix");
     glUseProgram( shaderProgram );
     GLuint vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
     glEnableVertexAttribArray( vPosition );
@@ -195,7 +222,16 @@ void Object::setVboVao()
     glEnableVertexAttribArray( vColor );
     glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, 
             BUFFER_OFFSET(tempSize));
+
+
+    GLuint vNormal = glGetAttribLocation( shaderProgram, "vNormal" );
+    glEnableVertexAttribArray( vNormal );
+    glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, 
+            BUFFER_OFFSET(2*tempSize));
+
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(transMatrix));
+    glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(viewMat));
+    glUniformMatrix4fv(normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMat));
 
 }
 
@@ -250,6 +286,8 @@ void Object::createMat()
     {
         child->applyOutsideTransform(transMatrix);
     }
+    normalMat = glm::transpose (glm::inverse(glm::mat3(transMatrix)));
+
 }
 
 void Object::reset()
@@ -302,6 +340,13 @@ void Object::savefile(std::string tempname)
         fs << triangleColor[i][1];
         fs <<",";
         fs << triangleColor[i][2];
+        fs <<",";
+        fs << triangleNormal[i][0];
+        fs <<",";
+        fs << triangleNormal[i][1];
+        fs <<",";
+        fs << triangleNormal[i][2];
+
         fs <<std::endl;
     }
     fs.close();
@@ -329,18 +374,19 @@ void Object::readfile(std::string tempname)
     {
         std::string cline;
         fs >> cline;
-        glm::vec4 cPoint,cColor;
+        glm::vec4 cPoint,cColor,cNormal;
         if (cline =="") continue;
-        parseline(cline,cPoint,cColor);
+        parseline(cline,cPoint,cColor,cNormal);
         pointStack.push_back(cPoint);
         colorStack.push_back(cColor);
+        normalStack.push_back(cNormal);
     }
     createTriangles();
     createMat();
 }
 
 void Object::parseline(std::string line,glm::vec4 &cPoint,
-        glm::vec4 &cColor)
+        glm::vec4 &cColor, glm::vec4 &cNormal)
 {
     std::string delimiter = ",";
     std::string token;
@@ -358,8 +404,17 @@ void Object::parseline(std::string line,glm::vec4 &cPoint,
         cColor[i] = std::stof(token);   
         line.erase(0, pos + delimiter.length());
     }
+    for (int i =0;i<3;i++)
+    {
+        auto pos = line.find(delimiter);
+        token = line.substr(0, pos);
+        cNormal[i] = std::stof(token);   
+        line.erase(0, pos + delimiter.length());
+    }
+
     cPoint[3]=1;
     cColor[3]=1;
+    cNormal[3]=1;
 }
 
 void Object::rotate( float delx, float dely, float delz)

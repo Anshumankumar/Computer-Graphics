@@ -16,14 +16,17 @@ struct Point
     double z;
     double cx; 
     double cy; 
-    double cz; 
+    double cz;
+    double nx; 
+    double ny; 
+    double nz; 
 };
 using PointV = std::vector<Point>;
 
 
 void filestore(std::ofstream &fs, Point point );
 void filestore(std::ofstream &fs, Point* point );
-void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy, double cz);
+void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy, double cz,  double nx = 0, double ny =0 ,double nz =0);
 void filestore(std::ofstream &fs,glm::vec4 v,double cx,double cy,double cz);
 
 namespace shapes

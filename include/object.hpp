@@ -30,15 +30,21 @@ class Object
     glm::vec4 currentPosition;
     glm::vec4 *trianglePoint;
     glm::vec4 *triangleColor;
+    glm::vec4 *triangleNormal;
     glm::vec3 centroid;
     int triangleArraySize;
     std::deque<glm::vec4> pointStack;
     std::deque<glm::vec4> colorStack;
+    std::deque<glm::vec4> normalStack;
     GLuint vbo, vao;
     GLuint uModelViewMatrix;
+    GLuint normalMatrix;
+    GLuint viewMatrix;
     std::vector<Object*> childArray;
     protected:
     glm::mat4 transMatrix;
+    glm::mat3 normalMat;
+    glm::mat4 viewMat;
     glm::mat4 outsideTransform;
     public:
     Object();
@@ -58,7 +64,7 @@ class Object
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");
     void parseline(std::string temp,glm::vec4 &cPoint,
-                glm::vec4 &cColor);
+                glm::vec4 &cColor, glm::vec4 &cNormal);
     void rotate(float  delx, float dely, float delz);
     void translate(float  delx, float dely, float delz);
     void resize(float sx,float sy,float sz);

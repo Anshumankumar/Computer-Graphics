@@ -65,12 +65,15 @@ int main(int argc, char** argv)
     initBufferGL();
 
     Object object1;
+    object1.readfile("test.raw");
     Humanoid robo1;
     robo1.createHierarchy();
+   // currentObject = &object1;
     while(!glfwWindowShouldClose(window))
     {
         renderGL();
         robo1.draw();
+        currentObject->draw();
         glfwPollEvents();
         glfwSwapBuffers(window);
         
