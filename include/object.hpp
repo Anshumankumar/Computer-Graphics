@@ -38,12 +38,12 @@ class Object
     GLuint normalMatrix;
     GLuint viewMatrix;
     std::vector<Object*> childArray;
-    protected:
+protected:
     glm::mat4 transMatrix;
     glm::mat4 normalMat;
     glm::mat4 viewMat;
     glm::mat4 outsideTransform;
-    public:
+public:
     Object();
     void givename(std::string);
     void updateXY(GLFWwindow *window, double X, double Y);
