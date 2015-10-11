@@ -154,6 +154,7 @@ void Object::createTriangles()
     for (int i=0; i < triangleArraySize;i++)
     {   
         triangleColor[triangleIt] = colorStack[i];
+        triangleNormal[triangleIt] = normalStack[i];
         trianglePoint[triangleIt++] = pointStack[i];
         tempVec = tempVec + pointStack[i];
     }
@@ -175,6 +176,7 @@ void Object::createConTriangles()
         triangleArraySize = 3*(stackSize-2);
         trianglePoint = new glm::vec4[triangleArraySize];
         triangleColor = new glm::vec4[triangleArraySize];
+        triangleNormal = new glm::vec4[triangleArraySize];
     }
     else
     {
@@ -286,7 +288,7 @@ void Object::createMat()
     {
         child->applyOutsideTransform(transMatrix);
     }
-    normalMat = glm::transpose (glm::inverse(glm::mat3(transMatrix)));
+    normalMat = glm::transpose (glm::inverse(glm::mat4(transMatrix)));
 
 }
 

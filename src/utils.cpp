@@ -147,19 +147,19 @@ namespace shapes
         
         centerR = {center[0],center[1],center[2]-h/2};
         tempArray = rectangle(centerR,l,b,color);
-        move::rotate(tempArray,M_PI,0,0,centerR);
+        move::rotate(tempArray,-M_PI,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
        
         centerR = {center[0],center[1]+b/2,center[2]};
         tempArray = rectangle(centerR,l,h,color);
-        move::rotate(tempArray,M_PI/2,0,0,centerR);
+        move::rotate(tempArray,-M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         
         centerR = {center[0],center[1]-b/2,center[2]};
         tempArray = rectangle(centerR,l,h,color);
-        move::rotate(tempArray,-M_PI/2,0,0,centerR);
+        move::rotate(tempArray,M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         

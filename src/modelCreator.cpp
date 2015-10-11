@@ -20,7 +20,7 @@ void createArm()
     glm::vec3 center2 = {0,0,0.4};
     glm::vec3 center3 = {0,0,0.1};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.1,0.1,color,color,
+    pointV = shapes::frustum(center2,center1,0.1,0.1,color,color,
             color);
     tempV = shapes::sphere(center3,0.141,color);
     PointV::iterator it;
@@ -40,7 +40,7 @@ void createHand()
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.4};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.1,0.08,color,color,
+    pointV = shapes::frustum(center2,center1,0.08,0.1,color,color,
             color);
     tempV = shapes::hemisphere(center2,0.08,color,color);
     PointV::iterator it;
@@ -56,7 +56,7 @@ void createBody()
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.8};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.3,0.3,color,color,color);
+    pointV = shapes::frustum(center2,center1,0.3,0.3,color,color,color);
     fileStoreV(filename,pointV);
 }
 void createHip()
@@ -66,7 +66,7 @@ void createHip()
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.3};
     glm::vec3 color = {1,0.8431,0.2};
-    pointV = shapes::frustum(center1,center2,0.3,0.3,color,color,color);
+    pointV = shapes::frustum(center2,center1,0.3,0.3,color,color,color);
     fileStoreV(filename,pointV);
 }
 
@@ -77,7 +77,7 @@ void createNeck()
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.1};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.15,0.15,color,color,color);
+    pointV = shapes::frustum(center2,center1,0.15,0.15,color,color,color);
     fileStoreV(filename,pointV);
 }
 
@@ -88,7 +88,7 @@ void createThigh()
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.6};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.15,0.12,color,color,color);
+    pointV = shapes::frustum(center2,center1,0.12,0.15,color,color,color);
     fileStoreV(filename,pointV);
 }
 
@@ -99,7 +99,7 @@ void createLeg()
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.6};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::frustum(center1,center2,0.12,0.12,color,color,color);
+    pointV = shapes::frustum(center2,center1,0.08,0.12,color,color,color);
     fileStoreV(filename,pointV);
 }
 

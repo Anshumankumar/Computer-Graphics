@@ -43,7 +43,7 @@ class Object
     std::vector<Object*> childArray;
     protected:
     glm::mat4 transMatrix;
-    glm::mat3 normalMat;
+    glm::mat4 normalMat;
     glm::mat4 viewMat;
     glm::mat4 outsideTransform;
     public:
