@@ -5,7 +5,7 @@
 void fileStoreV(std::string filename,PointV pointV)
 {
     std::ofstream fs(filename);
-     for (auto point:pointV)
+    for (auto point:pointV)
     {
         filestore(fs,point);
     }
@@ -121,7 +121,7 @@ void createFoot()
     PointV pointV;
     glm::vec3 center = {0,0,0};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::cuboid(center,0.25,0.25,0.20,color);;
+    pointV = shapes::cuboid(center,0.25,0.25,0.20,color);
     fileStoreV(filename,pointV); 
 }
 
@@ -131,18 +131,15 @@ void createHead()
     PointV pointV;
     glm::vec3 center = {0,0,0};
     glm::vec3 color = {1,0.8431,0};
-    pointV = shapes::ellipsoid(center,0.25,0.25,0.3,color);;
+    pointV = shapes::ellipsoid(center,0.25,0.25,0.3,color);
     fileStoreV(filename,pointV); 
 }
 
 
 
-
-
-int main()
+void createHumanoid()
 {
-
-    std::cout << "Model Creator";
+    std ::cout << "Creating Humanoid parts \n";
     createArm();
     createBody();
     createHand();
@@ -153,4 +150,67 @@ int main()
     createFist();
     createFoot();
     createHip();
+    std::cout << "Human Robot parts ready :) \n";
+        std::cout << "Integrate them to make complete robot \n \n";
+
+}
+
+void createSBody()
+{
+    std::string filename = "../models/roboS_body.raw";
+    PointV pointV;
+    glm::vec3 center1 = {0,0,0};
+    glm::vec3 center2 = {0,0,0.8};
+    glm::vec3 color = {1,0.8431,0};
+    pointV = shapes::frustum(center2,center1,0.4,0.4,color,color,color);
+    fileStoreV(filename,pointV);
+}
+
+void createSHead()
+{
+    std::string filename = "../models/roboS_head.raw";
+    PointV pointV;
+    glm::vec3 center = {0,0,0};
+    glm::vec3 color = {1,0.8431,0};
+    pointV = shapes::hemisphere(center,0.4,color,color);
+    fileStoreV(filename,pointV);
+}
+
+void createSHand()
+{
+    std::string filename = "../models/humanoid_foot.raw";
+    PointV pointV;
+    glm::vec3 center = {0,0,0};
+    glm::vec3 color = {1,0.8431,0};
+    pointV = shapes::cuboid(center,0.20,0.10,0.8,color);;
+    fileStoreV(filename,pointV);
+
+}
+
+void createSLeg()
+{
+    std::string filename = "../models/humanoid_foot.raw";
+    PointV pointV;
+    glm::vec3 center = {0,0,0};
+    glm::vec3 color = {1,0.8431,0};
+    pointV = shapes::cuboid(center,0.25,0.25,0.20,color);;
+    fileStoreV(filename,pointV);
+}
+
+void createRoboS()
+{
+    std::cout << " Creating the Small Robo\n";
+    createSHead();
+    createSBody();
+    createSHand();
+    createSLeg();
+    std::cout << ":( Evil is  coming\n";
+}
+
+int main()
+{
+
+    std::cout << "Model Creator\n";
+    createHumanoid();
+    createRoboS();
 }
