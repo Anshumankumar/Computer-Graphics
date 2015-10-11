@@ -1,6 +1,7 @@
 OPENGLLIB= -lGL
 GLEWLIB= -lGLEW
-GLFWLIB = -lglfw
+GLFWLIB = `pkg-config glfw3 --libs --static`
+# GLFWLIB = -lglfw
 LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB)
 LDFLAGS=-L/usr/local/lib 
 IN_DIR= include/

@@ -1,18 +1,17 @@
 #include "scene.hpp"
 
-std::stringstream  getLine(std::ifstream &fs)
+std::string getLine(std::ifstream &fs)
 {
     std::string cline;
-    std::stringstream ss;
     while(fs.good())
     {
         std::getline(fs,cline);
         if (cline == "" || cline[0]=='#')continue;
         break;        
     }
-    ss.str(cline);
-    return ss;
-} 
+    return cline;
+}
+
 Scene::Scene(int noOfObjects)
 {
     objectsNo = noOfObjects; 
@@ -81,24 +80,24 @@ void Scene::parseFile(std::string filename)
         if(i >=objectsNo) break;
     }
     std::stringstream ss;
-    ss = getLine(fs);
+    ss.str(getLine(fs));
     ss >> eye[0];
     ss >> eye[1];
     ss >> eye[2];
-    ss = getLine(fs);
+    ss.str(getLine(fs));
     ss >> lookAt[0];
     ss >> lookAt[1];
     ss >> lookAt[2];
-    ss = getLine(fs);
+    ss.str(getLine(fs));
     ss >> upVector[0];
     ss >> upVector[1];
     ss >> upVector[2];
-    ss = getLine(fs);
+    ss.str(getLine(fs));
     ss >> lenLeft;
     ss >> lenRight;
     ss >> lenTop;
     ss >> lenBottom;
-    ss = getLine(fs);
+    ss.str(getLine(fs));
     ss >> distanceNear;
     ss >> distanceFar;
     wcsToVcs();
