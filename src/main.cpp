@@ -9,6 +9,7 @@ GLuint shaderProgram;
 
 //Scene scene1(3);
 Object * currentObject;
+Humanoid* robo;
 
 void initBufferGL()
 {
@@ -65,9 +66,10 @@ int main(int argc, char** argv)
     initBufferGL();
 
     Object object1;
-    object1.readfile("test.raw");
     Humanoid robo1;
+    object1.readfile("test.raw");
     robo1.createHierarchy();
+    robo = &robo1;
 //    currentObject = &object1;
     while(!glfwWindowShouldClose(window))
     {

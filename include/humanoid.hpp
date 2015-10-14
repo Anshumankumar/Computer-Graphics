@@ -24,11 +24,18 @@ class Humanoid
     Object rightLeg;
     Object leftFoot;
     Object rightFoot;
-    Object hip;
+    Object torsal;
+    double lHAngle ,rHAngle,lAAngle,rAAngle;
+    double bendAngle;
     public: 
     Humanoid();
     void createHierarchy();
     void draw();
+    void bendBack();
+    void bendFront();
+    void walk();
+    void rotateArm(glm::vec3 left,glm::vec3 right);
+    void rotateHand(double left,double right);
 };
 
 #endif

@@ -1,13 +1,14 @@
 #include "gl_framework.hpp"
 #include "object.hpp"
 #include "scene.hpp"
+#include "humanoid.hpp"
 
 #define MODE_INSPECTION 1
 #define MODE_MODELLING 2
 
 int mode = MODE_INSPECTION; 
 extern Object* currentObject;
-
+extern Humanoid *robo;
 namespace myglf
 {
     void initGL(void)
@@ -60,11 +61,11 @@ namespace myglf
             currentObject->readfile();
         }
         else if (key == GLFW_KEY_R && action == GLFW_PRESS)
-            currentObject->reset();
+        {}
         else if (key == GLFW_KEY_1 && action == GLFW_PRESS)
-            currentObject->changeState(Scene::VCS);
+           robo->bendFront();
         else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
-            currentObject->changeState(Scene::CCS);
+            robo->bendBack();
         else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
             currentObject->changeState(Scene::NDCS);
         else if (key == GLFW_KEY_4 && action == GLFW_PRESS)

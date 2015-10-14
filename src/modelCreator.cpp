@@ -53,15 +53,21 @@ void createBody()
 {
     std::string filename = "../models/humanoid_body.raw";
     PointV pointV;
+    PointV tempV;
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.8};
     glm::vec3 color = {1,0.8431,0};
     pointV = shapes::frustum(center2,center1,0.3,0.3,color,color,color);
+    tempV = shapes::hemisphere(center2,0.3,color,color);
+    PointV::iterator it;
+    it = pointV.begin();
+    pointV.insert(it,tempV.begin(),tempV.end());
+ 
     fileStoreV(filename,pointV);
 }
-void createHip()
+void createTorsal()
 {
-    std::string filename = "../models/humanoid_hip.raw";
+    std::string filename = "../models/humanoid_torsal.raw";
     PointV pointV;
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.3};
@@ -149,7 +155,7 @@ void createHumanoid()
     createLeg();
     createFist();
     createFoot();
-    createHip();
+    createTorsal();
     std::cout << "Human Robot parts ready :) \n";
         std::cout << "Integrate them to make complete robot \n \n";
 

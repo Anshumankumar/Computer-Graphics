@@ -24,9 +24,9 @@ class Object
 {
     int rotationFlag;
     std::string name;
-    float currentZ,currentX,currentY;
     float xrot,yrot,zrot,xtln,ytln,ztln;
-    float xscale,yscale,zscale;
+    float xscale,yscale,zscale; 
+    float currentZ,currentX,currentY;
     glm::vec4 currentPosition;
     glm::vec4 *trianglePoint;
     glm::vec4 *triangleColor;
@@ -64,7 +64,7 @@ class Object
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");
     void parseline(std::string temp,glm::vec4 &cPoint,
-                glm::vec4 &cColor, glm::vec4 &cNormal);
+            glm::vec4 &cColor, glm::vec4 &cNormal);
     void rotate(float  delx, float dely, float delz);
     void translate(float  delx, float dely, float delz);
     void resize(float sx,float sy,float sz);
