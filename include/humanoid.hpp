@@ -27,6 +27,7 @@ class Humanoid
     Object torsal;
     double lHAngle ,rHAngle,lAAngle,rAAngle;
     double bendAngle;
+    int walkFlag;
     public: 
     Humanoid();
     void createHierarchy();

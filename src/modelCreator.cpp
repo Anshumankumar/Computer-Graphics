@@ -91,10 +91,21 @@ void createThigh()
 {
     std::string filename = "../models/humanoid_thigh.raw";
     PointV pointV;
+    PointV tempV;
     glm::vec3 center1 = {0,0,0};
     glm::vec3 center2 = {0,0,0.6};
     glm::vec3 color = {1,0.8431,0};
     pointV = shapes::frustum(center2,center1,0.12,0.15,color,color,color);
+    tempV = shapes::hemisphere(center1,0.15,color,color);
+    PointV::iterator it;
+    move::rotate(tempV,M_PI,0,0);
+    it = pointV.begin();
+    pointV.insert(it,tempV.begin(),tempV.end());
+   
+    tempV = shapes::hemisphere(center2,0.12,color,color);
+    it = pointV.begin();
+    pointV.insert(it,tempV.begin(),tempV.end());
+
     fileStoreV(filename,pointV);
 }
 

@@ -12,6 +12,7 @@ Object::Object()
     xrot = 0; yrot = 0; zrot = 0;
     xscale = 1; yscale = 1; zscale = 1;
     xtln = 0; ytln = 0; ztln = 0;
+    lxtln = 0; lytln = 0; lztln = 0;
     currentZ = 0.0;
     name = "default";
     trianglePoint = NULL;
@@ -272,22 +273,33 @@ void Object::createMat()
 {
     glm::vec3 tmat;
     glm::mat4 transMatrix2;
+    transMatrix = glm::mat4(1.0f);
+    transMatrix2 = glm::mat4(1.0f);
     tmat = {xtln,ytln,ztln };
-    transMatrix = glm::translate(glm::mat4(1.0f),tmat);
+    glm::vec3 ltmat = {lxtln,lytln,lztln };
     transMatrix = glm::translate(transMatrix, centroid);
     transMatrix = glm::rotate(transMatrix, xrot, glm::vec3(1.0f,0.0f,0.0f));
     transMatrix = glm::rotate(transMatrix, yrot, glm::vec3(0.0f,1.0f,0.0f));
     transMatrix = glm::rotate(transMatrix, zrot, glm::vec3(0.0f,0.0f,1.0f));
+    transMatrix = glm::translate(transMatrix,-(centroid));
 
-    transMatrix = glm::translate(transMatrix,-centroid);
-    //printMat(transMatrix2);
+    tmat = tmat+ glm::mat3(transMatrix)*ltmat;
+    xtln = tmat[0]; 
+    ytln = tmat[1]; 
+    ztln = tmat[2]; 
+    transMatrix2 = glm::translate(transMatrix2,tmat);
+    transMatrix = transMatrix2*transMatrix;
+
+
     tmat = {xscale,yscale,zscale };
     transMatrix = glm::scale(transMatrix,tmat);
-    transMatrix = outsideTransform*transMatrix; 
+
+    transMatrix = outsideTransform*transMatrix;
     for(auto& child:childArray)
     {
         child->applyOutsideTransform(transMatrix);
     }
+
     normalMat = glm::transpose (glm::inverse(glm::mat4(transMatrix)));
 
 }
@@ -434,6 +446,18 @@ void Object::translate( float delx, float dely, float delz)
     ztln = ztln+delz;
     createMat();
 }
+
+void Object::ltranslate( float delx, float dely, float delz)
+{
+    lxtln = lxtln+delx;
+    lytln = lytln+dely;
+    lztln = lztln+delz;
+    createMat();
+    lxtln = 0;
+    lytln = 0;
+    lztln = 0;
+}
+
 
 void Object::resize(float sx,float sy,float sz)
 {

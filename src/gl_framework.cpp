@@ -67,11 +67,28 @@ namespace myglf
         else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
             robo->bendBack();
         else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
-            currentObject->changeState(Scene::NDCS);
+            robo->rotateHand(M_PI/36,0);
         else if (key == GLFW_KEY_4 && action == GLFW_PRESS)
-            currentObject->changeState(Scene::DCS);
+            robo->rotateHand(0,M_PI/36);
+
+        else if (key == GLFW_KEY_5 && action == GLFW_PRESS)
+            robo->rotateHand(-M_PI/36,0);
+        else if (key == GLFW_KEY_6 && action == GLFW_PRESS)
+            robo->rotateHand(0,-M_PI/36);
+
+        else if (key == GLFW_KEY_7 && action == GLFW_PRESS)
+            robo->rotateArm({-M_PI/36,0,0},{-M_PI/36,0,0});
+        else if (key == GLFW_KEY_8 && action == GLFW_PRESS)
+            robo->rotateArm({M_PI/36,0,0},{M_PI/36,0,0});
+
+        else if (key == GLFW_KEY_9 && action == GLFW_PRESS)
+            robo->rotateArm({0,-M_PI/36,0},{0,-M_PI/36,0});
         else if (key == GLFW_KEY_0 && action == GLFW_PRESS)
-            currentObject->changeState(Scene::WCS);
+            robo->rotateArm({0,M_PI/36,0},{0,M_PI/36,0});
+        else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+            robo->walk();
+
+
         else if (mode == MODE_MODELLING && action ==GLFW_PRESS)
             std::cout << "Current Mode: MODELLING\n";
         else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)

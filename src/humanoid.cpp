@@ -3,6 +3,9 @@
 extern Object * currentObject;
 Humanoid::Humanoid()
 {
+    lHAngle = 0;
+    rHAngle = 0;
+    walkFlag = 0;
     currentObject = &torsal;
     body.readfile("humanoid_body.raw");
     leftArm.readfile("humanoid_arm.raw");
@@ -72,19 +75,18 @@ void Humanoid::createHierarchy()
     leftLeg.addChild(&leftFoot,linkLeftLegLeftFoot,linkLeftFootLeftLeg);
     rightLeg.addChild(&rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
     neck.addChild(&head,linkNeckHead,linkHeadNeck);
-    leftHand.rotate(M_PI/3,0.0,0.0);
- //   body.updateCentroid({0.0,0.0,0.8});
+    //   body.updateCentroid({0.0,0.0,0.8});
     torsal.resize(0.5,0.5,0.5);
 }
 
 void Humanoid::rotateHand(double left, double right)
 {
-    if (lHAngle+left < 5/6*M_PI && lHAngle+left >0)
+    if ((lHAngle+left) <= M_PI*2/3.0 && lHAngle+left > 0 )
     {
         lHAngle +=left;
         leftHand.rotate(left,0,0);
     }
-    if (rHAngle+right < 5/6*M_PI && rHAngle+right >0)
+    if (rHAngle+right < M_PI*2/3.0 && rHAngle+right > 0 )
     {
         rHAngle +=right;
         rightHand.rotate(right,0,0);
@@ -93,15 +95,17 @@ void Humanoid::rotateHand(double left, double right)
 
 void Humanoid::rotateArm(glm::vec3 left, glm::vec3 right)
 {
-    leftArm.rotate(left[0],0,0); 
+    leftArm.rotate(left[0],0,0);
     rightArm.rotate(right[0],0,0);
-    if (lAAngle + left[1] > 0 && lAAngle +left[1] < 5/6*M_PI)
+    if (lAAngle - left[1] < 0 && lAAngle -left[1] > - 0.3*M_PI)
     {
-        leftArm.rotate(left[1],0.0,0.0);
+        lAAngle -= left[1];
+        leftArm.rotate(0.0,-left[1],0.0);
     }
-    if (rAAngle + right[1] > 0 && rAAngle +right[1] < 5/6*M_PI)
+    if (rAAngle + right[1] > 0 && rAAngle +right[1]  < 0.3*M_PI)
     {
-        rightArm.rotate(right[1],0.0,0.0);
+        rAAngle += right[1];
+        rightArm.rotate(0.0,right[1],0.0);
     }
 
 }
@@ -111,7 +115,7 @@ void Humanoid::bendFront()
     {
         bendAngle +=M_PI/36; 
         body.rotate(M_PI/36,0,0);
-//        torsal.rotate(-M_PI/36,0,0);
+        //        torsal.rotate(-M_PI/36,0,0);
     }
 }
 
@@ -121,13 +125,29 @@ void Humanoid::bendBack()
     {
         bendAngle -=M_PI/36; 
         body.rotate(-M_PI/36,0,0);
- //       body.rotate(-M_PI/36,0,0);
+        //       body.rotate(-M_PI/36,0,0);
     }
 
 }
 
 void Humanoid::walk()
 {
+    torsal.ltranslate(0,-0.05,0);
+    switch(walkFlag)
+    {
+        case 1:
+            walkFlag = 0;
+            leftThigh.rotate(M_PI/15,0,0);
+            rightLeg.rotate(M_PI/10,0,0);
+            rightThigh.rotate(-M_PI/15,0,0);
+            break;
+        case 0:
+            walkFlag = 1;
+            rightThigh.rotate(M_PI/15,0,0);
+            rightLeg.rotate(-M_PI/10,0,0);
+            leftThigh.rotate(-M_PI/15,0,0);
+            break;
+    }
 }
 
 void Humanoid::draw()

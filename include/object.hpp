@@ -25,6 +25,7 @@ class Object
     int rotationFlag;
     std::string name;
     float xrot,yrot,zrot,xtln,ytln,ztln;
+    float lxtln,lytln,lztln;
     float xscale,yscale,zscale; 
     float currentZ,currentX,currentY;
     glm::vec4 currentPosition;
@@ -67,6 +68,7 @@ class Object
             glm::vec4 &cColor, glm::vec4 &cNormal);
     void rotate(float  delx, float dely, float delz);
     void translate(float  delx, float dely, float delz);
+    void ltranslate(float  delx, float dely, float delz);
     void resize(float sx,float sy,float sz);
     virtual void createMat();
     void reset();
