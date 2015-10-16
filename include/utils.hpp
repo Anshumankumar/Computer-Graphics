@@ -11,60 +11,63 @@
 
 struct Point
 {
-    double x;
-    double y;
-    double z;
-    double cx; 
-    double cy; 
-    double cz;
-    double nx; 
-    double ny; 
-    double nz; 
+    float x;
+    float y;
+    float z;
+    float cx; 
+    float cy; 
+    float cz;
+    float nx; 
+    float ny; 
+    float nz; 
+    float tx;
+    float ty;
 };
 using PointV = std::vector<Point>;
 
 
 void filestore(std::ofstream &fs, Point point );
 void filestore(std::ofstream &fs, Point* point );
-void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy, double cz,  double nx = 0, double ny =0 ,double nz =0);
-void filestore(std::ofstream &fs,glm::vec4 v,double cx,double cy,double cz);
+void filestore(std::ofstream & fs,float x,float y,float z,float cx,float cy, 
+        float cz,  float nx = 0, float ny =0 ,float nz =0,float tx = 0,ty = 0);
+void filestore(std::ofstream &fs,glm::vec4 v,float cx,float cy,float cz);
 
 namespace shapes
 {
-    PointV circle(glm::vec3 center, double a, glm::vec3 color);
-    PointV sphere(glm::vec3 center, double a, glm::vec3 color);
-    PointV ellipsoid(glm::vec3 center, double a, double b, double c,
+    PointV circle(glm::vec3 center, float a, glm::vec3 color);
+    PointV sphere(glm::vec3 center, float a, glm::vec3 color);
+    PointV ellipsoid(glm::vec3 center, float a, float b, float c,
             glm::vec3 color);
-    PointV partEllipsoid(glm::vec3 center, double a, double b,
-            double c, glm::vec3 color,double factor);
-    Point getPointEllipse(double a,double b,double c,double theta,
-            double phi,glm::vec3 color);
-    PointV ellipse(glm::vec3 center, double a,double b,
+    PointV partEllipsoid(glm::vec3 center, float a, float b,
+            float c, glm::vec3 color,float factor);
+    Point getPointEllipse(float a,float b,float c,float theta,
+            float phi,glm::vec3 color);
+    PointV ellipse(glm::vec3 center, float a,float b,
             glm::vec3 color);
-    PointV hemisphere(glm::vec3 center, double a, glm::vec3 color,
+    PointV hemisphere(glm::vec3 center, float a, glm::vec3 color,
             glm::vec3 colorbase);
 
-    PointV cuboid (glm::vec3 center,double l, double b, double h,
+    PointV cuboid (glm::vec3 center,float l, float b, float h,
             glm::vec3 color);
     PointV cylinder();
     PointV cone();
     PointV frustum(glm::vec3 b1Center, glm::vec3 b2Center,
-            double radius1, double radius2, glm::vec3 color1,
+            float radius1, float radius2, glm::vec3 color1,
             glm::vec3 color2,glm::vec3 color);
 
-    PointV rectangle(glm::vec3 center, double l, double b,
+    PointV rectangle(glm::vec3 center, float l, float b,
             glm::vec3 color);
-    Point getPointRect(glm::vec3  center, double l, double b,
+    Point getPointRect(glm::vec3  center, float l, float b,
             glm::vec3 color);
 
 }
 
 namespace move
 {
-    void rotate(PointV &pointArray, double angX, double angY,
-            double angZ, glm::vec3 rPoint = {0,0,0});
-    Point rotate(Point point, double angX, double angY, double angZ,
+    void rotate(PointV &pointArray, float angX, float angY,
+            float angZ, glm::vec3 rPoint = {0,0,0});
+    Point rotate(Point point, float angX, float angY, float angZ,
             glm::vec3 rPoint ={0,0,0});
-    Point translate(Point point, double x,double y,double z);
+    Point translate(Point point, float x,float y,float z);
 }
 #endif

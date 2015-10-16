@@ -3,13 +3,13 @@
 void filestore(std::ofstream &fs, Point point )
 {
     filestore(fs,point.x,point.y,point.z,point.cx,point.cy,point.cz,
-            point.nx,point.ny,point.nz);
+            point.nx,point.ny,point.nz,point.tx,point.ty);
 }
-void filestore(std::ofstream &fs,glm::vec4 v,double cx,double cy,double cz)
+void filestore(std::ofstream &fs,glm::vec4 v,float cx,float cy,float cz)
 {
     filestore(fs,v[0],v[1],v[2],cx,cy,cz);
 }
-void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy, double cz, double nx  ,double ny, double nz)
+void filestore(std::ofstream & fs,float x,float y,float z,float cx,float cy, float cz, float nx  ,float ny, float nz)
 {
     fs << (float)x;
     fs <<",";
@@ -28,21 +28,25 @@ void filestore(std::ofstream & fs,double x,double y,double z,double cx,double cy
     fs << (float)ny;
     fs <<",";
     fs << (float)nz;
+    fs <<",";
+    fs <<tx;
+    fs <<",";
+    fs <<ty;
     fs <<std::endl;
 }
 namespace shapes
 {
-    PointV circle(glm::vec3 center, double a, glm::vec3 color)
+    PointV circle(glm::vec3 center, float a, glm::vec3 color)
     {
         return ellipse(center,a,a,color);
     }
-    PointV ellipse(glm::vec3 center, double a,double b,
+    PointV ellipse(glm::vec3 center, float a,float b,
             glm::vec3 color)
     {
         int noOfPoints = a*360;
         PointV  pointArray;
         pointArray.resize(noOfPoints*3);
-        double theta,theta2;
+        float theta,theta2;
         Point point;
         point.cx = color[0];
         point.cy = color[1];
@@ -69,8 +73,8 @@ namespace shapes
         return pointArray;   
     }
 
-    Point getPointEllipse(glm::vec3 center, double a,double b,double c,double theta,
-            double phi,glm::vec3 color)
+    Point getPointEllipse(glm::vec3 center, float a,float b,float c,float theta,
+            float phi,glm::vec3 color)
     {
         Point point;
         point.cx =  color[0];
@@ -84,15 +88,15 @@ namespace shapes
         point.nz = cos(phi);
         return point;   
     }
-    PointV partEllipsoid(glm::vec3 center, double a, double b,
-            double c, glm::vec3 color,double factor)
+    PointV partEllipsoid(glm::vec3 center, float a, float b,
+            float c, glm::vec3 color,float factor)
     {
         int noOfPoints1 = a*180;
         int noOfPoints2 = a*90;
         PointV  pointArray;
         pointArray.resize(noOfPoints1*noOfPoints2*6);
-        double theta1,theta2;
-        double phi1,phi2;
+        float theta1,theta2;
+        float phi1,phi2;
         int k = 0;
         for (int i = 0;i < noOfPoints1; i++)
         {
@@ -113,18 +117,18 @@ namespace shapes
         return pointArray;   
     }
 
-    PointV sphere(glm::vec3 center, double a, glm::vec3 color)
+    PointV sphere(glm::vec3 center, float a, glm::vec3 color)
     {
         return ellipsoid(center,a,a,a,color);
     }
 
-    PointV ellipsoid(glm::vec3 center, double a, double b, double c,
+    PointV ellipsoid(glm::vec3 center, float a, float b, float c,
             glm::vec3 color)
     {
         return partEllipsoid(center,a,b,c,color,1);
     }
     
-    PointV hemisphere(glm::vec3 center, double a, glm::vec3 color,
+    PointV hemisphere(glm::vec3 center, float a, glm::vec3 color,
             glm::vec3 colorbase)
     {
         PointV pointArray;
@@ -136,7 +140,7 @@ namespace shapes
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         return pointArray;
     }
-    PointV cuboid (glm::vec3 center,double l, double b, double h,
+    PointV cuboid (glm::vec3 center,float l, float b, float h,
             glm::vec3 color)
     {
         PointV pointArray;
@@ -178,7 +182,7 @@ namespace shapes
 
     }
 
-    Point getPointRect(glm::vec3  center, double l, double b,
+    Point getPointRect(glm::vec3  center, float l, float b,
            glm::vec3 color )
     {
         Point point;
@@ -195,7 +199,7 @@ namespace shapes
 
     }
 
-    PointV rectangle(glm::vec3 center, double l, double b,
+    PointV rectangle(glm::vec3 center, float l, float b,
             glm::vec3 color)
     {
         PointV pointArray;
@@ -208,8 +212,8 @@ namespace shapes
         return pointArray;
     }
     
-    PointV frustum(glm::vec3 b1Center, glm::vec3 b2Center, double radius1,
-            double radius2, glm::vec3 color1, glm::vec3 color2, 
+    PointV frustum(glm::vec3 b1Center, glm::vec3 b2Center, float radius1,
+            float radius2, glm::vec3 color1, glm::vec3 color2, 
             glm::vec3 colorS)
     { 
         PointV pointArray;
@@ -223,9 +227,9 @@ namespace shapes
         int noOfPoints = radius1*360;
         int k = pointArray.size();
         pointArray.resize(pointArray.size()+noOfPoints*6);
-        double theta,theta2;
+        float theta,theta2;
         Point point;
-        double angle = atan2(radius1-radius2,b1Center[2]-b2Center[2]);
+        float angle = atan2(radius1-radius2,b1Center[2]-b2Center[2]);
         point.nz = sin(angle);
         point.cx = colorS[0];
         point.cy = colorS[1];
@@ -272,15 +276,15 @@ namespace shapes
 namespace move
 {
 
-    void rotate(PointV &pointArray, double angX, double angY,
-            double angZ, glm::vec3 rPoint)
+    void rotate(PointV &pointArray, float angX, float angY,
+            float angZ, glm::vec3 rPoint)
     {
         for (auto& point:pointArray)
         {
             point = rotate(point,angX,angY,angZ,rPoint);
         }
     }
-    Point rotate(Point point, double angX, double angY, double angZ,
+    Point rotate(Point point, float angX, float angY, float angZ,
             glm::vec3 rPoint)
     {
         glm::vec3 vec,vecN;
@@ -311,7 +315,7 @@ namespace move
         return point;
     }
 
-    Point translate(Point point, double x, double y, double z)
+    Point translate(Point point, float x, float y, float z)
     {
         point.x = point.x + x;
         point.y = point.y + y;
