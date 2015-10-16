@@ -14,7 +14,7 @@
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-
+#include <SOIL/SOIL.h>
 #define MAX_SIZE_X 1.0f
 #define MAX_SIZE_Y 1.0f
 #define MAX_SIZE_Z 1.0f
@@ -33,7 +33,7 @@ class Object
     PointV  pointArray;
     glm::vec3 centroid;
     int triangleArraySize;
-    GLuint vbo, vao;
+    GLuint vbo, vao,tex;
     GLuint uModelViewMatrix;
     GLuint normalMatrix;
     GLuint viewMatrix;
@@ -45,6 +45,7 @@ class Object
     glm::mat4 outsideTransform;
     public:
     Object();
+    void loadImage();
     void givename(std::string);
     void updateXY(GLFWwindow *window, double X, double Y);
     void push();

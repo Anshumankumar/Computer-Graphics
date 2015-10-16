@@ -4,10 +4,12 @@
 in vec4 vPosition;
 in vec4 vColor;
 in vec3 vNormal;
+in vec2 vTex;
 
 out vec3 normal;
 out vec4 eye;
 out vec4 color;
+out vec2 texCord;
 
 uniform mat4 uModelViewMatrix;
 uniform mat4 normalMatrix;
@@ -18,4 +20,5 @@ void main (void)
   normal = mat3(normalMatrix) * normalize(vNormal);
   eye = - (uModelViewMatrix * gl_Position);
   color = vColor;
+  texCord = vTex;
 }   

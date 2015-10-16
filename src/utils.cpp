@@ -10,7 +10,7 @@ void filestore(std::ofstream &fs, PointV pointv)
 void filestore(std::ofstream &fs, Point point )
 {
     filestore(fs,point.x,point.y,point.z,point.cx,point.cy,point.cz,
-            point.nx,point.ny,point.nz);
+            point.nx,point.ny,point.nz,point.tx,point.ty);
 }
 void filestore(std::ofstream & fs,float x,float y,float z,float cx,
         float cy, float cz, float nx  ,float ny, float nz,
@@ -65,6 +65,7 @@ void fileread(std::ifstream & fs, PointV &pointv)
 {
     while(fs.good())
     {
+
         std::string  cline;
         fs >> cline;
         if (cline =="") continue;
@@ -95,6 +96,7 @@ namespace shapes
         point.nx = 0;
         point.ny = 0;
         point.nz = 1;
+        
         point.z = center.z;
         int k = 0;
         for (int i = 0;i < noOfPoints; i++)
@@ -103,12 +105,18 @@ namespace shapes
             theta2 = (i+1)*2*M_PI/noOfPoints;
             point.x = center[0] + a*cos(theta);
             point.y = center[1] + b*sin(theta);
+            point.tx = 0.5 +0.5*cos(theta);
+            point.ty = 0.5 +0.5*sin(theta);
             pointArray[k++]= point;
             point.x = center[0] + a*cos(theta2);
             point.y = center[1] + b*sin(theta2);
+            point.tx = 0.5 + 0.5*cos(theta2);
+            point.ty = 0.5 + 0.5*sin(theta2);
             pointArray[k++]= point;
             point.x = center[0];
             point.y = center[1];
+            point.tx = 0.5;
+            point.ty = 0.5;
             pointArray[k++]= point;
         }   
         return pointArray;   
@@ -127,6 +135,9 @@ namespace shapes
         point.nx = cos(theta)*sin(phi);
         point.ny = sin(theta)*sin(phi);
         point.nz = cos(phi);
+        point.tx = 0.75 +  0.5*theta/M_PI;
+        if (point.tx > 1) point.tx -= 1;
+        point.ty = 1-phi/M_PI;
         return point;   
     }
     PointV partEllipsoid(glm::vec3 center, float a, float b,
@@ -188,43 +199,48 @@ namespace shapes
         PointV tempArray;
         PointV::iterator it;
         glm::vec3 centerR = {center[0],center[1],center[2]+h/2};
-        pointArray = rectangle(centerR,l,b,color);
+        pointArray = rectangle(centerR,l,b,color,0.125,0.5);
+        move::rotate(pointArray,0,0,M_PI,centerR);
 
         centerR = {center[0],center[1],center[2]-h/2};
-        tempArray = rectangle(centerR,l,b,color);
+        tempArray = rectangle(centerR,l,b,color,0.625,0.5);
         move::rotate(tempArray,-M_PI,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0],center[1]+b/2,center[2]};
-        tempArray = rectangle(centerR,l,h,color);
+        tempArray = rectangle(centerR,l,h,color,0.375,1.0/6);
+        move::rotate(tempArray,0,0,M_PI/2,centerR);
         move::rotate(tempArray,-M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0],center[1]-b/2,center[2]};
-        tempArray = rectangle(centerR,l,h,color);
+        tempArray = rectangle(centerR,l,h,color,0.375,5.0/6);
+        move::rotate(tempArray,0,0,-M_PI/2,centerR);
         move::rotate(tempArray,M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0]+l/2,center[1],center[2]};
-        tempArray = rectangle(centerR,h,b,color);
+        tempArray = rectangle(centerR,h,b,color,0.875,0.5);
+        move::rotate(tempArray,0,0,M_PI,centerR);
         move::rotate(tempArray,0,M_PI/2,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0]-l/2,center[1],center[2]};
-        tempArray = rectangle(centerR,h,b,color);
+        tempArray = rectangle(centerR,h,b,color,0.375,0.5);
+        move::rotate(tempArray,0,0,M_PI,centerR);
         move::rotate(tempArray,0,-M_PI/2,0,centerR);
-        it = pointArray.begin();
+        it = pointArray.end();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
         return pointArray;
 
     }
 
     Point getPointRect(glm::vec3  center, float l, float b,
-            glm::vec3 color )
+            glm::vec3 color, float tx, float ty )
     {
         Point point;
         point.x = center[0]+l;
@@ -236,23 +252,48 @@ namespace shapes
         point.nx = 0;
         point.ny = 0;
         point.nz = 1;
+        point.tx = tx;
+        point.ty = ty;
         return point;
 
     }
 
     PointV rectangle(glm::vec3 center, float l, float b,
-            glm::vec3 color)
+            glm::vec3 color, float tx,float ty)
     {
         PointV pointArray;
-        pointArray.push_back(getPointRect(center,l/2,b/2,color));
-        pointArray.push_back(getPointRect(center,l/2,-b/2,color));
-        pointArray.push_back(getPointRect(center,-l/2,b/2,color));
-        pointArray.push_back(getPointRect(center,l/2,-b/2,color));
-        pointArray.push_back(getPointRect(center,-l/2,b/2,color));
-        pointArray.push_back(getPointRect(center,-l/2,-b/2,color));
+        pointArray.push_back(getPointRect(center,l/2,b/2,color,tx+0.125,
+                    ty+1.0/6));
+        pointArray.push_back(getPointRect(center,l/2,-b/2,color,tx+0.125,
+                    ty-1.0/6));
+        pointArray.push_back(getPointRect(center,-l/2,b/2,color,tx-0.125,
+                    ty+1.0/6));
+        pointArray.push_back(getPointRect(center,l/2,-b/2,color,tx+0.125,
+                    ty-1.0/6));
+        pointArray.push_back(getPointRect(center,-l/2,b/2,color,tx-0.125,
+                    ty+1.0/6));
+        pointArray.push_back(getPointRect(center,-l/2,-b/2,color,tx-0.125,
+                    ty-1.0/6));
         return pointArray;
     }
 
+    Point getPointFrustum(float theta, glm::vec3 center, float radius,
+            glm::vec3 color, float  angle, float ty)
+    {
+        Point point;
+        point.x = center[0] + radius*cos(theta);
+        point.y = center[1] + radius*sin(theta);
+        point.z = center[2];
+        point.nx = cos(angle)*cos(theta);
+        point.ny = cos(angle)*sin(theta);
+        point.nz = sin(angle);
+        point.cx = color[0];
+        point.cy = color[1];
+        point.cz = color[2];
+        point.tx = 0.5*theta/M_PI;
+        point.ty = ty;
+        return point; 
+    }
     PointV frustum(glm::vec3 b1Center, glm::vec3 b2Center, float radius1,
             float radius2, glm::vec3 color1, glm::vec3 color2, 
             glm::vec3 colorS)
@@ -272,44 +313,29 @@ namespace shapes
         Point point;
         float angle = atan2(radius1-radius2,b1Center[2]-b2Center[2]);
         point.nz = sin(angle);
-        point.cx = colorS[0];
-        point.cy = colorS[1];
-        point.cz = colorS[2];
         for (int i = 0;i < noOfPoints; i++)
         {
             theta = i*2*M_PI/noOfPoints;
             theta2 = (i+1)*2*M_PI/noOfPoints;
-
+            
             point.x = b1Center[0] + radius1*cos(theta);
             point.y = b1Center[1] + radius1*sin(theta);
             point.nx = cos(angle)*cos(theta);
             point.ny = cos(angle)*sin(theta);
             point.z = b1Center[2];
-            pointArray[k++]= point;
-            point.x = b2Center[0] + radius2*cos(theta);
-            point.y = b2Center[1] + radius2*sin(theta);
-            point.z = b2Center[2];
-            pointArray[k++]= point;
-            point.x = b2Center[0] + radius2*cos(theta2);
-            point.y = b2Center[1] + radius2*sin(theta2);
-            point.nx = cos(angle)*cos(theta2);
-            point.ny = cos(angle)*sin(theta2);
+            pointArray[k++] = getPointFrustum(theta,b1Center,radius1,
+                    colorS,angle,1);
+            pointArray[k++] = getPointFrustum(theta,b2Center,radius2,
+                    colorS,angle,0);
+            pointArray[k++] = getPointFrustum(theta2,b2Center,radius2,
+                    colorS,angle,0);
+            pointArray[k++] = getPointFrustum(theta2,b2Center,radius2,
+                    colorS,angle,0);
+            pointArray[k++] = getPointFrustum(theta,b1Center,radius1,
+                    colorS,angle,1);
+            pointArray[k++] = getPointFrustum(theta2,b1Center,radius1,
+                    colorS,angle,1);
 
-            pointArray[k++]= point;
-            pointArray[k++]= point;
-            point.x = b1Center[0] + radius1*cos(theta);
-            point.y = b1Center[1] + radius1*sin(theta);
-            point.z = b1Center[2];
-            point.nx = cos(angle)*cos(theta);
-            point.ny = cos(angle)*sin(theta);
-
-            pointArray[k++]= point;
-            point.x = b1Center[0] + radius1*cos(theta2);
-            point.y = b1Center[1] + radius1*sin(theta2);
-            point.nx = cos(angle)*cos(theta2);
-            point.ny = cos(angle)*sin(theta2);
-
-            pointArray[k++]= point;
         }
         return pointArray;   
     }

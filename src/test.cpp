@@ -12,7 +12,7 @@ int main()
     std::string filename = "../models/test.raw";
     std::ofstream fs(filename);
     std::cout << "YO\n";
-    vecP = shapes::cuboid(vecb1,0.5,0.5,0.5,vec2);
+    vecP = shapes::cuboid(vecb1,1.0,1.0,1.0,vec2);
     std::cout << "YO2\n";
     for (auto point:vecP)
     {

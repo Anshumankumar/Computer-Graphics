@@ -2,7 +2,7 @@
 #define DRAWLINES 0
 extern GLuint shaderProgram;
 
-GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 2.0;
+GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 0.0;
 GLfloat c_up_x = 0.0, c_up_y = 1.0, c_up_z = 0.0;
 GLfloat c_xrot=0.0,c_yrot=0.0,c_zrot=0.0;
 
@@ -34,9 +34,17 @@ Object::Object()
     projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 5.0);
 
     viewMat = projection_matrix*lookat_matrix;
-
 }
 
+void Object::loadImage()
+{
+    int width, height;
+    unsigned char* image =
+        SOIL_load_image("../texture.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+            GL_UNSIGNED_BYTE, image);
+    SOIL_free_image_data(image);
+}
 void Object::updateCentroid(glm::vec3 rPoint)
 {
     centroid[0] =   rPoint[0];
@@ -125,8 +133,14 @@ void Object::initVboVao()
     glGenBuffers (1, &vbo);
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
     glBufferData (GL_ARRAY_BUFFER, 
-            20000000,
-            NULL, GL_STATIC_DRAW);
+            20000000,NULL, GL_STATIC_DRAW);
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    loadImage();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 }
 void Object::setVboVao()
@@ -150,19 +164,18 @@ void Object::setVboVao()
 
     GLuint vNormal = glGetAttribLocation( shaderProgram, "vNormal" );
     glEnableVertexAttribArray( vNormal );
-    glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE,
-        sizeof(Point),BUFFER_OFFSET(8*sizeof(float)));
+    glVertexAttribPointer( vNormal, 3, GL_FLOAT, GL_FALSE,
+            sizeof(Point),BUFFER_OFFSET(8*sizeof(float)));
 
     GLuint vTex = glGetAttribLocation( shaderProgram, "vTex" );
     glEnableVertexAttribArray( vTex );
-    glVertexAttribPointer( vTex, 4, GL_FLOAT, GL_FALSE,
-        sizeof(Point),BUFFER_OFFSET(11*sizeof(float)));
+    glVertexAttribPointer( vTex, 2, GL_FLOAT, GL_FALSE,
+            sizeof(Point),BUFFER_OFFSET(11*sizeof(float)));
 
 
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(transMatrix));
     glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(viewMat));
     glUniformMatrix4fv(normalMatrix, 1, GL_FALSE, glm::value_ptr(normalMat));
-
 }
 
 void Object::drawPointLines()
@@ -174,7 +187,6 @@ void Object::drawPointLines()
 void Object::draw()
 {
     setVboVao();
-    //std::cout <<name <<": "  << pointArray.size() << std::endl;
 #if DRAWLINES == 0
     glDrawArrays(GL_TRIANGLES,0,pointArray.size());
 #else
@@ -278,10 +290,6 @@ void Object::readfile(std::string tempname)
         return;
     }
     fileread(fs,pointArray);
-    for (int i =0 ; i < pointArray.size();i++)
-    {
-        std::cout << pointArray[i].z <<"\n";
-    }
     fs.close();
     createTriangles();
     createMat();

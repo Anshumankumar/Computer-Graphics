@@ -59,9 +59,9 @@ namespace shapes
             glm::vec3 color2,glm::vec3 color);
 
     PointV rectangle(glm::vec3 center, float l, float b,
-            glm::vec3 color);
+            glm::vec3 color,float tx, float ty);
     Point getPointRect(glm::vec3  center, float l, float b,
-            glm::vec3 color);
+            glm::vec3 color, float tx, float ty);
 
 }
 
