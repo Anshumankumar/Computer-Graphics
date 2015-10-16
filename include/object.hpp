@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <vector>
+#include "utils.hpp"
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
 #include "glm/mat4x4.hpp"
@@ -29,14 +30,9 @@ class Object
     float xscale,yscale,zscale; 
     float currentZ,currentX,currentY;
     glm::vec4 currentPosition;
-    glm::vec4 *trianglePoint;
-    glm::vec4 *triangleColor;
-    glm::vec4 *triangleNormal;
+    PointV  pointArray;
     glm::vec3 centroid;
     int triangleArraySize;
-    std::deque<glm::vec4> pointStack;
-    std::deque<glm::vec4> colorStack;
-    std::deque<glm::vec4> normalStack;
     GLuint vbo, vao;
     GLuint uModelViewMatrix;
     GLuint normalMatrix;
@@ -55,17 +51,13 @@ class Object
     void pop();
     void zIncrease();
     void zDecrease();
-    glm::vec4 getPoint();
-    glm::vec4 getColor();
+    Point getPoint();
     void createTriangles();
-    void createConTriangles();
     void initVboVao();
     void setVboVao();
     virtual void draw();
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");
-    void parseline(std::string temp,glm::vec4 &cPoint,
-            glm::vec4 &cColor, glm::vec4 &cNormal);
     void rotate(float  delx, float dely, float delz);
     void translate(float  delx, float dely, float delz);
     void ltranslate(float  delx, float dely, float delz);

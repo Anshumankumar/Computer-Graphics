@@ -70,12 +70,12 @@ int main(int argc, char** argv)
     object1.readfile("test.raw");
     robo1.createHierarchy();
     robo = &robo1;
-//    currentObject = &object1;
+  //  currentObject = &object1;
     while(!glfwWindowShouldClose(window))
     {
         renderGL();
         robo1.draw();
-     //   currentObject->draw();
+//        currentObject->draw();
         glfwPollEvents();
         glfwSwapBuffers(window);
         

@@ -1,38 +1,79 @@
 #include "utils.hpp"
 
+void filestore(std::ofstream &fs, PointV pointv)
+{
+    for (auto&  point:pointv)
+    {
+        filestore(fs,point);
+    }
+}
 void filestore(std::ofstream &fs, Point point )
 {
     filestore(fs,point.x,point.y,point.z,point.cx,point.cy,point.cz,
-            point.nx,point.ny,point.nz,point.tx,point.ty);
+            point.nx,point.ny,point.nz);
 }
-void filestore(std::ofstream &fs,glm::vec4 v,float cx,float cy,float cz)
+void filestore(std::ofstream & fs,float x,float y,float z,float cx,
+        float cy, float cz, float nx  ,float ny, float nz,
+        float tx, float ty, float w,float ca)
 {
-    filestore(fs,v[0],v[1],v[2],cx,cy,cz);
-}
-void filestore(std::ofstream & fs,float x,float y,float z,float cx,float cy, float cz, float nx  ,float ny, float nz)
-{
-    fs << (float)x;
+    fs << x;
     fs <<",";
-    fs << (float)y;
+    fs << y;
     fs <<",";
-    fs << (float)z;
+    fs << z;
     fs <<",";
-    fs << (float)cx;
+    fs << w;
     fs <<",";
-    fs << (float)cy;
+    fs << cx;
     fs <<",";
-    fs << (float)cz;
+    fs << cy;
     fs <<",";
-    fs << (float)nx;
+    fs << cz;
     fs <<",";
-    fs << (float)ny;
+    fs <<ca;
     fs <<",";
-    fs << (float)nz;
+    fs << nx;
+    fs <<",";
+    fs << ny;
+    fs <<",";
+    fs << nz;
     fs <<",";
     fs <<tx;
     fs <<",";
     fs <<ty;
     fs <<std::endl;
+}
+
+void lineread(std::string cline, Point &point)
+{
+    Point tempPoint;
+    float * pPointer;
+    pPointer = (float*)&tempPoint;
+    std::string delimiter = ","; 
+    std::string token;
+    int len = sizeof(Point)/sizeof(float);
+    for (int i =0;i<len;i++)
+    {
+        auto pos = cline.find(delimiter);
+        token = cline.substr(0, pos);
+        pPointer[i] = std::stof(token);
+        cline.erase(0, pos + delimiter.length());
+    }
+    point = tempPoint;
+}
+void fileread(std::ifstream & fs, PointV &pointv)
+{
+    while(fs.good())
+    {
+        std::string  cline;
+        fs >> cline;
+        if (cline =="") continue;
+        Point point;
+        lineread(cline,point);
+        pointv.push_back(point);
+
+    }
+
 }
 namespace shapes
 {
@@ -127,7 +168,7 @@ namespace shapes
     {
         return partEllipsoid(center,a,b,c,color,1);
     }
-    
+
     PointV hemisphere(glm::vec3 center, float a, glm::vec3 color,
             glm::vec3 colorbase)
     {
@@ -148,25 +189,25 @@ namespace shapes
         PointV::iterator it;
         glm::vec3 centerR = {center[0],center[1],center[2]+h/2};
         pointArray = rectangle(centerR,l,b,color);
-        
+
         centerR = {center[0],center[1],center[2]-h/2};
         tempArray = rectangle(centerR,l,b,color);
         move::rotate(tempArray,-M_PI,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
-       
+
         centerR = {center[0],center[1]+b/2,center[2]};
         tempArray = rectangle(centerR,l,h,color);
         move::rotate(tempArray,-M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
-        
+
         centerR = {center[0],center[1]-b/2,center[2]};
         tempArray = rectangle(centerR,l,h,color);
         move::rotate(tempArray,M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
-        
+
         centerR = {center[0]+l/2,center[1],center[2]};
         tempArray = rectangle(centerR,h,b,color);
         move::rotate(tempArray,0,M_PI/2,0,centerR);
@@ -183,7 +224,7 @@ namespace shapes
     }
 
     Point getPointRect(glm::vec3  center, float l, float b,
-           glm::vec3 color )
+            glm::vec3 color )
     {
         Point point;
         point.x = center[0]+l;
@@ -211,7 +252,7 @@ namespace shapes
         pointArray.push_back(getPointRect(center,-l/2,-b/2,color));
         return pointArray;
     }
-    
+
     PointV frustum(glm::vec3 b1Center, glm::vec3 b2Center, float radius1,
             float radius2, glm::vec3 color1, glm::vec3 color2, 
             glm::vec3 colorS)
@@ -296,12 +337,12 @@ namespace move
         vecN[1] = point.ny;
         vecN[2] = point.nz;
 
-        vec  = glm::rotateX(vec,(float)angX);
-        vec  = glm::rotateY(vec,(float)angY);
-        vec  = glm::rotateZ(vec,(float)angZ);
-        vecN  = glm::rotateX(vecN,(float)angX);
-        vecN  = glm::rotateY(vecN,(float)angY);
-        vecN  = glm::rotateZ(vecN,(float)angZ);
+        vec  = glm::rotateX(vec,angX);
+        vec  = glm::rotateY(vec,angY);
+        vec  = glm::rotateZ(vec,angZ);
+        vecN  = glm::rotateX(vecN,angX);
+        vecN  = glm::rotateY(vecN,angY);
+        vecN  = glm::rotateZ(vecN,angZ);
 
 
         point.x = vec[0];

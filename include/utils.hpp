@@ -1,5 +1,5 @@
 #ifndef UTILS_HPP
-#define UTILS_CPP
+#define UTILS_HPP
 
 #include <fstream>
 #include <iostream>
@@ -14,9 +14,11 @@ struct Point
     float x;
     float y;
     float z;
+    float w;
     float cx; 
     float cy; 
     float cz;
+    float ca;
     float nx; 
     float ny; 
     float nz; 
@@ -25,12 +27,13 @@ struct Point
 };
 using PointV = std::vector<Point>;
 
-
+void fileread(std::ifstream & fs, Point &point);
+void fileread(std::ifstream & fs, PointV &pointv);
 void filestore(std::ofstream &fs, Point point );
-void filestore(std::ofstream &fs, Point* point );
-void filestore(std::ofstream & fs,float x,float y,float z,float cx,float cy, 
-        float cz,  float nx = 0, float ny =0 ,float nz =0,float tx = 0,ty = 0);
-void filestore(std::ofstream &fs,glm::vec4 v,float cx,float cy,float cz);
+void filestore(std::ofstream &fs, PointV pointv );
+void filestore(std::ofstream & fs,float x,float y,float z,float cx,
+        float cy, float cz,  float nx = 0, float ny =0 ,float nz =0,
+        float tx = 0,float ty = 0, float w =1.0, float ca = 1.0);
 
 namespace shapes
 {

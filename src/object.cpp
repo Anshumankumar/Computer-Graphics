@@ -8,15 +8,12 @@ GLfloat c_xrot=0.0,c_yrot=0.0,c_zrot=0.0;
 
 Object::Object()
 {
-    triangleArraySize = 0;
     xrot = 0; yrot = 0; zrot = 0;
     xscale = 1; yscale = 1; zscale = 1;
     xtln = 0; ytln = 0; ztln = 0;
     lxtln = 0; lytln = 0; lztln = 0;
     currentZ = 0.0;
     name = "default";
-    trianglePoint = NULL;
-    triangleColor = NULL;
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
     initVboVao();
@@ -78,25 +75,20 @@ void Object::zDecrease()
     if (currentZ <=-MAX_SIZE_Z) currentZ = -MAX_SIZE_Z;
 }
 
-glm::vec4 Object::getPoint()
+Point Object::getPoint()
 {
-    glm::vec4 temp;
-    temp[0] = currentX;
-    temp[1] = currentY;
-    temp[2] = currentZ;
-    temp[3] = 1;
-    return temp;
+    Point point;
+    point.x = currentX;
+    point.y = currentY;
+    point.z = currentZ;
+    point.w = 1;
+    point.cx = rand()%1000/1000.0;   
+    point.cy = rand()%1000/1000.0;   
+    point.cz = rand()%1000/1000.0;   
+    point.ca = 1;   
+    return point;
 }
 
-glm::vec4 Object::getColor()
-{
-    glm::vec4 temp;
-    temp[0] = rand()%1000/1000.0;   
-    temp[1] = rand()%1000/1000.0;   
-    temp[2] = rand()%1000/1000.0;   
-    temp[3] = 1;
-    return temp;  
-}
 
 void Object::updateXY(GLFWwindow * window,double X,double Y)
 {
@@ -109,90 +101,21 @@ void Object::updateXY(GLFWwindow * window,double X,double Y)
 
 void Object::push()
 {
-    std::cout<<"XYZ " << getPoint()[0] <<" " << getPoint()[1] << 
-        " " << getPoint()[2]<<"\n";
-    pointStack.push_back(getPoint());
-    colorStack.push_back(getColor());
-    normalStack.push_back({0,0,0,0});
+    pointArray.push_back(getPoint());
     createTriangles();
 }
 
 void Object::pop()
 {
-    if (pointStack.size() >0)
+    if (pointArray.size() >0)
     {
-        pointStack.pop_back();
-        colorStack.pop_back();
-        normalStack.pop_back();
+        pointArray.pop_back();
     }
     createTriangles();
 }
 
 void Object::createTriangles()
 {
-    int stackSize;
-    stackSize = pointStack.size();
-    triangleArraySize = 0;
-    if (stackSize >=3)
-    {
-        if (trianglePoint != NULL)
-        {
-            delete trianglePoint;
-            delete triangleColor;
-            delete triangleNormal;
-        }
-        triangleArraySize = 3*(stackSize/3);
-        trianglePoint = new glm::vec4[triangleArraySize];
-        triangleColor = new glm::vec4[triangleArraySize];
-        triangleNormal = new glm::vec4[triangleArraySize];
-    }
-    else
-    {
-        return;
-    } 
-    int triangleIt = 0;
-    glm::vec4 tempVec ={0,0,0,0};
-    for (int i=0; i < triangleArraySize;i++)
-    {   
-        triangleColor[triangleIt] = colorStack[i];
-        triangleNormal[triangleIt] = normalStack[i];
-        trianglePoint[triangleIt++] = pointStack[i];
-        tempVec = tempVec + pointStack[i];
-    }
-    if (rotationFlag == 1)
-    {
-        centroid[0] = tempVec[0]/(float)triangleArraySize;
-        centroid[1] = tempVec[1]/(float)triangleArraySize;
-        centroid[2] = tempVec[2]/(float)triangleArraySize;
-    }
-}
-
-void Object::createConTriangles()
-{
-    int stackSize;
-    stackSize = pointStack.size();
-    triangleArraySize = 0;
-    if (stackSize >=3)
-    {
-        triangleArraySize = 3*(stackSize-2);
-        trianglePoint = new glm::vec4[triangleArraySize];
-        triangleColor = new glm::vec4[triangleArraySize];
-        triangleNormal = new glm::vec4[triangleArraySize];
-    }
-    else
-    {
-        return;
-    } 
-    int triangleIt = 0;
-    for (int i=0; i < stackSize-2;i++)
-    {   
-        triangleColor[triangleIt] = colorStack[i];
-        trianglePoint[triangleIt++] = pointStack[i];
-        triangleColor[triangleIt] = colorStack[i+1];
-        trianglePoint[triangleIt++] = pointStack[i+1];
-        triangleColor[triangleIt] = colorStack[i+2];
-        trianglePoint[triangleIt++] = pointStack[i+2];
-    }
 }
 
 void Object::initVboVao()
@@ -203,34 +126,38 @@ void Object::initVboVao()
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
     glBufferData (GL_ARRAY_BUFFER, 
             20000000,
-            NULL, GL_DYNAMIC_DRAW);
+            NULL, GL_STATIC_DRAW);
 
 }
 void Object::setVboVao()
 {
-    auto tempSize = sizeof(trianglePoint[0])*triangleArraySize;
-    glBufferSubData( GL_ARRAY_BUFFER, 0, tempSize, trianglePoint );
-    glBufferSubData( GL_ARRAY_BUFFER, tempSize, tempSize, triangleColor);
-    glBufferSubData( GL_ARRAY_BUFFER, 2*tempSize, tempSize, triangleNormal);
+    auto tempSize = sizeof(Point)*pointArray.size();
+    glBufferData( GL_ARRAY_BUFFER, tempSize, (void*)&pointArray[0],GL_STATIC_DRAW );
     uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
     normalMatrix = glGetUniformLocation( shaderProgram, "normalMatrix");
     viewMatrix = glGetUniformLocation( shaderProgram, "viewMatrix");
     glUseProgram( shaderProgram );
     GLuint vPosition = glGetAttribLocation( shaderProgram, "vPosition" );
     glEnableVertexAttribArray( vPosition );
-    glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0,
-            BUFFER_OFFSET(0) );
+    glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE,
+            sizeof(Point), BUFFER_OFFSET(0));
 
     GLuint vColor = glGetAttribLocation( shaderProgram, "vColor" );
     glEnableVertexAttribArray( vColor );
-    glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE, 0, 
-            BUFFER_OFFSET(tempSize));
+    glVertexAttribPointer( vColor, 4, GL_FLOAT, GL_FALSE,
+            sizeof(Point), BUFFER_OFFSET(4*sizeof(float)));
 
 
     GLuint vNormal = glGetAttribLocation( shaderProgram, "vNormal" );
     glEnableVertexAttribArray( vNormal );
-    glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, 
-            BUFFER_OFFSET(2*tempSize));
+    glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE,
+        sizeof(Point),BUFFER_OFFSET(8*sizeof(float)));
+
+    GLuint vTex = glGetAttribLocation( shaderProgram, "vTex" );
+    glEnableVertexAttribArray( vTex );
+    glVertexAttribPointer( vTex, 4, GL_FLOAT, GL_FALSE,
+        sizeof(Point),BUFFER_OFFSET(11*sizeof(float)));
+
 
     glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(transMatrix));
     glUniformMatrix4fv(viewMatrix, 1, GL_FALSE, glm::value_ptr(viewMat));
@@ -241,17 +168,17 @@ void Object::setVboVao()
 void Object::drawPointLines()
 {
     setVboVao();
-    glDrawArrays(GL_LINES,0,triangleArraySize-1);
-    glDrawArrays(GL_POINTS,triangleArraySize-1,triangleArraySize);
+    glDrawArrays(GL_LINES,0,pointArray.size()-1);
+    glDrawArrays(GL_POINTS,pointArray.size()-1,pointArray.size());
 }
 void Object::draw()
 {
     setVboVao();
-    //std::cout <<name <<": "  << triangleArraySize << std::endl;
+    //std::cout <<name <<": "  << pointArray.size() << std::endl;
 #if DRAWLINES == 0
-    glDrawArrays(GL_TRIANGLES,0,triangleArraySize);
+    glDrawArrays(GL_TRIANGLES,0,pointArray.size());
 #else
-    glDrawArrays(GL_LINES,0,triangleArraySize);
+    glDrawArrays(GL_LINES,0,pointArray.size());
 #endif
     for (auto& child:childArray)
     {
@@ -308,19 +235,6 @@ void Object::reset()
 {
     xrot = 0; yrot = 0; zrot = 0;
     xtln = 0; ytln = 0; ztln = 0;
-    glm::vec4 tempVec ={0,0,0,0};
-    for (int i=0; i < triangleArraySize;i++)
-    {   
-        tempVec = tempVec + pointStack[i];
-    }
-    tempVec[0] = tempVec[0]/(float)triangleArraySize;
-    tempVec[1] = tempVec[1]/(float)triangleArraySize;
-    tempVec[2] = tempVec[2]/(float)triangleArraySize;
-    for (int i=0; i < triangleArraySize;i++)
-    {   
-        pointStack[i]=pointStack[i]-tempVec;
-        pointStack[i][3] = 1;
-    }
     createTriangles();
     createMat();
 }
@@ -341,28 +255,7 @@ void Object::savefile(std::string tempname)
         fs.close();
         return;
     }  
-    for (int i = 0; i <triangleArraySize;i++)
-    {
-        fs << trianglePoint[i][0];
-        fs <<","; 
-        fs << trianglePoint[i][1];
-        fs <<","; 
-        fs << trianglePoint[i][2];
-        fs <<",";
-        fs << triangleColor[i][0];
-        fs <<",";
-        fs << triangleColor[i][1];
-        fs <<",";
-        fs << triangleColor[i][2];
-        fs <<",";
-        fs << triangleNormal[i][0];
-        fs <<",";
-        fs << triangleNormal[i][1];
-        fs <<",";
-        fs << triangleNormal[i][2];
-
-        fs <<std::endl;
-    }
+    filestore(fs,pointArray);
     fs.close();
     std::cout << "File Saved:"<< filename <<"\n";
 }
@@ -383,53 +276,17 @@ void Object::readfile(std::string tempname)
         std::cout << "Unable to open raw file\n";
         fs.close();
         return;
-    }  
-    while(fs.good())
-    {
-        std::string cline;
-        fs >> cline;
-        glm::vec4 cPoint,cColor,cNormal;
-        if (cline =="") continue;
-        parseline(cline,cPoint,cColor,cNormal);
-        pointStack.push_back(cPoint);
-        colorStack.push_back(cColor);
-        normalStack.push_back(cNormal);
     }
+    fileread(fs,pointArray);
+    for (int i =0 ; i < pointArray.size();i++)
+    {
+        std::cout << pointArray[i].z <<"\n";
+    }
+    fs.close();
     createTriangles();
     createMat();
 }
 
-void Object::parseline(std::string line,glm::vec4 &cPoint,
-        glm::vec4 &cColor, glm::vec4 &cNormal)
-{
-    std::string delimiter = ",";
-    std::string token;
-    for (int i =0;i<3;i++)
-    {
-        auto pos = line.find(delimiter);
-        token = line.substr(0, pos);
-        cPoint[i] = std::stof(token);   
-        line.erase(0, pos + delimiter.length());
-    }
-    for (int i =0;i<3;i++)
-    {
-        auto pos = line.find(delimiter);
-        token = line.substr(0, pos);
-        cColor[i] = std::stof(token);   
-        line.erase(0, pos + delimiter.length());
-    }
-    for (int i =0;i<3;i++)
-    {
-        auto pos = line.find(delimiter);
-        token = line.substr(0, pos);
-        cNormal[i] = std::stof(token);   
-        line.erase(0, pos + delimiter.length());
-    }
-
-    cPoint[3]=1;
-    cColor[3]=1;
-    cNormal[3]=1;
-}
 
 void Object::rotate( float delx, float dely, float delz)
 {
