@@ -13,8 +13,8 @@ Humanoid* robo;
 
 void initBufferGL()
 {
-    std::string vertex_shader_file("../shaders/assign1_vshader.glsl");
-    std::string fragment_shader_file("../shaders/assign1_fshader.glsl");
+    std::string vertex_shader_file("../shaders/assign3_vshader.glsl");
+    std::string fragment_shader_file("../shaders/assign3_fshader.glsl");
 
     std::vector<GLuint> shaderList;
     shaderList.push_back(csX75::LoadShaderGL(GL_VERTEX_SHADER, vertex_shader_file));
