@@ -8,6 +8,7 @@
 
 int mode = MODE_INSPECTION; 
 extern Object* currentObject;
+extern Object* currentObject2;
 extern Humanoid *robo;
 namespace myglf
 {
@@ -105,13 +106,13 @@ namespace myglf
         else if (key == GLFW_KEY_PAGE_DOWN && action == GLFW_PRESS)
             currentObject->rotate(0,0,M_PI/24);
         else if (key == GLFW_KEY_W && action == GLFW_PRESS)
-            currentObject->translate(0, -0.05,0);
+            currentObject2->ltranslate(0, -0.1,0.0);
         else if (key == GLFW_KEY_S && action == GLFW_PRESS)
-            currentObject->translate(0,0.05,0);
+            currentObject2->ltranslate(0, 0.1,0.0);
         else if (key == GLFW_KEY_A && action == GLFW_PRESS)
-            currentObject->translate(-0.05,0.0,0);
+            currentObject2->rotate(0,0,M_PI/24);
         else if (key == GLFW_KEY_D && action == GLFW_PRESS)
-            currentObject->translate(0.05,0 ,0);
+            currentObject2->rotate(0,0,-M_PI/24);
         else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
             currentObject->translate(0,0,-0.05);
         else if (key == GLFW_KEY_X && action == GLFW_PRESS)

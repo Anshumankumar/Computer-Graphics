@@ -9,6 +9,7 @@
 class Robo
 {
    public:
+   Object * mainObj; 
    virtual void createHierarchy() =0;
    virtual void draw()= 0;
    virtual void bendBack()= 0;
@@ -43,7 +44,6 @@ class Humanoid:public Robo
     double bendAngle;
     int walkFlag;
     public:
-    Object * mainObj; 
     Humanoid();
     void createHierarchy();
     void draw();

@@ -82,7 +82,6 @@ void Humanoid::createHierarchy()
     rightLeg.addChild(&rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
     neck.addChild(&head,linkNeckHead,linkHeadNeck);
     torsal.updateCentroid({0.0,0.0,0.0});
-    torsal.resize(0.3,0.3,0.3);
     torsal.rotate(M_PI/2,0,0);
 }
 

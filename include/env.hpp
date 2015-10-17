@@ -5,6 +5,7 @@
 #include "humanoid.hpp"
 
 extern Robo *robo;
+extern Object *currentObject2;
 class Env:public Object
 {
     glm::vec3 cPos,cUp,cRot;
@@ -28,8 +29,8 @@ class Env:public Object
         Humanoid *robo2 =new Humanoid;
         robo1->createHierarchy();
         robo2->createHierarchy();
-        robo1->translate({0.0,0,1});
-        robo2->translate({-0.5,0,1});
+        robo1->translate({-1.5,-1.4,2});
+        robo2->translate({1.5,-1.4,2});
         roboArray.push_back(robo1);
         roboArray.push_back(robo2);
         glm::vec3 vec = {0,0,0};
@@ -41,6 +42,7 @@ class Env:public Object
     {
         currentRobo = (currentRobo +1 )%roboArray.size();
         robo = roboArray[currentRobo];
+        currentObject2 = roboArray[currentRobo]->mainObj;
     }
    
     void createViewMat()
@@ -53,15 +55,18 @@ class Env:public Object
         cRotationMat = glm::rotate(cRotationMat, glm::radians(cRot[2]), glm::vec3(0.0f,0.0f,1.0f));
         glm::vec4 c_pos = glm::vec4(cPos, 1.0)*cRotationMat;
         glm::vec4 c_up = glm::vec4(cUp, 1.0)*cRotationMat;
-        lookatMat = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
-        projectionMat = glm::frustum(-1.0, 1.0, -1.0, 1.0, 0.5, 5.0);
+        glm::vec4 c_view = {0,0,100.0,1};
+        c_view = cRotationMat*c_view;
+        lookatMat = glm::lookAt(glm::vec3(c_pos),glm::vec3(c_view),glm::vec3(c_up));
+        projectionMat = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 10.0);
         viewMat = projectionMat*lookatMat;
         updateViewMat(viewMat);
+        viewMat = glm::mat4(glm::mat3(viewMat));
     }
 
     void initCam()
     {
-        cPos = {0.0,0.0,1.0};
+        cPos = {0.0,0.0,0.0};
         cRot = {0,0,0};
         cUp = {0,1,0};
         createViewMat();
@@ -69,7 +74,6 @@ class Env:public Object
  
     void translate(float delx , float dely ,float delz)
     {
-        std::cout << "here Working\n";
         cPos[0] += 0.1 *delx;
         cPos[1] += 0.1 *dely;
         cPos[2] += delz;
@@ -77,10 +81,10 @@ class Env:public Object
     }
     void rotate(float delx, float dely, float delz)
     {
-        std::cout << "here Working2\n";
-        cRot[0] += 10*delx;
-        cRot[1] += 10*dely;
-        cRot[2] += 10*delz;
+        cRot[0] += 50*delx;
+        cRot[1] += 50*dely;
+        cRot[2] += 50*delz;
+        cPos = {0,0,0};
         createViewMat();
     }
     
