@@ -87,8 +87,9 @@ namespace myglf
             robo->rotateArm({0,M_PI/36,0},{0,M_PI/36,0});
         else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
             robo->walk();
-
-
+        
+        else if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
+            currentObject->swap();
         else if (mode == MODE_MODELLING && action ==GLFW_PRESS)
             std::cout << "Current Mode: MODELLING\n";
         else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)

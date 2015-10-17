@@ -2,12 +2,19 @@
 #define DRAWLINES 0
 extern GLuint shaderProgram;
 
-GLfloat c_xpos = 0.0, c_ypos = 0.0, c_zpos = 0.0;
-GLfloat c_up_x = 0.0, c_up_y = 1.0, c_up_z = 0.0;
-GLfloat c_xrot=0.0,c_yrot=0.0,c_zrot=0.0;
-
-Object::Object()
+Object::Object(std::string texImg)
 {
+    if (texImg == "NOTHING")
+    {
+        
+        texImage = "../texture.jpg";
+        texFlag = 0;
+    }
+    else
+    {
+        texImage = texImg;
+        texFlag = 1;
+    }
     xrot = 0; yrot = 0; zrot = 0;
     xscale = 1; yscale = 1; zscale = 1;
     xtln = 0; ytln = 0; ztln = 0;
@@ -17,32 +24,32 @@ Object::Object()
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
     initVboVao();
-
-    glm::mat4 rotation_matrix;
-    glm::mat4 projection_matrix;
-    glm::mat4 c_rotation_matrix;
-    glm::mat4 lookat_matrix;
-    c_rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(c_xrot), glm::vec3(1.0f,0.0f,0.0f));
-    c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_yrot), glm::vec3(0.0f,1.0f,0.0f));
-    c_rotation_matrix = glm::rotate(c_rotation_matrix, glm::radians(c_zrot), glm::vec3(0.0f,0.0f,1.0f));
-
-    glm::vec4 c_pos = glm::vec4(c_xpos,c_ypos,c_zpos, 1.0)*c_rotation_matrix;
-    glm::vec4 c_up = glm::vec4(c_up_x,c_up_y,c_up_z, 1.0)*c_rotation_matrix;
-    lookat_matrix = glm::lookAt(glm::vec3(c_pos),glm::vec3(0.0),glm::vec3(c_up));
-
-
-    projection_matrix = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 5.0);
-
-    viewMat = projection_matrix*lookat_matrix;
 }
 
-void Object::loadImage()
+void Object::updateViewMat(glm::mat4 mat)
 {
+    viewMat = mat;
+    for(auto& child:childArray)
+    {
+        child->updateViewMat(mat);
+    }
+    createMat();
+}
+void Object::changeTexImage(std::string tname)
+{
+    texImage = tname;
+    texFlag = 1; 
+    initVboVao();
+}
+void Object::loadImage()
+{ 
+    std::cout << texImage <<"\n"; 
     int width, height;
     unsigned char* image =
-        SOIL_load_image("../texture.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+        SOIL_load_image(texImage.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
             GL_UNSIGNED_BYTE, image);
+//    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, image);
     SOIL_free_image_data(image);
 }
 void Object::updateCentroid(glm::vec3 rPoint)
@@ -134,17 +141,28 @@ void Object::initVboVao()
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
     glBufferData (GL_ARRAY_BUFFER, 
             20000000,NULL, GL_STATIC_DRAW);
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
-    loadImage();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+    glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
+    if (texFlag ==1)
+    {
+        glGenTextures(1, &tex);
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,GL_MIRRORED_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,GL_MIRRORED_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glUniform1i(glGetUniformLocation(shaderProgram, "mytex"), 0);
+        glBindTexture(GL_TEXTURE_2D, tex);
+        glActiveTexture(GL_TEXTURE0);  
+        loadImage();
+    }
 }
+
 void Object::setVboVao()
 {
+
+    glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
+    glBindTexture(GL_TEXTURE_2D, tex);
     auto tempSize = sizeof(Point)*pointArray.size();
     glBufferData( GL_ARRAY_BUFFER, tempSize, (void*)&pointArray[0],GL_STATIC_DRAW );
     uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
@@ -238,7 +256,7 @@ void Object::createMat()
     {
         child->applyOutsideTransform(transMatrix);
     }
-
+    transMatrix = viewMat*transMatrix;
     normalMat = glm::transpose (glm::inverse(glm::mat4(transMatrix)));
 
 }

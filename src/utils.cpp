@@ -195,6 +195,7 @@ namespace shapes
     PointV cuboid (glm::vec3 center,float l, float b, float h,
             glm::vec3 color)
     {
+        std::cout << l << " " << b << " " << h << "\n";
         PointV pointArray;
         PointV tempArray;
         PointV::iterator it;

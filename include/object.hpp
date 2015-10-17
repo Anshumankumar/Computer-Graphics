@@ -43,9 +43,11 @@ class Object
     glm::mat4 normalMat;
     glm::mat4 viewMat;
     glm::mat4 outsideTransform;
+    std::string texImage;
     public:
-    Object();
+    Object(std::string texImg = "NOTHING");
     void loadImage();
+    void changeTexImage(std::string tname);
     void givename(std::string);
     void updateXY(GLFWwindow *window, double X, double Y);
     void push();
@@ -59,17 +61,21 @@ class Object
     virtual void draw();
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");
-    void rotate(float  delx, float dely, float delz);
-    void translate(float  delx, float dely, float delz);
+    virtual void rotate(float  delx, float dely, float delz);
+    virtual void translate(float  delx, float dely, float delz);
     void ltranslate(float  delx, float dely, float delz);
     void resize(float sx,float sy,float sz);
     virtual void createMat();
+    virtual void swap(){};
     void reset();
     void applyOutsideTransform(glm::mat4 t);
     void drawPointLines();
     virtual void changeState(int current){};
     void addChild(Object *child,glm::vec3 pP,glm::vec3 cP);
     void updateCentroid(glm::vec3 rPoint);
+    void updateViewMat(glm::mat4 mat);
+
+    int texFlag;
 
 };
 void printMat(glm::mat4);

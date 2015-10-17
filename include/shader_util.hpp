@@ -8,7 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-
+#include <GL/glew.h>
 
 namespace csX75
 {

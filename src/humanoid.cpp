@@ -1,7 +1,12 @@
 #include "humanoid.hpp"
 
 extern Object * currentObject;
-Humanoid::Humanoid()
+Humanoid::Humanoid():
+    body("../texture.jpg"),
+    leftHand("../texture.jpg"),
+    rightHand("../texture.jpg"),
+    leftLeg("../texture.jpg"),
+    rightLeg("../texture.jpg")
 {
     lHAngle = 0;
     rHAngle = 0;
@@ -23,6 +28,7 @@ Humanoid::Humanoid()
     rightLeg.readfile("humanoid_leg.raw");
     rightFoot.readfile("humanoid_foot.raw");
     leftFoot.readfile("humanoid_foot.raw");
+    mainObj = &torsal;
 }
 
 
@@ -75,8 +81,9 @@ void Humanoid::createHierarchy()
     leftLeg.addChild(&leftFoot,linkLeftLegLeftFoot,linkLeftFootLeftLeg);
     rightLeg.addChild(&rightFoot,linkRightLegRightFoot,linkRightFootRightLeg);
     neck.addChild(&head,linkNeckHead,linkHeadNeck);
-    //   body.updateCentroid({0.0,0.0,0.8});
-    torsal.resize(0.5,0.5,0.5);
+    torsal.updateCentroid({0.0,0.0,0.0});
+    torsal.resize(0.3,0.3,0.3);
+    torsal.rotate(M_PI/2,0,0);
 }
 
 void Humanoid::rotateHand(double left, double right)
@@ -149,7 +156,10 @@ void Humanoid::walk()
             break;
     }
 }
-
+void Humanoid::translate(glm::vec3 del)
+{
+    torsal.translate(del[0],del[1],del[2]);      
+}
 void Humanoid::draw()
 {
     torsal.draw();

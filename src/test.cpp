@@ -11,9 +11,8 @@ int main()
     glm::vec3  vecc = {0,1,0};
     std::string filename = "../models/test.raw";
     std::ofstream fs(filename);
-    std::cout << "YO\n";
-    vecP = shapes::cuboid(vecb1,1.0,1.0,1.0,vec2);
-    std::cout << "YO2\n";
+    vecP = shapes::cuboid(vecb1,2.0,2.0,2.0,vec2);
+    std::cout << "Test File \n";
     for (auto point:vecP)
     {
         filestore(fs,point);

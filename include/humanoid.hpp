@@ -6,7 +6,21 @@
 #include "object.hpp"
 #include "scene.hpp"
 
-class Humanoid
+class Robo
+{
+   public:
+   virtual void createHierarchy() =0;
+   virtual void draw()= 0;
+   virtual void bendBack()= 0;
+   virtual void bendFront() = 0;
+   virtual void walk()= 0;
+   virtual void rotateArm(glm::vec3 left,glm::vec3 right)= 0;
+   virtual  void rotateHand(double left,double right)= 0;
+   virtual  void translate(glm::vec3 del) =0;
+   
+};
+
+class Humanoid:public Robo
 {
     Object body;
     Object head;
@@ -28,7 +42,8 @@ class Humanoid
     double lHAngle ,rHAngle,lAAngle,rAAngle;
     double bendAngle;
     int walkFlag;
-    public: 
+    public:
+    Object * mainObj; 
     Humanoid();
     void createHierarchy();
     void draw();
@@ -37,6 +52,7 @@ class Humanoid
     void walk();
     void rotateArm(glm::vec3 left,glm::vec3 right);
     void rotateHand(double left,double right);
+    void translate(glm::vec3 del);
 };
 
 #endif

@@ -1,3 +1,6 @@
 *.png
 build
 .*.*
+models
+images
+Images

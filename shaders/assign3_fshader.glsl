@@ -5,8 +5,9 @@ in vec4 eye;
 in vec4 color;
 in vec2 texCord;
 uniform mat4 viewMatrix;
-uniform sampler2D tex;
+uniform sampler2D mytex;
 out vec4 frag_color;
+uniform int texFlag;
 
 void main () 
 {
@@ -16,7 +17,7 @@ void main ()
     float shininess = 50.0;
     vec4 spec = vec4(0.0);
 
-    vec4 lightPos = vec4(2, 2, 2, 0.0);
+    vec4 lightPos = vec4(4, 4, -4, 0.0);
     vec3 lightDir = vec3(viewMatrix * lightPos);  // Transforms with camera
     lightDir = normalize( vec3(lightDir));
 
@@ -30,11 +31,19 @@ void main ()
         float intSpec = max(dot(h,n), 0.0);
         spec = specular * pow(intSpec, shininess);
     }
-   vec4 tex_color = 2*texture(tex, texCord);
-    vec4 colorNew = max((intensity*diffuse   + spec)*tex_color, ambient);
+    vec4 colorNew;
+    if (texFlag == 1)
+    {
+        vec4 tex_color = 2*texture(mytex, texCord);
+        vec4 colorNew = max((intensity*diffuse   + spec)*tex_color, ambient);
+    }
+    else
+    { 
+        colorNew = max((intensity*diffuse   + spec)*color, ambient);
+    }
     frag_color = colorNew;
- // All
-//   frag_color =  tex_color*vec4(0.5,0.5,0.5,1);
-     frag_color = 2*texture(tex, texCord);// * frag_color;
-    
+    if (texFlag ==1)
+    { 
+        frag_color = 2*texture(mytex, texCord);
+    }    
 }

@@ -3,13 +3,12 @@
  *@author Anshuman Kumar
  */
 
-#include "humanoid.hpp"
-
+#include "env.hpp"
 GLuint shaderProgram;
 
 //Scene scene1(3);
 Object * currentObject;
-Humanoid* robo;
+Robo* robo;
 
 void initBufferGL()
 {
@@ -66,16 +65,18 @@ int main(int argc, char** argv)
     initBufferGL();
 
     Object object1;
-  //  Humanoid robo1;
+    Humanoid robo1;
+    robo1.createHierarchy();
     object1.readfile("test.raw");
-//    robo1.createHierarchy();
-//    robo = &robo1;
-    currentObject = &object1;
+      Env env(1);
+    //  currentObject = &object1;
+     currentObject = &env;
+    // robo = &robo1;
     while(!glfwWindowShouldClose(window))
     {
         renderGL();
-//        robo1.draw();
-        currentObject->draw();
+     //   robo1.draw();
+        env.draw();
         glfwPollEvents();
         glfwSwapBuffers(window);
         
