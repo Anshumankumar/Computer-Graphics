@@ -51,6 +51,15 @@ void filestore(std::ofstream & fs,float x,float y,float z,float cx,
     fs <<std::endl;
 }
 
+void fileStoreV(std::string filename, PointV pointV)
+{
+  std::ofstream fs(filename);
+  for (auto point:pointV) {
+    filestore(fs,point);
+  }
+  fs.close();
+}
+
 void lineread(std::string cline, Point &point)
 {
     Point tempPoint;

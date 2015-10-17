@@ -1,20 +1,11 @@
 #include <iostream>
-#include "utils.hpp"
 #include <fstream>
+#include "utils.hpp"
 
 using namespace std;
 using namespace glm;
 
 vec3 robo_color = {1,0.8431,0};
-
-void fileStoreV(string filename,PointV pointV)
-{
-  ofstream fs(filename);
-  for (auto point:pointV) {
-    filestore(fs,point);
-  }
-  fs.close();
-}
 
 void createArm()
 {

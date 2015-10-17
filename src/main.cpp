@@ -4,12 +4,13 @@
  */
 
 #include "humanoid.hpp"
+#include "r2d2.hpp"
 
 GLuint shaderProgram;
 
 //Scene scene1(3);
 Object * currentObject;
-Humanoid* robo;
+R2D2* robo;
 
 void initBufferGL()
 {
@@ -59,7 +60,7 @@ int main(int argc, char** argv)
     initBufferGL();
 
     Object object1;
-    Humanoid robo1;
+    R2D2 robo1;
     object1.readfile("test.raw");
     robo1.createHierarchy();
     robo = &robo1;

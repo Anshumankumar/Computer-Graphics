@@ -36,6 +36,8 @@ void filestore(std::ofstream & fs,float x,float y,float z,float cx,
         float cy, float cz,  float nx = 0, float ny =0 ,float nz =0,
         float tx = 0,float ty = 0, float w =1.0, float ca = 1.0);
 
+void fileStoreV(std::string filename, PointV pointV);
+
 namespace shapes
 {
     PointV circle(glm::vec3 center, float a, glm::vec3 color);
