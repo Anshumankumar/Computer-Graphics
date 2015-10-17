@@ -1,15 +1,10 @@
 OPENGLLIB= -lGL
 GLEWLIB= -lGLEW
-<<<<<<< HEAD
-GLFWLIB = -lglfw
+GLFWLIB = `pkg-config glfw3 --libs --static`
 SOILLIB = -lSOIL
 LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(SOILLIB)
-=======
-GLFWLIB = `pkg-config glfw3 --libs --static`
-# GLFWLIB = -lglfw
-LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB)
->>>>>>> b275313de3036f6c05dd13fbe822bc5c0be5f06c
-LDFLAGS=-L/usr/local/lib 
+LIBS_DIR = ./libs
+LDFLAGS=-L/usr/local/lib -L$(LIBS_DIR)
 IN_DIR= include/
 SRC_DIR = src/
 CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11 -g
@@ -33,7 +28,7 @@ $(BIN1): $(SRCS) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCS) -o $(BIN1) $(LDFLAGS) $(LIBS)
 
 modelCreator: src/modelCreator.cpp src/utils.cpp
-	g++ $(CPPFLAGS) $(LIBS) src/modelCreator.cpp src/utils.cpp -o build/modelCreator
+	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) src/modelCreator.cpp src/utils.cpp -o build/modelCreator
 
 clean:
 	rm -f build/*

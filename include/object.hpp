@@ -14,7 +14,7 @@
 #include "glm/mat4x4.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include <SOIL/SOIL.h>
+#include "SOIL.h"
 #define MAX_SIZE_X 1.0f
 #define MAX_SIZE_Y 1.0f
 #define MAX_SIZE_Z 1.0f
