@@ -2,11 +2,22 @@
 
 extern Object * currentObject;
 Humanoid::Humanoid():
-    body("../texture.jpg"),
-    leftHand("../texture.jpg"),
-    rightHand("../texture.jpg"),
-    leftLeg("../texture.jpg"),
-    rightLeg("../texture.jpg")
+    body("../texture2.jpg"),
+    leftHand("../texture2.jpg"),
+    rightHand("../texture2.jpg"),
+    leftLeg("../texture2.jpg"),
+    rightLeg("../texture2.jpg"),
+    neck("../texture.jpg"),
+    head("../texture3.jpg"),
+    torsal("../texture.jpg"),
+    leftThigh("../texture.jpg"),
+    rightThigh("../texture.jpg"),
+    leftArm("../texture.jpg"),
+    rightArm("../texture.jpg"),
+    rightFist("../texture3.jpg"),
+    leftFist("../texture3.jpg"),
+    leftFoot("../texture3.jpg"),
+    rightFoot("../texture3.jpg")
 {
     lHAngle = 0;
     rHAngle = 0;
@@ -143,15 +154,15 @@ void Humanoid::walk()
     {
         case 1:
             walkFlag = 0;
-            leftThigh.rotate(M_PI/15,0,0);
-            rightLeg.rotate(M_PI/10,0,0);
-            rightThigh.rotate(-M_PI/15,0,0);
+            leftThigh.rotate(M_PI/30,0,0);
+            rightLeg.rotate(M_PI/20,0,0);
+            rightThigh.rotate(-M_PI/30,0,0);
             break;
         case 0:
             walkFlag = 1;
-            rightThigh.rotate(M_PI/15,0,0);
-            rightLeg.rotate(-M_PI/10,0,0);
-            leftThigh.rotate(-M_PI/15,0,0);
+            rightThigh.rotate(M_PI/30,0,0);
+            rightLeg.rotate(-M_PI/20,0,0);
+            leftThigh.rotate(-M_PI/30,0,0);
             break;
     }
 }

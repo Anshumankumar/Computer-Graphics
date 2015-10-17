@@ -138,7 +138,7 @@ void createFoot()
     PointV pointV;
     glm::vec3 center = {0,0,0};
     glm::vec3 color = {0.62,0.70,0.62};
-    pointV = shapes::cuboid(center,0.25,0.25,0.20,color);
+    pointV = shapes::cuboid(center,0.15,0.40,0.05,color);
     fileStoreV(filename,pointV); 
 }
 

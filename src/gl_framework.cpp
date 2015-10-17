@@ -10,6 +10,7 @@ int mode = MODE_INSPECTION;
 extern Object* currentObject;
 extern Object* currentObject2;
 extern Humanoid *robo;
+extern int l1,l2,l3;
 namespace myglf
 {
     void initGL(void)
@@ -49,17 +50,17 @@ namespace myglf
         {
             currentObject->zIncrease();
         }
-        else if (key == GLFW_KEY_B && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_J && action == GLFW_PRESS)
         {
-            currentObject->zDecrease();
+            l2 = abs(l2-1);
         }
         else if (key == GLFW_KEY_K && action == GLFW_PRESS)
         {
-            currentObject->savefile();
+            l1 =  abs(l1-1);
         }
         else if (key == GLFW_KEY_L && action == GLFW_PRESS)
         {
-            currentObject->readfile();
+            l3 =  abs(l3-1);
         }
         else if (key == GLFW_KEY_R && action == GLFW_PRESS)
         {}

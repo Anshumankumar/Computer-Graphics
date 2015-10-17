@@ -1,7 +1,9 @@
 #include "object.hpp"
 #define DRAWLINES 0
 extern GLuint shaderProgram;
-
+int l1 =1;
+int l2 =1;
+int l3 =1;
 Object::Object(std::string texImg)
 {
     if (texImg == "NOTHING")
@@ -38,7 +40,7 @@ void Object::updateViewMat(glm::mat4 mat)
 void Object::changeTexImage(std::string tname)
 {
     texImage = tname;
-    texFlag = 1; 
+    texFlag = 2; 
     initVboVao();
 }
 void Object::loadImage()
@@ -143,7 +145,7 @@ void Object::initVboVao()
             20000000,NULL, GL_STATIC_DRAW);
 
     glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
-    if (texFlag ==1)
+    if (texFlag >=1 )
     {
         glGenTextures(1, &tex);
         glBindTexture(GL_TEXTURE_2D, tex);
@@ -162,6 +164,9 @@ void Object::setVboVao()
 {
 
     glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
+    glUniform1i(glGetUniformLocation(shaderProgram, "l1Flag"),l1);
+    glUniform1i(glGetUniformLocation(shaderProgram, "l2Flag"),l2);
+    glUniform1i(glGetUniformLocation(shaderProgram, "l3Flag"),l3);
     glBindTexture(GL_TEXTURE_2D, tex);
     auto tempSize = sizeof(Point)*pointArray.size();
     glBufferData( GL_ARRAY_BUFFER, tempSize, (void*)&pointArray[0],GL_STATIC_DRAW );
