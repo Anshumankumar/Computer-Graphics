@@ -27,6 +27,7 @@ struct Point
 };
 using PointV = std::vector<Point>;
 
+void appendV(PointV &a, const PointV &b);
 void fileread(std::ifstream & fs, Point &point);
 void fileread(std::ifstream & fs, PointV &pointv);
 void filestore(std::ofstream &fs, Point point );

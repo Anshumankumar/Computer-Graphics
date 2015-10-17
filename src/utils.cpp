@@ -1,5 +1,10 @@
 #include "utils.hpp"
 
+void appendV(PointV &a, const PointV &b)
+{
+  a.insert(a.end(), b.begin(), b.end());
+}
+
 void filestore(std::ofstream &fs, PointV pointv)
 {
     for (auto&  point:pointv)
@@ -7,11 +12,13 @@ void filestore(std::ofstream &fs, PointV pointv)
         filestore(fs,point);
     }
 }
+
 void filestore(std::ofstream &fs, Point point )
 {
     filestore(fs,point.x,point.y,point.z,point.cx,point.cy,point.cz,
             point.nx,point.ny,point.nz);
 }
+
 void filestore(std::ofstream & fs,float x,float y,float z,float cx,
         float cy, float cz, float nx  ,float ny, float nz,
         float tx, float ty, float w,float ca)

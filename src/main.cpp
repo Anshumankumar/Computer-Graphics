@@ -25,23 +25,16 @@ void initBufferGL()
     
 }
 
-void renderGL()
-{
-     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // currentObject->draw();
-
-}
 int main(int argc, char** argv)
 {
-    std::cout << "Assignment1\n";
+    std::cout << "Assignment 3\n";
     if (!glfwInit())
     {
         std::cerr << "Unable to start GLFW\n";
         return 1;
     }
     GLFWwindow* window = glfwCreateWindow  (640, 640,
-            "OpenGL Assignment1", NULL , NULL);
+            "OpenGL Assignment 3", NULL , NULL);
     glfwSetErrorCallback(myglf::error_callback);
 
     if(! window)
@@ -70,12 +63,12 @@ int main(int argc, char** argv)
     object1.readfile("test.raw");
     robo1.createHierarchy();
     robo = &robo1;
-  //  currentObject = &object1;
+    // currentObject = &object1;
     while(!glfwWindowShouldClose(window))
     {
-        renderGL();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         robo1.draw();
-//        currentObject->draw();
+        // currentObject->draw();
         glfwPollEvents();
         glfwSwapBuffers(window);
         
