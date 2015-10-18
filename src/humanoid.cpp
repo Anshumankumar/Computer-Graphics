@@ -2,22 +2,22 @@
 
 extern Object * currentObject;
 Humanoid::Humanoid():
-    body("../texture2.jpg"),
-    leftHand("../texture2.jpg"),
-    rightHand("../texture2.jpg"),
-    leftLeg("../texture2.jpg"),
-    rightLeg("../texture2.jpg"),
-    neck("../texture.jpg"),
-    head("../texture3.jpg"),
-    torsal("../texture.jpg"),
-    leftThigh("../texture.jpg"),
-    rightThigh("../texture.jpg"),
-    leftArm("../texture.jpg"),
-    rightArm("../texture.jpg"),
-    rightFist("../texture3.jpg"),
-    leftFist("../texture3.jpg"),
-    leftFoot("../texture3.jpg"),
-    rightFoot("../texture3.jpg")
+    body("../textures/texture2.jpg"),
+    leftHand("../textures/texture2.jpg"),
+    rightHand("../textures/texture2.jpg"),
+    leftLeg("../textures/texture2.jpg"),
+    rightLeg("../textures/texture2.jpg"),
+    neck("../textures/texture.jpg"),
+    head("../textures/texture3.jpg"),
+    torsal("../textures/texture.jpg"),
+    leftThigh("../textures/texture.jpg"),
+    rightThigh("../textures/texture.jpg"),
+    leftArm("../textures/texture.jpg"),
+    rightArm("../textures/texture.jpg"),
+    rightFist("../textures/texture3.jpg"),
+    leftFist("../textures/texture3.jpg"),
+    leftFoot("../textures/texture3.jpg"),
+    rightFoot("../textures/texture3.jpg")
 {
     lHAngle = 0;
     rHAngle = 0;

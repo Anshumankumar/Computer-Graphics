@@ -27,6 +27,7 @@ struct Point
 };
 using PointV = std::vector<Point>;
 
+void appendV(PointV &a, const PointV &b);
 void fileread(std::ifstream & fs, Point &point);
 void fileread(std::ifstream & fs, PointV &pointv);
 void filestore(std::ofstream &fs, Point point );
@@ -34,6 +35,7 @@ void filestore(std::ofstream &fs, PointV pointv );
 void filestore(std::ofstream & fs,float x,float y,float z,float cx,
         float cy, float cz,  float nx = 0, float ny =0 ,float nz =0,
         float tx = 0,float ty = 0, float w =1.0, float ca = 1.0);
+void fileStoreV(std::string filename, PointV pointV);
 
 namespace shapes
 {

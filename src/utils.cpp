@@ -1,5 +1,10 @@
 #include "utils.hpp"
 
+void appendV(PointV &a, const PointV &b)
+{
+  a.insert(a.end(), b.begin(), b.end());
+}
+
 void filestore(std::ofstream &fs, PointV pointv)
 {
     for (auto&  point:pointv)
@@ -42,6 +47,15 @@ void filestore(std::ofstream & fs,float x,float y,float z,float cx,
     fs <<",";
     fs <<ty;
     fs <<std::endl;
+}
+
+void fileStoreV(std::string filename, PointV pointV)
+{
+  std::ofstream fs(filename);
+  for (auto point:pointV) {
+    filestore(fs,point);
+  }
+  fs.close();
 }
 
 void lineread(std::string cline, Point &point)

@@ -1,16 +1,7 @@
 #include <iostream>
-#include "utils.hpp"
 #include <fstream>
+#include "utils.hpp"
 
-void fileStoreV(std::string filename,PointV pointV)
-{
-    std::ofstream fs(filename);
-    for (auto point:pointV)
-    {
-        filestore(fs,point);
-    }
-    fs.close();
-}
 void createArm()
 {
     std::string filename = "../models/humanoid_arm.raw";
