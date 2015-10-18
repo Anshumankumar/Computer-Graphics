@@ -24,7 +24,6 @@ class Env:public Object
     }
     void addObject()
     {
-        std::cout << "HELL0\n";
         Humanoid *robo1 =new Humanoid;
         Humanoid *robo2 =new Humanoid;
         robo1->createHierarchy();
@@ -50,12 +49,12 @@ class Env:public Object
         glm::mat4 projectionMat;
         glm::mat4 cRotationMat;
         glm::mat4 lookatMat;
-        cRotationMat = glm::rotate(glm::mat4(1.0f), glm::radians(cRot[0]), glm::vec3(1.0f,0.0f,0.0f));
-        cRotationMat = glm::rotate(cRotationMat, glm::radians(cRot[1]), glm::vec3(0.0f,1.0f,0.0f));
+        cRotationMat = glm::rotate(glm::mat4(1.0f), glm::radians(cRot[1]), glm::vec3(0.0f,1.0f,0.0f));
+        cRotationMat = glm::rotate(cRotationMat, glm::radians(cRot[0]), glm::vec3(1.0f,0.0f,0.0f));
         cRotationMat = glm::rotate(cRotationMat, glm::radians(cRot[2]), glm::vec3(0.0f,0.0f,1.0f));
         glm::vec4 c_pos = glm::vec4(cPos, 1.0)*cRotationMat;
-        glm::vec4 c_up = glm::vec4(cUp, 1.0)*cRotationMat;
-        glm::vec4 c_view = {0,0,0.1,1};
+        glm::vec4 c_up = glm::vec4(cUp, 1.0);
+        glm::vec4 c_view = {0,0,10,1};
         c_view = cRotationMat*c_view;
         lookatMat = glm::lookAt(glm::vec3(c_pos),glm::vec3(c_view),glm::vec3(c_up));
         projectionMat = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 10.0);
