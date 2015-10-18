@@ -224,14 +224,14 @@ namespace shapes
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0],center[1]+b/2,center[2]};
-        tempArray = rectangle(centerR,l,h,color,0.375,1.0/6);
+        tempArray = rectangle(centerR,h,l,color,0.375,1.0/6);
         move::rotate(tempArray,0,0,M_PI/2,centerR);
         move::rotate(tempArray,-M_PI/2,0,0,centerR);
         it = pointArray.begin();
         pointArray.insert(it,tempArray.begin(),tempArray.end());
 
         centerR = {center[0],center[1]-b/2,center[2]};
-        tempArray = rectangle(centerR,l,h,color,0.375,5.0/6);
+        tempArray = rectangle(centerR,h,l,color,0.375,5.0/6);
         move::rotate(tempArray,0,0,-M_PI/2,centerR);
         move::rotate(tempArray,M_PI/2,0,0,centerR);
         it = pointArray.begin();
