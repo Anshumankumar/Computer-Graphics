@@ -55,7 +55,7 @@ class Env:public Object
         cRotationMat = glm::rotate(cRotationMat, glm::radians(cRot[2]), glm::vec3(0.0f,0.0f,1.0f));
         glm::vec4 c_pos = glm::vec4(cPos, 1.0)*cRotationMat;
         glm::vec4 c_up = glm::vec4(cUp, 1.0)*cRotationMat;
-        glm::vec4 c_view = {0,0,100.0,1};
+        glm::vec4 c_view = {0,0,0.1,1};
         c_view = cRotationMat*c_view;
         lookatMat = glm::lookAt(glm::vec3(c_pos),glm::vec3(c_view),glm::vec3(c_up));
         projectionMat = glm::frustum(-1.0, 1.0, -1.0, 1.0, 1.0, 10.0);
@@ -84,7 +84,7 @@ class Env:public Object
         cRot[0] += 50*delx;
         cRot[1] += 50*dely;
         cRot[2] += 50*delz;
-        cPos = {0,0,0};
+//        cPos = {0,0,0};
         createViewMat();
     }
     
@@ -93,7 +93,7 @@ class Env:public Object
         addObject();
         swap();
         env.readfile("../models/test.raw");
-        env.changeTexImage("../Images/texture.jpg");
+        env.changeTexImage("../textures/outside_texture.jpg");
         initCam();
     }
 
