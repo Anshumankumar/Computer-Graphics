@@ -24,10 +24,10 @@ void main ()
     vec4 spec2 = vec4(0.0);
 
     vec4 lightPos = vec4(-10, 5, 6, 1.0);
-    vec3 lightDir =  vec3(lightPos);
-    lightDir = normalize( vec3(lightDir));
+    vec3 lightDir =  vec3(viewMatrix*lightPos);
+    lightDir =  vec3(lightDir);
 
-    vec3 e = normalize(vec3(eye));
+    vec3 e = vec3(eye);
     vec3 h = normalize(lightDir + e );
     vec3 n = normalize(vec3(normal));
     float dotProduct = dot(n, h);
@@ -42,7 +42,7 @@ void main ()
 
 
     vec4 lightPos2 = vec4(-5, 5, -5, 1.0);
-    vec3 lightDir2 =  vec3(lightPos2);
+    vec3 lightDir2 =  vec3(viewMatrix*lightPos2);
     lightDir2 = normalize( vec3(lightDir2));
 
     vec3 e2 = normalize(vec3(eye));
