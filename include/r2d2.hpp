@@ -5,8 +5,9 @@
 #include "shader_util.hpp"
 #include "object.hpp"
 #include "scene.hpp"
+#include "robo.hpp"
 
-class R2D2
+class R2D2:public Robo
 {
   Object torso;
   Object head;
@@ -24,6 +25,7 @@ public:
   void walk();
   void rotateArm(glm::vec3 left,glm::vec3 right);
   void rotateHand(double left,double right);
+  void translate(glm::vec3 del);
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "object.hpp"
 #include "humanoid.hpp"
+#include "r2d2.hpp"
 
 extern Robo *robo;
 extern Object *currentObject2;
@@ -26,7 +27,7 @@ class Env:public Object
     {
         std::cout << "HELL0\n";
         Humanoid *robo1 =new Humanoid;
-        Humanoid *robo2 =new Humanoid;
+        R2D2 *robo2 =new R2D2;
         robo1->createHierarchy();
         robo2->createHierarchy();
         robo1->translate({-1.5,-1.4,2});
@@ -93,7 +94,7 @@ class Env:public Object
         addObject();
         swap();
         env.readfile("../models/test.raw");
-        env.changeTexImage("../Images/texture.jpg");
+        env.changeTexImage("../textures/texuture.jpg");
         initCam();
     }
 

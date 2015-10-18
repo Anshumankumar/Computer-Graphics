@@ -11,6 +11,8 @@ R2D2::R2D2()
   head.readfile("r2d2_head.raw");
   leftLeg.readfile("r2d2_leg.raw");
   rightLeg.readfile("r2d2_leg.raw");
+
+  mainObj = &torso;
 }
 
 void R2D2::createHierarchy()
@@ -25,6 +27,8 @@ void R2D2::createHierarchy()
   torso.addChild(&head, linkTorsoHead, linkHeadTorso);
   torso.addChild(&leftLeg, linkTorsoLeftLeg, linkLeftLegTorso);
   torso.addChild(&rightLeg, linkTorsoRightLeg, linkRightLegTorso);
+
+  torso.rotate(-M_PI/2,0,0);
 }
 
 void R2D2::rotateHand(double left, double right)
@@ -41,6 +45,11 @@ void R2D2::bendBack()
 
 void R2D2::walk()
 {}
+
+void R2D2::translate(glm::vec3 del)
+{
+    torso.translate(del[0],del[1],del[2]);
+}
 
 void R2D2::draw()
 {
