@@ -81,7 +81,7 @@ void main ()
     }
     else
     { 
-        colorNew = l1*color;
+        colorNew = l*color;
     }    
     frag_color = colorNew;
 }

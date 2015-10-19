@@ -92,7 +92,7 @@ class Env:public Object
     {
         addObject();
         swap();
-        env.readfile("../models/test.raw");
+        env.readfile("../models/cube.raw");
         env.changeTexImage("../textures/outside_texture.jpg");
         initCam();
     }

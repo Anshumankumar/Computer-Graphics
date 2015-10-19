@@ -220,5 +220,7 @@ int main()
 
     std::cout << "Model Creator\n";
     createHumanoid();
-    createRoboS();
+    PointV pointV = shapes::cuboid({0,0,0},8.0,8.0,8.0,{1,1,1});
+    std::string filename = "../models/cube.raw";
+    fileStoreV(filename,pointV);
 }
