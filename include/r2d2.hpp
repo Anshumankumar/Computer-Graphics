@@ -9,17 +9,20 @@
 
 class R2D2:public Robo
 {
+  Object axle;
   Object torso;
   Object head;
   Object leftLeg;
   Object rightLeg;
-  double headAngle, torsoAngle;
-  double bendAngle;
+  float headAngle, torsoAngle;
+  float bendAngle;
+  const float kdbendAngle;
   int walkFlag;
 public: 
   R2D2();
   void createHierarchy();
   void draw();
+  void bendTorso();
   void bendBack();
   void bendFront();
   void walk();

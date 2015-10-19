@@ -5,13 +5,20 @@ using namespace glm;
 
 vec3 r2d2_color = {.7, 0.7, 0.7}; // off white
 
+void createAxle() // root of hirerarchy
+{
+  string filename = "../models/r2d2_axle.raw";
+  PointV pointV = shapes::cuboid(vec3(.0,.0,.0), .01, .01, .01, r2d2_color);
+  fileStoreV(filename,pointV);
+}
+
 void createTorso()
 {
   string filename = "../models/r2d2_torso.raw";
   vec3 center1 = {0, 0,   0};
   vec3 center2 = {0, 0, .05};
   vec3 center3 = {0, 0, .540};
-  PointV pointV = shapes::frustum(center3, center2, .225, .225, r2d2_color, r2d2_color, r2d2_color); // main cyclindrical body
+  PointV pointV = shapes::frustum(center3, center2, .225, .225, r2d2_color, r2d2_color, r2d2_color); // cyclindrical body
   appendV(pointV, shapes::frustum(center2, center1, .225, .195, r2d2_color, r2d2_color, r2d2_color)); // lower frustrum
   fileStoreV(filename,pointV);
 }

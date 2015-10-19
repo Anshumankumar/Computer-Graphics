@@ -37,6 +37,7 @@ void Object::updateViewMat(glm::mat4 mat)
     }
     createMat();
 }
+
 void Object::changeTexImage(std::string tname)
 {
     texImage = tname;
@@ -45,14 +46,14 @@ void Object::changeTexImage(std::string tname)
 }
 void Object::loadImage()
 { 
-    std::cout << "Loading texture from: "<< texImage <<"\n"; 
-    int width, height;
-    unsigned char* image =
-        SOIL_load_image(texImage.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-            GL_UNSIGNED_BYTE, image);
-//    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, image);
-    SOIL_free_image_data(image);
+  // std::cout << "Loading texture from: "<< texImage <<"\n"; 
+  int width, height;
+  unsigned char* image = SOIL_load_image(texImage.c_str(),
+                                         &width, &height, 0, SOIL_LOAD_RGB);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+               GL_UNSIGNED_BYTE, image);
+  // glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, image);
+  SOIL_free_image_data(image);
 }
 void Object::updateCentroid(glm::vec3 rPoint)
 {
@@ -251,7 +252,6 @@ void Object::createMat()
     ztln = tmat[2]; 
     transMatrix2 = glm::translate(transMatrix2,tmat);
     transMatrix = transMatrix2*transMatrix;
-
 
     tmat = {xscale,yscale,zscale };
     transMatrix = glm::scale(transMatrix,tmat);
