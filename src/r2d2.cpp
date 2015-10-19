@@ -70,7 +70,7 @@ void R2D2::walk()
 
 void R2D2::translate(glm::vec3 del)
 {
-    torso.translate(del[0],del[1],del[2]);
+    axle.translate(del[0],del[1],del[2]);
 }
 
 void R2D2::draw()
