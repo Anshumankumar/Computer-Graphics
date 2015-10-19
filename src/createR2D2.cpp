@@ -43,6 +43,7 @@ void createLeg()
 void createR2D2Parts()
 {
   cout << " Creating parts for R2D2\n";
+  createAxle();
   createTorso();
   createHead();
   createLeg();
