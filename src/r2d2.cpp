@@ -8,8 +8,7 @@ torso("../textures/r2d2_torso.jpg"),
 {
   bendAngle = 0;
   walkFlag = 0;
-  currentObject = &axle;
-  
+  currentObject = &axle; 
   axle.readfile("r2d2_axle.raw");
   torso.readfile("r2d2_torso.raw");
   head.readfile("r2d2_head.raw");
@@ -21,8 +20,8 @@ torso("../textures/r2d2_torso.jpg"),
 
 void R2D2::createHierarchy()
 {
-  glm::vec3 link_axle_torso = {.0, .0, .0};
-  glm::vec3 link_torso_axle = {.0, .0, .370};
+  glm::vec3 link_axle_torso = {.0, .0, -0.370};
+  glm::vec3 link_torso_axle = {.0, .0, 0};
   glm::vec3 linkTorsoHead = {0,0,.54};
   glm::vec3 linkHeadTorso = {0,0,0};
   glm::vec3 linkTorsoLeftLeg= {.227, 0, .420};
@@ -35,7 +34,7 @@ void R2D2::createHierarchy()
   torso.addChild(&leftLeg, linkTorsoLeftLeg, linkLeftLegTorso);
   torso.addChild(&rightLeg, linkTorsoRightLeg, linkRightLegTorso);
 
-  axle.updateCentroid({.0, .0, .0});
+  axle.updateCentroid({0.0, 0.0, 0.0});
   axle.rotate(-M_PI/2,0,0);
 }
 
@@ -70,7 +69,7 @@ void R2D2::walk()
 
 void R2D2::translate(glm::vec3 del)
 {
-    torso.translate(del[0],del[1],del[2]);
+    axle.translate(del[0],del[1],del[2]);
 }
 
 void R2D2::draw()
