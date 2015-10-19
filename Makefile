@@ -9,7 +9,7 @@ IN_DIR= include/
 SRC_DIR = src/
 CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11 -g
 BIN1=build/assignment_O3
-SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp utils.cpp humanoid.cpp r2d2.cpp
+SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp utils.cpp humanoid.cpp r2d2.cpp env.cpp
 SRCS = $(SRCS1:%=$(SRC_DIR)%)
 INCLUDES1= gl_framework.hpp object.hpp shader_util.hpp utils.hpp humanoid.hpp env.hpp r2d2.hpp
 INCLUDES = $(INCLUDES1:%=$(IN_DIR)%)
