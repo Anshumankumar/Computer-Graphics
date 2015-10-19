@@ -38,9 +38,6 @@ void main ()
         spec = specular * pow(intSpec, shininess);
     }
 
-
-
-
     vec4 lightPos2 = vec4(-5, 5, -5, 1.0);
     vec3 lightDir2 =  vec3(viewMatrix*lightPos2);
     lightDir2 = normalize( vec3(lightDir2));
@@ -58,11 +55,6 @@ void main ()
 
     vec4 colorNew;
     colorNew = texture(mytex, texCord);
-
-
-
-
-
 
     vec4 l1 = max(intensity*diffuse +spec,ambient);
     vec4 l2 = max(intensity2*diffuse2 +spec2,ambient);

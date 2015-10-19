@@ -2,7 +2,7 @@
 
 extern Object * currentObject;
 Humanoid::Humanoid():
-    body("../textures/texture2.jpg"),
+    body("../textures/r2d2_torso.jpg"),
     leftHand("../textures/texture2.jpg"),
     rightHand("../textures/texture2.jpg"),
     leftLeg("../textures/texture2.jpg"),

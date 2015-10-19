@@ -33,7 +33,7 @@ class Object
     PointV  pointArray;
     glm::vec3 centroid;
     int triangleArraySize;
-    GLuint vbo, vao,tex;
+    GLuint vbo, vao, tex;
     GLuint uModelViewMatrix;
     GLuint normalMatrix;
     GLuint viewMatrix;

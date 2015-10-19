@@ -2,7 +2,8 @@
 
 extern Object *currentObject;
 
-R2D2::R2D2()
+R2D2::R2D2():
+torso("../textures/r2d2_torso.jpg")
 {
   walkFlag = 0;
   currentObject = &torso;
