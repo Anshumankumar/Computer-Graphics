@@ -23,15 +23,17 @@ all: $(BIN1) $(BINTEST) modelCreator createR2D2
 
 $(BINTEST):$(SRCTEST) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCTEST) -o $(BINTEST) $(LDFLAGS) $(LIBS)
-
+	
 $(BIN1): $(SRCS) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCS) $(INCLUDES) -o $(BIN1) $(LDFLAGS) $(LIBS)
 
 modelCreator: src/modelCreator.cpp src/utils.cpp
 	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) src/modelCreator.cpp src/utils.cpp -o build/modelCreator
+	(cd build; ./modelCreator);
 
 createR2D2: src/createR2D2.cpp src/utils.cpp
 	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) src/createR2D2.cpp src/utils.cpp -o build/createR2D2
+	(cd build; ./createR2D2); 
 
 clean:
 	rm -f build/*
