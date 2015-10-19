@@ -308,7 +308,7 @@ void Object::readfile(std::string tempname)
     std::ifstream fs(filename);
     if (!fs.is_open())
     {
-        std::cout << "Unable to open raw file\n";
+        std::cout << "Unable to open raw file"<<filename<<"\n";
         fs.close();
         return;
     }

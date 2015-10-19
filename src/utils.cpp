@@ -339,17 +339,17 @@ namespace shapes
             point.ny = cos(angle)*sin(theta);
             point.z = b1Center[2];
             pointArray[k++] = getPointFrustum(theta,b1Center,radius1,
-                    colorS,angle,1);
+                    colorS,angle,0);
             pointArray[k++] = getPointFrustum(theta,b2Center,radius2,
-                    colorS,angle,0);
+                    colorS,angle,1);
             pointArray[k++] = getPointFrustum(theta2,b2Center,radius2,
-                    colorS,angle,0);
+                    colorS,angle,1);
             pointArray[k++] = getPointFrustum(theta2,b2Center,radius2,
-                    colorS,angle,0);
+                    colorS,angle,1);
             pointArray[k++] = getPointFrustum(theta,b1Center,radius1,
-                    colorS,angle,1);
+                    colorS,angle,0);
             pointArray[k++] = getPointFrustum(theta2,b1Center,radius1,
-                    colorS,angle,1);
+                    colorS,angle,0);
 
         }
         return pointArray;   
