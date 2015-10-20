@@ -4,15 +4,16 @@ make #for compiling the code.
 
 chmod +x run.sh 
 
-./run.sh 3 For generating models
-./run.sh 2 For generating cuboid
-./run.sh 1  #Running the program
-optirun ./run.sh 1 #Running the program in optimus system
+./run.sh 0 For running the program
+./run.sh 1 For running the program using optirun (on optimus systems)
+./run.sh 2 For running tests
+./run.sh 3 For generate humanoid model
+./run.sh 4 For generate r2d2 model
 
-# You can go to build directory and run
-cd build
-./assignment_03  # for Running the program
-optirun ./assignment_03 # for running the in optimus system 
+Alternatively, you can cd into the `build' directory and run either
+./assignment_03
+or
+optirun ./assignment_03 
 
+For a full report please: see http://anshumankumar.github.io/CS475/assignment3.html
 
-#See http://anshumankumar.github.io/CS475/assignment3.html
