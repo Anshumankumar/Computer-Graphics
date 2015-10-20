@@ -74,7 +74,8 @@ class Object
     void addChild(Object *child,glm::vec3 pP,glm::vec3 cP);
     void updateCentroid(glm::vec3 rPoint);
     void updateViewMat(glm::mat4 mat);
-
+    void startlight();
+    int lFlag;
     int texFlag;
 
 };

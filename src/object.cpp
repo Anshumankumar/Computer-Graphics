@@ -28,6 +28,10 @@ Object::Object(std::string texImg)
     initVboVao();
 }
 
+void Object::startlight()
+{
+    lFlag = 1;
+}
 void Object::updateViewMat(glm::mat4 mat)
 {
     viewMat = mat;
@@ -165,6 +169,7 @@ void Object::setVboVao()
 {
 
     glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
+    glUniform1i(glGetUniformLocation(shaderProgram, "lFlag"),lFlag);
     glUniform1i(glGetUniformLocation(shaderProgram, "l1Flag"),l1);
     glUniform1i(glGetUniformLocation(shaderProgram, "l2Flag"),l2);
     glUniform1i(glGetUniformLocation(shaderProgram, "l3Flag"),l3);
@@ -261,7 +266,6 @@ void Object::createMat()
     {
         child->applyOutsideTransform(transMatrix);
     }
-    transMatrix = viewMat*transMatrix;
     normalMat = glm::transpose (glm::inverse(glm::mat4(transMatrix)));
 
 }
