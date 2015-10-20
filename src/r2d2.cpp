@@ -4,6 +4,7 @@ extern Object *currentObject;
 
 R2D2::R2D2():
 torso("../textures/r2d2_torso.jpg"),
+head("../textures/texture3.jpg"),
   kdbendAngle(M_PI/36)
 {
   bendAngle = 0;
@@ -20,26 +21,34 @@ torso("../textures/r2d2_torso.jpg"),
 
 void R2D2::createHierarchy()
 {
-  glm::vec3 link_axle_torso = {.0, .0, -0.370};
-  glm::vec3 link_torso_axle = {.0, .0, 0};
+  glm::vec3 link_axle_torso = {.0, .0, 0};
+  glm::vec3 link_torso_axle = {.0, .0, 0.370};
   glm::vec3 linkTorsoHead = {0,0,.54};
   glm::vec3 linkHeadTorso = {0,0,0};
-  glm::vec3 linkTorsoLeftLeg= {.227, 0, .420};
-  glm::vec3 linkLeftLegTorso = {.50, 0, 0};
-  glm::vec3 linkTorsoRightLeg= {-.227, 0, .420};
-  glm::vec3 linkRightLegTorso = {-.50, 0, 0};
+
+  glm::vec3 link_axle_leftLeg= {.227, 0, .0};
+  glm::vec3 link_leftLeg_axle = {.50, 0, 0};
+  glm::vec3 link_axle_rightLeg= {-.227, 0, .0};
+  glm::vec3 link_rightLeg_axle = {-.50, 0, 0};
 
   axle.addChild(&torso, link_axle_torso, link_torso_axle);
   torso.addChild(&head, linkTorsoHead, linkHeadTorso);
-  torso.addChild(&leftLeg, linkTorsoLeftLeg, linkLeftLegTorso);
-  torso.addChild(&rightLeg, linkTorsoRightLeg, linkRightLegTorso);
+  axle.addChild(&leftLeg, link_axle_leftLeg, link_leftLeg_axle);
+  axle.addChild(&rightLeg, link_axle_rightLeg, link_rightLeg_axle);
 
   axle.updateCentroid({0.0, 0.0, 0.0});
   axle.rotate(-M_PI/2,0,0);
 }
 
-void R2D2::rotateHand(double left, double right)
-{}
+void R2D2::rotateHand(double left, double right) // rotates head: TODO: organize keyboard ctrls better
+{
+  if(left == 0) {
+    head.rotate(0,0,  kdbendAngle);
+  }
+  if(right == 0) {
+    head.rotate(0,0, -kdbendAngle);
+  }
+}
 
 void R2D2::rotateArm(glm::vec3 left, glm::vec3 right)
 {}
@@ -48,9 +57,7 @@ void R2D2::bendFront()
 {
   if(bendAngle < M_PI/6) {
     bendAngle += kdbendAngle;
-    leftLeg.rotate(kdbendAngle, 0, 0);
-    rightLeg.rotate(kdbendAngle, 0, 0);
-    torso.rotate(-kdbendAngle, 0, 0);
+    torso.rotate(kdbendAngle, 0, 0);
   }
 }
 
@@ -58,9 +65,7 @@ void R2D2::bendBack()
 {
   if(bendAngle > -M_PI/6) {
     bendAngle -= kdbendAngle;
-    leftLeg.rotate(-kdbendAngle, 0, 0);
-    rightLeg.rotate(-kdbendAngle, 0, 0);
-    torso.rotate(kdbendAngle, 0, 0);
+    torso.rotate(-kdbendAngle, 0, 0);
   }
 }
 
@@ -74,6 +79,6 @@ void R2D2::translate(glm::vec3 del)
 
 void R2D2::draw()
 {
-    torso.draw();
+    axle.draw();
 }
 
