@@ -215,11 +215,23 @@ void createRoboS()
     std::cout << ":( Evil is  coming\n";
 }
 
+void createSpotLight()
+{
+    std::string filename = "../models/spotLight.raw";
+    PointV pointV;
+    glm::vec3 center1 = {0,0,0};
+    glm::vec3 center2 = {0,0,0.3};
+    glm::vec3 color = {0.62,0.70,0.62};
+    pointV = shapes::frustum(center2,center1,0.15,0.10,color,color,color);
+    fileStoreV(filename,pointV);
+
+}
 int main()
 {
 
     std::cout << "Model Creator\n";
     createHumanoid();
+    createSpotLight();
     PointV pointV = shapes::cuboid({0,0,0},8.0,8.0,8.0,{1,1,1});
     std::string filename = "../models/cube.raw";
     fileStoreV(filename,pointV);

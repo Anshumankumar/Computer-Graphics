@@ -15,9 +15,9 @@ uniform mat4 normalMatrix;
 uniform mat4 viewMatrix;
 void main (void)
 {
-  gl_Position = uModelViewMatrix * vPosition;
+  gl_Position = viewMatrix*uModelViewMatrix * vPosition;
   normal = mat3(normalMatrix) * normalize(vNormal);
-  eye = - (uModelViewMatrix * gl_Position);
+  eye =   uModelViewMatrix*vPosition;
   color = vColor;
   texCord = vTex;
 }   

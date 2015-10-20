@@ -6,7 +6,7 @@ void Env::draw()
         obj->draw();
     }
     env.draw();
-
+    spotLight.draw();
 }
 void Env::addObject()
 {
@@ -16,12 +16,15 @@ void Env::addObject()
     robo2->createHierarchy();
     robo1->translate({-1.5,-1.4,2});
     robo2->translate({1.5,-1.4,2});
+    spotLight.translate(0,-3.4,0);
+    spotLight.rotate(-M_PI/6,-M_PI/6,0);
     roboArray.push_back(robo1);
     roboArray.push_back(robo2);
     glm::vec3 vec = {0,0,0};
     addChild(robo1->mainObj,vec,vec);
     addChild(robo2->mainObj,vec,vec);
     addChild(&env,vec,vec);
+    addChild(&spotLight,vec,vec);
 }
 void Env::swap()
 {
@@ -73,12 +76,14 @@ void Env::rotate(float delx, float dely, float delz)
     createViewMat();
 }
 
-Env::Env(int a)
+Env::Env(int a):spotLight("../textures/spotLight.jpg")
 {
     addObject();
     swap();
     env.readfile("../models/cube.raw");
     env.changeTexImage("../textures/outside_texture.jpg");
+    spotLight.readfile("../models/spotLight.raw");
+    spotLight.startlight();
     initCam();
 }
 

@@ -11,6 +11,7 @@ uniform int texFlag;
 uniform int l1Flag;
 uniform int l2Flag;
 uniform int l3Flag;
+uniform int lFlag;
 
 void main () 
 {
@@ -24,11 +25,10 @@ void main ()
     vec4 spec2 = vec4(0.0);
 
     vec4 lightPos = vec4(-10, 5, 6, 1.0);
-    vec3 lightDir =  vec3(viewMatrix*lightPos);
-    lightDir =  vec3(lightDir);
+    vec3 lightDir =  vec3(lightPos);
 
     vec3 e = vec3(eye);
-    vec3 h = normalize(lightDir + e );
+    vec3 h = normalize(lightDir - e );
     vec3 n = normalize(vec3(normal));
     float dotProduct = dot(n, h);
     float intensity =  max( dotProduct, 0.0);
@@ -39,11 +39,10 @@ void main ()
     }
 
     vec4 lightPos2 = vec4(-5, 5, -5, 1.0);
-    vec3 lightDir2 =  vec3(viewMatrix*lightPos2);
-    lightDir2 = normalize( vec3(lightDir2));
+    vec3 lightDir2 =  vec3(lightPos2);
 
     vec3 e2 = normalize(vec3(eye));
-    vec3 h2 = normalize(lightDir2 + e2 );
+    vec3 h2 = normalize(lightDir2 - e2 );
     vec3 n2 = normalize(vec3(normal));
     float dotProduct2 = dot(n2, h2);
     float intensity2 =  max( dotProduct2, 0.0);
@@ -53,12 +52,22 @@ void main ()
         spec2 = specular2 * pow(intSpec2, shininess);
     }
 
+    vec4 spotLightPos = vec4(0.0,-3.4,0.0,1);
+    vec3 sLightPos = vec3(normalize(spotLightPos));
+    vec3 sLightDir = normalize(vec3(1,-1,-1));
+    h2 = vec3(normalize(sLightPos-e2));
+    float dotProductS = dot(h2,sLightDir);
+    vec4 l3 = vec4(0,0,0,0);
+    if (dotProductS  > 0.99)
+    {
+        l3 =  vec4(1,1,1,1);
+    }    
+
     vec4 colorNew;
     colorNew = texture(mytex, texCord);
 
     vec4 l1 = max(intensity*diffuse +spec,ambient);
     vec4 l2 = max(intensity2*diffuse2 +spec2,ambient);
-    vec4 l3 = vec4(0,0,0,0);
     if (l1Flag == 0)
     {
         l1 = vec4(0,0,0,0);
@@ -68,9 +77,13 @@ void main ()
     {
         l2 = vec4(0,0,0,0);
     }
-
+    
+    if (l3Flag == 0)
+    {    
+        l3 = vec4(0,0,0,0);
+    }
     vec4 l = l1+l2+l3;
-    float a = (l1Flag+l2Flag+l3Flag)/3.0;
+    float a = (l1Flag+l2Flag+1)/3.0;
     if (texFlag == 1)
     {
         colorNew = l*colorNew;
@@ -84,4 +97,8 @@ void main ()
         colorNew = l*color;
     }    
     frag_color = colorNew;
+    if (l3Flag == 1 && lFlag == 1)
+    {
+        frag_color = frag_color +vec4(0.5,0.5,0.5,1);
+    }
 }

@@ -14,6 +14,7 @@ class Env:public Object
     std::vector<Robo*> roboArray;
     public:
     Object env;
+    Object spotLight;
     void draw();
     void addObject();
     void swap();
