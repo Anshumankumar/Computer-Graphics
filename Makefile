@@ -2,13 +2,14 @@ OPENGLLIB= -lGL
 GLEWLIB= -lGLEW
 GLFWLIB = `pkg-config glfw3 --libs --static`
 SOILLIB = -lSOIL
-LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(SOILLIB)
+YAMLLIB = -lyaml-cpp
+LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(SOILLIB) $(YAMLLIB)
 LIBS_DIR = ./libs
 LDFLAGS=-L/usr/local/lib -L$(LIBS_DIR)
 IN_DIR= include/
 SRC_DIR = src/
 CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11 -g
-BIN1=build/assignment_O3
+BIN1=build/assignment_04
 SRCS1=main.cpp gl_framework.cpp shader_util.cpp object.cpp utils.cpp humanoid.cpp r2d2.cpp env.cpp
 SRCS = $(SRCS1:%=$(SRC_DIR)%)
 INCLUDES1= gl_framework.hpp object.hpp shader_util.hpp utils.hpp humanoid.hpp env.hpp r2d2.hpp
@@ -23,7 +24,7 @@ all: $(BIN1) $(BINTEST) modelCreator createR2D2
 
 $(BINTEST):$(SRCTEST) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCTEST) -o $(BINTEST) $(LDFLAGS) $(LIBS)
-	
+
 $(BIN1): $(SRCS) $(INCLUDES)
 	g++ $(CPPFLAGS) $(SRCS) $(INCLUDES) -o $(BIN1) $(LDFLAGS) $(LIBS)
 
