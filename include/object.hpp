@@ -15,6 +15,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "SOIL.h"
+#include <yaml-cpp/yaml.h>
+
 #define MAX_SIZE_X 1.0f
 #define MAX_SIZE_Y 1.0f
 #define MAX_SIZE_Z 1.0f
@@ -24,7 +26,6 @@
 class Object
 {
     int rotationFlag;
-    std::string name;
     float xrot,yrot,zrot,xtln,ytln,ztln;
     float lxtln,lytln,lztln;
     float xscale,yscale,zscale; 
@@ -45,7 +46,8 @@ class Object
     glm::mat4 outsideTransform;
     std::string texImage;
     public:
-    Object(std::string texImg = "NOTHING");
+    std::string name;
+    Object(std::string texImg = "none",std::string name_ ="default");
     void loadImage();
     void changeTexImage(std::string tname);
     void givename(std::string);

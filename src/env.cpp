@@ -1,11 +1,12 @@
 #include <env.hpp>
 void Env::draw()
 {
-    for (auto obj:roboArray)
+/*    for (auto obj:roboArray)
     {
         obj->draw();
-    }
+    }*/
     env.draw();
+    r2d2n->draw();
     spotLight.draw();
 }
 void Env::addObject()
@@ -21,8 +22,11 @@ void Env::addObject()
     roboArray.push_back(robo1);
     roboArray.push_back(robo2);
     glm::vec3 vec = {0,0,0};
+    r2d2n = new Assembly("../models/r2d2.yaml");
+    r2d2n->mainObj->translate(0,-1.4,2);
     addChild(robo1->mainObj,vec,vec);
     addChild(robo2->mainObj,vec,vec);
+    addChild(r2d2n->mainObj,vec,vec);
     addChild(&env,vec,vec);
     addChild(&spotLight,vec,vec);
 }
@@ -85,5 +89,6 @@ Env::Env(int a):spotLight("../textures/spotLight.jpg")
     spotLight.readfile("../models/spotLight.raw");
     spotLight.startlight();
     initCam();
+
 }
 

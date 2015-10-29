@@ -4,6 +4,7 @@
 #include "object.hpp"
 #include "humanoid.hpp"
 #include "r2d2.hpp"
+#include "assembly.hpp"
 
 extern Robo *robo;
 extern Object *currentObject2;
@@ -12,6 +13,7 @@ class Env:public Object
     glm::vec3 cPos,cUp,cRot;
     int currentRobo = 0;
     std::vector<Robo*> roboArray;
+    Assembly * r2d2n;
     public:
     Object env;
     Object spotLight;
