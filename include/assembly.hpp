@@ -13,6 +13,7 @@ class Assembly
     std::string name;
     public:
     Assembly(std::string yamlFile);
+    ~Assembly();
     Object * mainObj; 
     virtual void createHierarchy(YAML::Node parts);
     virtual void draw();

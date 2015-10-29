@@ -10,12 +10,17 @@ void Env::draw()
 }
 void Env::addObject()
 {
+    Humanoid *robo1;
+    robo1 =new Humanoid("../models/humanoid.yaml");
+    robo1->translate({-1.5,-1.4,2});
     R2D2 *robo2 =new R2D2("../models/r2d2.yaml");
     robo2->translate({1.5,-1.4,2});
     spotLight.translate(0,-3.4,0);
     spotLight.rotate(-M_PI/6,-M_PI/6,0);
+    roboArray.push_back(robo1);
     roboArray.push_back(robo2);
     glm::vec3 vec = {0,0,0};
+    addChild(robo1->mainObj,vec,vec);
     addChild(robo2->mainObj,vec,vec);
     addChild(&env,vec,vec);
     addChild(&spotLight,vec,vec);

@@ -41,7 +41,7 @@ int main(int argc, char** argv)
         return 1;
     }
     GLFWwindow* window = glfwCreateWindow  (640, 640,
-            "OpenGL Assignment1", NULL , NULL);
+            "OpenGL Assignment4", NULL , NULL);
     glfwSetErrorCallback(myglf::error_callback);
 
     if(! window)
@@ -65,18 +65,11 @@ int main(int argc, char** argv)
     myglf::initGL();
     initBufferGL();
 
-    Object object1;
-    Humanoid robo1;
-    robo1.createHierarchy();
-    object1.readfile("test.raw");
-      Env env(1);
-    //  currentObject = &object1;
+     Env env(1);
      currentObject = &env;
-    // robo = &robo1;
     while(!glfwWindowShouldClose(window))
     {
         renderGL();
-     //   robo1.draw();
         env.draw();
         glfwPollEvents();
         glfwSwapBuffers(window);

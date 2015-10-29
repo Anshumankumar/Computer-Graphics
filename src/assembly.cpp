@@ -3,11 +3,15 @@
 Assembly::Assembly(std::string yamlFile)
 {
     YAML::Node node = YAML::LoadFile(yamlFile);
-    name = node["assemb"]["name"].as<std::string>();
-    YAML::Node parts = node["assemb"]["parts"];
+    name = node["assembly"]["name"].as<std::string>();
+    YAML::Node parts = node["assembly"]["parts"];
     createHierarchy(parts);
 }
 
+Assembly::~Assembly()
+{
+    std::cout << "Destroyed\n";
+}
 void Assembly::createHierarchy(YAML::Node parts)
 {
     glm::vec3 linkPC;
@@ -38,8 +42,6 @@ void Assembly::createHierarchy(YAML::Node parts)
             if (objectMap.find(parent) != objectMap.end())
             {
                 objectMap[parent].addChild(&objectMap[name],linkPC,linkCP);
-                std::cout << object.name << "\n";
-                std::cout << linkPC[0] << "\n";
             }
             else
             {
@@ -48,6 +50,7 @@ void Assembly::createHierarchy(YAML::Node parts)
         }
 
     }
+
     mainObj->updateCentroid({0.0, 0.0, 0.0});
     mainObj->rotate(-M_PI/2,0,0);
 }

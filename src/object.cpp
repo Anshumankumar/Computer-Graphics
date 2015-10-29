@@ -50,7 +50,7 @@ void Object::changeTexImage(std::string tname)
 }
 void Object::loadImage()
 { 
-  // std::cout << "Loading texture from: "<< texImage <<"\n"; 
+//  std::cout << "Loading texture from: "<< texImage <<"\n"; 
   int width, height;
   unsigned char* image = SOIL_load_image(texImage.c_str(),
                                          &width, &height, 0, SOIL_LOAD_RGB);

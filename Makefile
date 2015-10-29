@@ -8,7 +8,7 @@ LIBS_DIR = ./libs
 LDFLAGS=-L/usr/local/lib -L$(LIBS_DIR)
 IN_DIR= include/
 SRC_DIR = src/
-CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11  -w
+CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11  -w -g
 BIN1=build/assignment_04
 SRCS1= gl_framework.cpp shader_util.cpp object.cpp utils.cpp humanoid.cpp r2d2.cpp env.cpp assembly.cpp
 SRCS = $(SRCS1:%=$(SRC_DIR)%)
