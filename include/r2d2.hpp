@@ -5,30 +5,19 @@
 #include "shader_util.hpp"
 #include "object.hpp"
 #include "scene.hpp"
-#include "robo.hpp"
+#include "assembly.hpp"
 
-class R2D2:public Robo
+class R2D2:public Assembly
 {
-  Object axle;
-  Object torso;
-  Object head;
-  Object leftLeg;
-  Object rightLeg;
-  float headAngle, torsoAngle;
-  float bendAngle;
-  const float kdbendAngle;
-  int walkFlag;
-public: 
-  R2D2();
-  void createHierarchy();
-  void draw();
-  void bendTorso();
-  void bendBack();
-  void bendFront();
-  void walk();
-  void rotateArm(glm::vec3 left,glm::vec3 right);
-  void rotateHand(double left,double right);
-  void translate(glm::vec3 del);
+    float headAngle, torsoAngle;
+    float bendAngle;
+    int walkFlag;
+    public: 
+    using Assembly::Assembly;
+    void bendTorso();
+    void bendBack();
+    void bendFront();
+    void rotateHand(double left,double right);
 };
 
 #endif

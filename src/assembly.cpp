@@ -50,5 +50,12 @@ void Assembly::createHierarchy(YAML::Node parts)
     }
     mainObj->updateCentroid({0.0, 0.0, 0.0});
     mainObj->rotate(-M_PI/2,0,0);
-
+}
+void Assembly::translate(glm::vec3 del)
+{
+    mainObj->translate(del[0],del[1],del[2]);
+}
+void Assembly::draw()
+{
+    mainObj->draw();
 }

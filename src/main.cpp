@@ -9,7 +9,7 @@ GLuint shaderProgram;
 //Scene scene1(3);
 Object * currentObject;
 Object * currentObject2;
-Robo* robo;
+Assembly* robo;
 
 void initBufferGL()
 {

@@ -1,32 +1,22 @@
 #include <env.hpp>
 void Env::draw()
 {
-/*    for (auto obj:roboArray)
+    for (auto obj:roboArray)
     {
         obj->draw();
-    }*/
+    }
     env.draw();
-    r2d2n->draw();
     spotLight.draw();
 }
 void Env::addObject()
 {
-    Humanoid *robo1 =new Humanoid;
-    R2D2 *robo2 =new R2D2;
-    robo1->createHierarchy();
-    robo2->createHierarchy();
-    robo1->translate({-1.5,-1.4,2});
+    R2D2 *robo2 =new R2D2("../models/r2d2.yaml");
     robo2->translate({1.5,-1.4,2});
     spotLight.translate(0,-3.4,0);
     spotLight.rotate(-M_PI/6,-M_PI/6,0);
-    roboArray.push_back(robo1);
     roboArray.push_back(robo2);
     glm::vec3 vec = {0,0,0};
-    r2d2n = new Assembly("../models/r2d2.yaml");
-    r2d2n->mainObj->translate(0,-1.4,2);
-    addChild(robo1->mainObj,vec,vec);
     addChild(robo2->mainObj,vec,vec);
-    addChild(r2d2n->mainObj,vec,vec);
     addChild(&env,vec,vec);
     addChild(&spotLight,vec,vec);
 }

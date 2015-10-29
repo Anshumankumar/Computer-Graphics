@@ -1,7 +1,7 @@
 #include "gl_framework.hpp"
 #include "object.hpp"
 #include "scene.hpp"
-#include "humanoid.hpp"
+#include "assembly.hpp"
 
 #define MODE_INSPECTION 1
 #define MODE_MODELLING 2
@@ -9,7 +9,7 @@
 int mode = MODE_INSPECTION; 
 extern Object* currentObject;
 extern Object* currentObject2;
-extern Humanoid *robo;
+extern Assembly *robo;
 extern int l1,l2,l3;
 namespace myglf
 {

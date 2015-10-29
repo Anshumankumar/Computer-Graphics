@@ -8,23 +8,20 @@
 
 class Assembly
 {
+    protected:
     std::map<std::string,Object> objectMap;
     std::string name;
     public:
     Assembly(std::string yamlFile);
     Object * mainObj; 
     virtual void createHierarchy(YAML::Node parts);
-    virtual void draw()
-    {
-        mainObj->draw();
-
-    };
+    virtual void draw();
     virtual void bendBack(){};
     virtual void bendFront(){};
     virtual void walk(){};
     virtual void rotateArm(glm::vec3 left,glm::vec3 right){};
     virtual  void rotateHand(double left,double right){};
-    virtual  void translate(glm::vec3 del){};
+    virtual  void translate(glm::vec3 del);
 
 };
 
