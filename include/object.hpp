@@ -28,7 +28,9 @@ class Object
     int rotationFlag;
     float xrot,yrot,zrot,xtln,ytln,ztln;
     float lxtln,lytln,lztln;
-    float xscale,yscale,zscale; 
+    float xscale,yscale,zscale;
+    float xdel,ydel,zdel,rxdel,rydel,rzdel;
+    float sxdel,sydel,szdel; 
     float currentZ,currentX,currentY;
     glm::vec4 currentPosition;
     PointV  pointArray;
@@ -76,6 +78,9 @@ class Object
     void addChild(Object *child,glm::vec3 pP,glm::vec3 cP);
     void updateCentroid(glm::vec3 rPoint);
     void updateViewMat(glm::mat4 mat);
+    YAML::Node getNode();
+    void moveNext();
+    void setNext(YAML::Node &node,float frames);
     void startlight();
     int lFlag;
     int texFlag;

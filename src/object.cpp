@@ -362,3 +362,40 @@ void Object::resize(float sx,float sy,float sz)
     zscale = sz;
     createMat();
 }
+
+YAML::Node Object::getNode()
+{
+    YAML::Node node;
+    node["name"] = name;
+    node["x"] = xtln;
+    node["y"] = ytln;
+    node["z"] = ztln;
+    node["rx"] = xrot;
+    node["ry"] = yrot;
+    node["rz"] = zrot;
+    node["sx"] = xscale;
+    node["sy"] = yscale;
+    node["sz"] = zscale;
+    return node;
+}
+
+
+void Object::moveNext()
+{
+    translate(xdel,ydel,zdel);
+    rotate(rxdel,rydel,rzdel);
+    resize(xscale+sxdel,yscale+sydel,zscale+szdel);
+}
+
+void Object::setNext(YAML::Node &node, float frames)
+{
+    xdel = (xtln-node["x"].as<float>())/frames;      
+    ydel = (ytln-node["y"].as<float>())/frames;      
+    zdel = (ztln-node["z"].as<float>())/frames;      
+    rxdel = (xrot-node["rx"].as<float>())/frames;      
+    rydel = (yrot-node["ry"].as<float>())/frames;      
+    rzdel = (zrot-node["rz"].as<float>())/frames;      
+    sxdel = (xscale-node["sx"].as<float>())/frames;      
+    sydel = (yscale-node["sy"].as<float>())/frames;      
+    szdel = (zscale-node["sz"].as<float>())/frames;      
+}

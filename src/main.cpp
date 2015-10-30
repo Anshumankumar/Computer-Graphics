@@ -6,8 +6,7 @@
 #include "env.hpp"
 GLuint shaderProgram;
 
-//Scene scene1(3);
-Object * currentObject;
+Env * currentObject;
 Object * currentObject2;
 Assembly* robo;
 

@@ -8,10 +8,9 @@
 
 class Assembly
 {
-    protected:
-    std::map<std::string,Object> objectMap;
-    std::string name;
     public:
+    std::string name;
+    std::map<std::string,Object> objectMap;
     Assembly(std::string yamlFile);
     ~Assembly();
     Object * mainObj; 

@@ -18,9 +18,9 @@ void main ()
     vec4 diffuse = vec4(1.0, 1.0, 1.0, 1.0);
     vec4 diffuse2 = vec4(1.0, 1.0, 1.0, 1.0);
     vec4 ambient = vec4(0.1, 0.1, 0.1, 1.0);
-    vec4 specular = vec4(0.2, 0.2, 0.2, 1.0);
-    vec4 specular2 = vec4(0.2, 0.2, 0.2, 1.0);
-    float shininess = 50.0;
+    vec4 specular = vec4(0.4, 0.4, 0.4, 1.0);
+    vec4 specular2 = vec4(0.4, 0.4, 0.4, 1.0);
+    float shininess = 100.0;
     vec4 spec = vec4(0.0);
     vec4 spec2 = vec4(0.0);
 
@@ -38,7 +38,7 @@ void main ()
         spec = specular * pow(intSpec, shininess);
     }
 
-    vec4 lightPos2 = vec4(-5, 5, -5, 1.0);
+    vec4 lightPos2 = vec4(-5, 10, -10, 1.0);
     vec3 lightDir2 =  vec3(lightPos2);
 
     vec3 e2 = normalize(vec3(eye));

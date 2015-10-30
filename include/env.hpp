@@ -23,6 +23,7 @@ class Env:public Object
     void initCam();
     void translate(float delx , float dely ,float delz);
     void rotate(float delx, float dely, float delz);
+    void appendYaml(int frameNo);
     Env(int a);
 };
 #endif

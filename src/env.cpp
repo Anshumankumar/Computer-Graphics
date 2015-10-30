@@ -84,6 +84,29 @@ Env::Env(int a):spotLight("../textures/spotLight.jpg")
     spotLight.readfile("../models/spotLight.raw");
     spotLight.startlight();
     initCam();
+}
 
+void Env::appendYaml(int frameNo)
+{
+    YAML::Node mainNode;
+    if (frameNo != 0)
+    {
+        mainNode =  YAML::LoadFile("../keyframes.yaml");
+    }
+    YAML::Node node;
+    for (auto &robo:roboArray)
+    {
+        YAML::Node rnode;
+        rnode["name"] = robo->name;
+        for (auto &obj:robo->objectMap)
+        {
+            rnode["objects"].push_back(obj.second.getNode());
+        }
+        node["frame"].push_back(rnode);
+        node["keyFrameNo"] = frameNo;
+    }
+    mainNode["frames"].push_back(node);
+    std::ofstream fout("../keyframes.yaml");
+    fout << mainNode;
 }
 
