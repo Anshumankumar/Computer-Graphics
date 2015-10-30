@@ -5,3 +5,4 @@ build
 *.raw
 images
 Images
+keyframes.yaml
