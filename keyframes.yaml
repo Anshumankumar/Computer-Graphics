@@ -1,291 +1,311 @@
 frames:
   - frame:
-      - objects:
-          - x: 0
+      - assembly:
+          - rz: 0
+            z: -0.8
             sz: 1
             name: body
             y: 0
+            ry: 0
             sy: 1
-            ry: 0
+            x: 0
             rx: 0
-            rz: 0
             sx: 1
-            z: -0.8
-          - x: 0
-            ry: 0
-            rz: 0
+          - ry: 0
+            sy: 1
+            y: 0
+            sx: 1
             name: head
-            y: 0
-            sz: 1
-            sy: 1
             z: -0.2
-            sx: 1
+            sz: 1
             rx: 0
-          - sy: 1
-            rx: 0
-            z: 0
-            y: 0
-            name: leftArm
+            x: 0
             rz: 0
+          - rx: 0
+            y: 0
             sx: 1
+            ry: 0
+            rz: 0
+            sy: 1
+            z: 0
+            name: leftArm
             sz: 1
             x: -0.4
+          - rx: 0
+            x: 0
+            sz: 1
             ry: 0
-          - x: 0
-            sy: 1
-            z: 0.55
-            name: leftFist
+            rz: 0
+            y: 0
             sx: 1
-            ry: 0
-            rz: 0
-            rx: 0
-            y: 0
-            sz: 1
-          - x: 0
-            sz: 1
-            z: 0.7
-            ry: 0
-            rx: 0
             sy: 1
-            rz: 0
+            name: leftFist
+            z: 0.55
+          - ry: 0
             y: 0
+            rx: 0
+            x: 0
+            sz: 1
             sx: 1
             name: leftFoot
-          - x: 0
-            sz: 1
-            rx: 0
-            name: leftHand
-            sy: 1
+            z: 0.7
             rz: 0
+            sy: 1
+          - sx: 1
+            sy: 1
+            ry: 0
             y: 0
             z: 0.4
-            sx: 1
+            name: leftHand
+            rz: 0
+            x: 0
+            sz: 1
+            rx: 0
+          - sy: 1
+            x: 0
+            name: leftLeg
             ry: 0
-          - rx: 0
+            rx: 0
             y: 0
             rz: 0
-            name: leftLeg
-            sy: 1
-            ry: 0
-            z: 0.6
-            x: 0
             sx: 1
             sz: 1
+            z: 0.6
           - rx: 0
             z: 0.3
-            y: 0
-            sy: 1
-            ry: 0
-            sz: 1
-            sx: 1
-            name: leftThigh
             x: 0.15
+            name: leftThigh
+            sx: 1
+            sz: 1
+            ry: 0
+            sy: 1
             rz: 0
-          - name: neck
+            y: 0
+          - rx: 0
+            rz: 0
             z: -0.1
+            ry: 0
+            sy: 1
+            sx: 1
+            sz: 1
             y: 0
             x: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - ry: 0
-            rx: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-            x: 0.4
-            name: rightArm
+            name: neck
+          - x: 0.4
+            y: 0
             z: 0
-            y: 0
-          - sy: 1
-            name: rightFist
+            name: rightArm
+            sz: 1
+            rx: 0
+            sy: 1
+            ry: 0
+            rz: 0
+            sx: 1
+          - z: 0.55
             rx: 0
             x: 0
-            ry: 0
-            sx: 1
-            rz: 0
-            sz: 1
-            z: 0.55
+            name: rightFist
             y: 0
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
           - name: rightFoot
             x: 0
             y: 0
-            ry: 0
-            rx: 0
-            sx: 1
-            rz: 0
-            sz: 1
-            sy: 1
             z: 0.7
-          - name: rightHand
             sx: 1
             ry: 0
-            x: 0
-            sy: 1
             sz: 1
-            z: 0.4
             rx: 0
-            y: 0
-            rz: 0
-          - name: rightLeg
             sy: 1
+            rz: 0
+          - z: 0.4
+            x: 0
+            sz: 1
             y: 0
+            name: rightHand
+            ry: 0
+            rx: 0
+            sx: 1
+            rz: 0
+            sy: 1
+          - y: 0
             z: 0.6
+            rz: 0
+            name: rightLeg
+            ry: 0
+            x: 0
+            rx: 0
+            sx: 1
+            sy: 1
+            sz: 1
+          - rx: 0
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+            x: -0.15
+            z: 0.3
+            y: 0
+            name: rightThigh
+          - y: -1.4
+            sy: 1
+            rx: 1.570796
+            sx: 1
+            x: -1.5
+            rz: 0
+            z: 2
+            sz: 1
+            name: torsal
+            ry: 0
+        name: humanoid
+      - name: r2d2
+        assembly:
+          - x: 1.5
+            sx: 1
+            sy: 1
+            z: 2
+            y: -1.4
+            name: axle
+            ry: 0
+            rz: 0
+            sz: 1
+            rx: -1.570796
+          - y: 0
+            name: head
             rx: 0
             ry: 0
-            sx: 1
-            sz: 1
-            x: 0
             rz: 0
-          - rx: 0
-            z: 0.3
-            name: rightThigh
-            x: -0.15
-            sy: 1
-            ry: 0
-            sx: 1
-            rz: 0
-            y: 0
-            sz: 1
-          - rz: 0
-            z: 2
-            ry: 0
-            y: -1.4
-            rx: 1.570796
-            sz: 1
-            x: -1.5
-            sy: 1
-            sx: 1
-            name: torsal
-        name: humanoid
-      - objects:
-          - y: -1.4
-            rx: -1.570796
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-            z: 2
-            x: 1.5
-            name: axle
-          - rx: 0
-            y: 0
-            name: head
             z: 0.54
+            sz: 1
             x: 0
+            sx: 1
+            sy: 1
+          - sy: 1
+            sx: 1
+            x: -0.223
+            rz: 0
+            z: 0
+            rx: 0
+            ry: 0
+            sz: 1
+            y: 0
+            name: leftLeg
+          - z: 0
+            rz: 0
+            x: 0.223
+            ry: 0
+            sx: 1
+            sz: 1
+            rx: 0
+            name: rightLeg
+            y: 0
+            sy: 1
+          - rx: 0
+            y: 0
+            name: torso
+            ry: 0
+            sy: 1
+            sx: 1
+            sz: 1
+            z: -0.37
+            rz: 0
+            x: 0
+    camera:
+      x: 0
+      ry: -0.2617994
+      rx: 0.2617994
+      y: 0
+      rz: 0
+      z: 0
+    light1: 1
+    keyFrameNo: 0
+    light2: 1
+    light3: 1
+  - camera:
+      z: 0
+      rx: 0.2617994
+      ry: -0.2617994
+      rz: 0
+      x: 0
+      y: 0
+    light3: 1
+    light2: 1
+    light1: 1
+    frame:
+      - assembly:
+          - y: 0
+            x: 0
+            name: body
+            rx: 0.2617994
+            sy: 1
+            ry: 0
+            z: -0.8
+            sx: 1
+            rz: 0
+            sz: 1
+          - x: 0
+            rx: 0
+            name: head
+            y: 0
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+            z: -0.2
+          - name: leftArm
+            z: 0
+            y: 0
+            x: -0.4
+            rx: 0.959931
+            ry: -0.6108652
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+          - x: 0
+            y: 0
+            z: 0.55
+            rx: 0
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+            name: leftFist
+          - name: leftFoot
+            x: 0
+            y: 0
+            z: 0.7
+            ry: 0
+            rx: 0
+            sx: 1
+            rz: 0
+            sz: 1
+            sy: 1
+          - name: leftHand
+            x: 0
+            z: 0.4
+            y: 0
+            rx: 1.570796
             ry: 0
             rz: 0
             sx: 1
             sy: 1
             sz: 1
           - y: 0
+            x: 0
+            z: 0.6
             rz: 0
-            sy: 1
-            x: -0.223
-            z: 0
             name: leftLeg
             rx: 0
             ry: 0
             sx: 1
-            sz: 1
-          - x: 0.223
-            rz: 0
             sy: 1
-            y: 0
-            ry: 0
-            z: 0
-            sx: 1
-            name: rightLeg
-            sz: 1
-            rx: 0
-          - sy: 1
-            rz: 0
-            sx: 1
-            sz: 1
-            x: 0
-            y: 0
-            name: torso
-            z: -0.37
-            rx: 0
-            ry: 0
-        name: r2d2
-    keyFrameNo: 0
-  - frame:
-      - objects:
-          - x: 0
-            name: body
-            ry: 0
-            z: -0.8
-            sz: 1
-            rx: 0
-            sx: 1
-            rz: 0
-            sy: 1
-            y: 0
-          - x: 0
-            z: -0.2
-            y: 0
-            name: head
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - x: -0.4
-            name: leftArm
-            y: 0
-            z: 0
-            ry: 0
-            rx: 0
-            sx: 1
-            rz: 0
-            sz: 1
-            sy: 1
-          - x: 0
-            z: 0.55
-            y: 0
-            name: leftFist
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.7
-            name: leftFoot
-            y: 0
-            x: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - name: leftHand
-            x: 0
-            rz: 0
-            sx: 1
-            ry: 0
-            z: 0.4
-            y: 0
-            rx: 0
-            sy: 1
-            sz: 1
-          - z: 0.6
-            name: leftLeg
-            y: 0
-            x: 0
-            rx: 0
-            rz: 0
-            ry: 0
-            sy: 1
-            sx: 1
             sz: 1
           - z: 0.3
             x: 0.15
@@ -302,450 +322,17 @@ frames:
             y: 0
             name: neck
             rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - x: 0.4
-            z: 0
-            y: 0
-            name: rightArm
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.55
-            name: rightFist
-            y: 0
-            x: 0
-            ry: 0
-            rx: 0
-            sx: 1
-            rz: 0
-            sz: 1
-            sy: 1
-          - z: 0.7
-            name: rightFoot
-            y: 0
-            x: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.4
-            name: rightHand
-            y: 0
-            x: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.6
-            y: 0
-            sy: 1
-            sx: 1
-            x: 0
-            name: rightLeg
-            rx: 0
-            ry: 0
-            rz: 0
-            sz: 1
-          - z: 0.3
-            name: rightThigh
-            y: 0
-            x: -0.15
-            rx: 0
             rz: 0
             ry: 0
             sy: 1
             sx: 1
             sz: 1
-          - z: 2
-            name: torsal
-            y: -1.4
-            x: -1.5
-            rx: 1.570796
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-        name: humanoid
-      - objects:
-          - z: 2
-            x: 1.5
-            y: -1.4
-            name: axle
-            rx: -1.570796
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.54
-            x: 0
-            y: 0
-            name: head
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - rz: 0
-            x: -0.223
-            sy: 1
-            sx: 1
-            sz: 1
-            y: 0
-            rx: 0
-            z: 0
-            ry: 0
-            name: leftLeg
-          - z: 0
-            x: 0.223
-            name: rightLeg
-            y: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: -0.37
-            x: 0
-            y: 0
-            name: torso
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-        name: r2d2
-    keyFrameNo: 1
-  - frame:
-      - objects:
-          - z: -0.8
-            y: 0
-            x: 0
-            name: body
-            sx: 1
-            ry: 0
-            rz: 0
-            sy: 1
-            rx: 0
-            sz: 1
-          - y: 0
-            x: 0
-            z: -0.2
-            name: head
-            ry: 0
-            sx: 1
-            rx: 0
-            sz: 1
-            rz: 0
-            sy: 1
-          - y: 0
-            sy: 1
-            x: -0.4
-            z: 0
-            sz: 1
-            name: leftArm
-            sx: 1
-            rx: 0
-            ry: 0
-            rz: 0
-          - name: leftFist
-            x: 0
-            y: 0
-            z: 0.55
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.7
-            y: 0
-            x: 0
-            name: leftFoot
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - name: leftHand
-            z: 0.4
-            x: 0
-            y: 0
-            rz: 0
-            rx: 0
-            sy: 1
-            ry: 0
-            sz: 1
-            sx: 1
-          - x: 0
-            z: 0.6
-            y: 0
-            name: leftLeg
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - name: leftThigh
-            x: 0.15
-            y: 0
-            z: 0.3
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - ry: 0
-            x: 0
-            z: -0.1
-            rx: 0
-            y: 0
-            name: neck
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0
-            name: rightArm
-            y: 0
+          - name: rightArm
             x: 0.4
-            ry: 0
-            sx: 1
-            rx: 0
-            sz: 1
-            rz: 0
-            sy: 1
-          - x: 0
-            sz: 1
-            z: 0.55
             y: 0
-            name: rightFist
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-          - name: rightFoot
-            y: 0
-            z: 0.7
-            x: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - x: 0
-            z: 0.4
-            y: 0
-            name: rightHand
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - y: 0
-            x: 0
-            sz: 1
-            sy: 1
-            z: 0.6
-            rx: 0
-            name: rightLeg
-            ry: 0
-            rz: 0
-            sx: 1
-          - x: -0.15
-            z: 0.3
-            y: 0
-            name: rightThigh
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - x: -1.5
-            z: 2
-            y: -1.4
-            name: torsal
-            rx: 1.570796
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-        name: humanoid
-      - objects:
-          - name: axle
-            z: 2
-            x: 1.5
-            y: -1.4
-            rx: -1.570796
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - name: head
-            x: 0
-            y: 0
-            z: 0.54
-            rz: 0
-            rx: 0
-            sy: 1
-            ry: 0
-            sz: 1
-            sx: 1
-          - z: 0
-            x: -0.223
-            y: 0
-            name: leftLeg
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - y: 0
-            x: 0.223
-            name: rightLeg
             z: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - x: 0
-            z: -0.37
-            y: 0
-            name: torso
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-        name: r2d2
-    keyFrameNo: 2
-  - keyFrameNo: 3
-    frame:
-      - objects:
-          - x: 0
-            name: body
-            z: -0.8
-            y: 0
-            sx: 1
-            rz: 0
-            ry: 0
-            rx: 0
-            sy: 1
-            sz: 1
-          - z: -0.2
-            y: 0
-            rx: 0
-            x: 0
-            name: head
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0
-            name: leftArm
-            y: 0
-            x: -0.4
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - y: 0
-            x: 0
-            name: leftFist
-            z: 0.55
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - name: leftFoot
-            x: 0
-            y: 0
-            z: 0.7
-            ry: 0
-            rx: 0
-            sx: 1
-            rz: 0
-            sz: 1
-            sy: 1
-          - rz: 0
-            name: leftHand
-            x: 0
-            z: 0.4
-            y: 0
-            sy: 1
-            sx: 1
-            rx: 0
-            ry: 0
-            sz: 1
-          - name: leftLeg
-            z: 0.6
-            x: 0
-            y: 0
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0.3
-            x: 0.15
-            y: 0
-            name: leftThigh
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-          - ry: 0
-            x: 0
-            z: -0.1
-            rx: 0
-            y: 0
-            rz: 0
-            name: neck
-            sy: 1
-            sx: 1
-            sz: 1
-          - y: 0
-            x: 0.4
-            z: 0
-            name: rightArm
-            rx: 0
-            ry: 0
+            ry: 0.6108652
+            rx: 0.959931
             rz: 0
             sx: 1
             sy: 1
@@ -770,134 +357,144 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-          - y: 0
-            ry: 0
-            name: rightHand
-            sy: 1
-            rz: 0
-            sx: 1
+          - name: rightHand
+            x: 0
+            y: 0
             z: 0.4
-            rx: 0
-            x: 0
+            ry: 0
+            rx: 0.959931
+            sx: 1
+            rz: 0
             sz: 1
-          - ry: 0
-            rx: 0
+            sy: 1
+          - name: rightLeg
+            x: 0
+            y: 0
             z: 0.6
+            rx: 0
+            ry: 0
+            rz: 0
+            sx: 1
             sy: 1
             sz: 1
-            x: 0
-            y: 0
-            name: rightLeg
-            sx: 1
-            rz: 0
           - y: 0
-            rz: 0
-            rx: 0
-            sy: 1
-            sz: 1
             x: -0.15
+            rz: 0
             z: 0.3
-            ry: 0
             name: rightThigh
+            rx: 0
+            ry: 0
             sx: 1
-          - sx: 1
-            rz: 0
-            rx: 1.570796
             sy: 1
             sz: 1
+          - name: torsal
             x: -1.5
-            z: 2
-            name: torsal
-            ry: 0
             y: -1.4
+            z: 2
+            rx: 1.570796
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
         name: humanoid
-      - objects:
-          - ry: 0
-            z: 2
-            rz: 0
-            name: axle
-            rx: -1.570796
-            sy: 1
-            sx: 1
-            sz: 1
+      - assembly:
+          - z: 2
             x: 1.5
+            name: axle
             y: -1.4
-          - rz: 0
-            x: 0
             ry: 0
-            name: head
+            rx: -1.570796
             sx: 1
-            sy: 1
+            rz: 0
             sz: 1
-            z: 0.54
-            rx: 0
+            sy: 1
+          - z: 0.54
+            x: 0
             y: 0
-          - name: leftLeg
+            name: head
             rx: 0
             ry: 0
             rz: 0
             sx: 1
             sy: 1
             sz: 1
-            z: 0
+          - z: 0
             x: -0.223
             y: 0
-          - z: 0
-            y: 0
+            name: leftLeg
+            rx: 0
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+          - y: 0
+            x: 0.223
+            sx: 1
+            z: 0
             name: rightLeg
             rx: 0
             ry: 0
             rz: 0
-            sx: 1
             sy: 1
             sz: 1
-            x: 0.223
-          - x: 0
+          - name: torso
+            x: 0
             y: 0
             z: -0.37
-            sx: 1
-            ry: 0
-            sz: 1
             rx: 0
-            sy: 1
             rz: 0
-            name: torso
-        name: r2d2
-  - keyFrameNo: 4
-    frame:
-      - objects:
-          - x: 0
+            ry: 0
             sy: 1
-            y: 0
+            sx: 1
+            sz: 1
+        name: r2d2
+    keyFrameNo: 1
+  - light1: 1
+    light2: 1
+    camera:
+      z: 0
+      y: 0
+      rx: 0.2617994
+      x: 0
+      ry: -0.2617994
+      rz: 0
+    light3: 1
+    frame:
+      - assembly:
+          - x: 0
+            rz: 0
             name: body
             z: -0.8
-            rz: 0
-            sz: 1
+            sy: 1
+            rx: 0.2617994
             sx: 1
             ry: 0
-            rx: 0
-          - ry: 0
-            z: -0.2
-            rx: 0
+            y: 0
+            sz: 1
+          - z: -0.2
             y: 0
             x: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
             name: head
-          - name: leftArm
-            x: -0.4
-            y: 0
-            z: 0
             rx: 0
             ry: 0
             rz: 0
             sx: 1
             sy: 1
             sz: 1
-          - x: 0
-            name: leftFist
+          - x: -0.4
+            name: leftArm
+            y: 0
+            z: 0
+            rx: 0.959931
+            ry: -0.8726645
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+          - name: leftFist
+            x: 0
             y: 0
             z: 0.55
             rx: 0
@@ -910,21 +507,21 @@ frames:
             name: leftFoot
             y: 0
             x: 0
-            rx: 0
-            ry: 0
             rz: 0
-            sx: 1
+            rx: 0
             sy: 1
+            ry: 0
             sz: 1
+            sx: 1
           - name: leftHand
             x: 0
-            sy: 1
-            sx: 1
-            z: 0.4
             y: 0
-            rx: 0
+            z: 0.4
+            rx: 1.570796
             ry: 0
             rz: 0
+            sx: 1
+            sy: 1
             sz: 1
           - z: 0.6
             name: leftLeg
@@ -950,18 +547,18 @@ frames:
             x: 0
             y: 0
             z: -0.1
-            rx: 0
             ry: 0
-            rz: 0
             sx: 1
-            sy: 1
+            rx: 0
             sz: 1
+            rz: 0
+            sy: 1
           - x: 0.4
             z: 0
             y: 0
             name: rightArm
-            rx: 0
-            ry: 0
+            rx: 0.959931
+            ry: 0.8726645
             rz: 0
             sx: 1
             sy: 1
@@ -990,25 +587,25 @@ frames:
             name: rightHand
             y: 0
             x: 0
+            rz: 0
+            rx: 0.959931
+            sy: 1
+            ry: 0
+            sz: 1
+            sx: 1
+          - z: 0.6
+            name: rightLeg
+            y: 0
+            x: 0
             rx: 0
             ry: 0
             rz: 0
             sx: 1
             sy: 1
             sz: 1
-          - ry: 0
-            name: rightLeg
-            z: 0.6
-            rx: 0
-            x: 0
-            rz: 0
-            sx: 1
-            sy: 1
-            sz: 1
-            y: 0
-          - y: 0
-            z: 0.3
+          - z: 0.3
             name: rightThigh
+            y: 0
             x: -0.15
             rx: 0
             ry: 0
@@ -1027,17 +624,17 @@ frames:
             sy: 1
             sz: 1
         name: humanoid
-      - objects:
-          - x: 1.5
-            name: axle
+      - assembly:
+          - y: -1.4
+            x: 1.5
             z: 2
-            y: -1.4
-            rx: -1.570796
-            ry: 0
+            name: axle
             rz: 0
-            sx: 1
+            rx: -1.570796
             sy: 1
+            ry: 0
             sz: 1
+            sx: 1
           - name: head
             x: 0
             y: 0
@@ -1058,63 +655,74 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-          - name: rightLeg
-            z: 0
+          - z: 0
+            name: rightLeg
             y: 0
             x: 0.223
-            rz: 0
             rx: 0
-            sy: 1
             ry: 0
-            sz: 1
+            rz: 0
             sx: 1
+            sy: 1
+            sz: 1
           - z: -0.37
             name: torso
             y: 0
             x: 0
-            rx: 0
             ry: 0
-            rz: 0
             sx: 1
-            sy: 1
+            rx: 0
             sz: 1
+            rz: 0
+            sy: 1
         name: r2d2
-  - keyFrameNo: 5
+    keyFrameNo: 2
+  - keyFrameNo: 3
+    light1: 1
+    light2: 1
+    camera:
+      y: 0
+      z: 0
+      rx: 0.2617994
+      x: 0
+      ry: -0.2617994
+      rz: 0
+    light3: 1
     frame:
       - name: humanoid
-        objects:
-          - sz: 1
-            sy: 1
-            name: body
+        assembly:
+          - name: body
             sx: 1
-            x: 0
-            ry: 0
-            y: 0
             z: -0.8
-            rx: 0
-            rz: 0
-          - rx: 0
-            rz: 0
+            x: 0
+            y: 0
+            sy: 1
+            rx: 0.2617994
+            sz: 1
             ry: 0
+            rz: 0
+          - name: head
             z: -0.2
-            y: 0
-            x: 0
-            name: head
-            sx: 1
-            sy: 1
-            sz: 1
-          - z: 0
-            x: -0.4
-            y: 0
-            name: leftArm
-            ry: 0
             rx: 0
-            sx: 1
-            rz: 0
-            sz: 1
-            sy: 1
-          - z: 0.55
+            y: 0
             x: 0
+            ry: 0
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+          - name: leftArm
+            z: 0
+            y: 0
+            x: -0.4
+            rx: 0.959931
+            ry: -0.08726647
+            rz: 0
+            sx: 1
+            sy: 1
+            sz: 1
+          - x: 0
+            z: 0.55
             y: 0
             name: leftFist
             rx: 0
@@ -1123,78 +731,77 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-          - x: 0
-            z: 0.7
+          - z: 0.7
+            x: 0
             y: 0
             name: leftFoot
-            rx: 0
             ry: 0
-            rz: 0
+            rx: 0
             sx: 1
-            sy: 1
+            rz: 0
             sz: 1
+            sy: 1
           - name: leftHand
-            x: 0
             z: 0.4
-            sz: 1
+            x: 0
             y: 0
-            rx: 0
+            rx: 1.570796
             ry: 0
             rz: 0
             sx: 1
             sy: 1
+            sz: 1
           - x: 0
             z: 0.6
             y: 0
             name: leftLeg
             rx: 0
-            rz: 0
             ry: 0
-            sy: 1
+            rz: 0
             sx: 1
+            sy: 1
             sz: 1
           - z: 0.3
+            rx: 0
             x: 0.15
             y: 0
             name: leftThigh
-            rx: 0
             ry: 0
             rz: 0
             sx: 1
             sy: 1
             sz: 1
-          - z: -0.1
+          - sy: 1
+            sx: 1
+            sz: 1
+            z: -0.1
             x: 0
             y: 0
             name: neck
             rx: 0
             ry: 0
             rz: 0
+          - y: 0
+            z: 0
+            rx: 0.959931
+            ry: 0.08726647
+            rz: 0
             sx: 1
-            sy: 1
-            sz: 1
-          - z: 0
-            name: rightArm
-            y: 0
             x: 0.4
-            rx: 0
-            ry: 0
-            rz: 0
-            sx: 1
             sy: 1
+            name: rightArm
             sz: 1
-          - x: 0
-            z: 0.55
-            y: 0
+          - y: 0
             name: rightFist
-            ry: 0
             rx: 0
-            sx: 1
+            ry: 0
             rz: 0
-            sz: 1
+            sx: 1
             sy: 1
-          - x: 0
-            z: 0.7
+            sz: 1
+            x: 0
+            z: 0.55
+          - z: 0.7
             y: 0
             name: rightFoot
             rx: 0
@@ -1203,18 +810,18 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-          - x: 0
-            z: 0.4
-            y: 0
+            x: 0
+          - y: 0
             name: rightHand
-            rx: 0
             ry: 0
-            rz: 0
+            rx: 0.959931
             sx: 1
-            sy: 1
+            rz: 0
             sz: 1
-          - x: 0
-            z: 0.6
+            sy: 1
+            x: 0
+            z: 0.4
+          - z: 0.6
             y: 0
             name: rightLeg
             rx: 0
@@ -1223,16 +830,17 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-          - x: -0.15
-            z: 0.3
+            x: 0
+          - z: 0.3
             y: 0
             name: rightThigh
             rx: 0
-            rz: 0
             ry: 0
-            sy: 1
+            rz: 0
             sx: 1
+            sy: 1
             sz: 1
+            x: -0.15
           - x: -1.5
             z: 2
             y: -1.4
@@ -1243,36 +851,36 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-      - objects:
+      - assembly:
           - z: 2
             x: 1.5
-            y: -1.4
             name: axle
-            rx: -1.570796
+            y: -1.4
             ry: 0
-            rz: 0
+            rx: -1.570796
             sx: 1
-            sy: 1
+            rz: 0
             sz: 1
+            sy: 1
           - z: 0.54
+            sz: 1
             x: 0
             y: 0
             name: head
+            sx: 1
             rx: 0
             ry: 0
             rz: 0
-            sx: 1
             sy: 1
-            sz: 1
           - z: 0
             x: -0.223
             y: 0
             name: leftLeg
             rx: 0
-            rz: 0
             ry: 0
-            sy: 1
+            rz: 0
             sx: 1
+            sy: 1
             sz: 1
           - x: 0.223
             z: 0
@@ -1284,47 +892,56 @@ frames:
             sx: 1
             sy: 1
             sz: 1
-          - x: 0
-            z: -0.37
+          - z: -0.37
+            rz: 0
             y: 0
             name: torso
             rx: 0
             ry: 0
-            rz: 0
-            sx: 1
             sy: 1
+            sx: 1
             sz: 1
+            x: 0
         name: r2d2
-  - keyFrameNo: 6
+  - light1: 1
+    light2: 1
+    light3: 1
+    camera:
+      x: 0
+      y: 0
+      z: 0
+      rx: 0.2617994
+      ry: -0.2617994
+      rz: 0
     frame:
       - name: humanoid
-        objects:
-          - name: body
-            x: 0
-            y: 0
-            ry: 0
-            z: -0.8
-            rx: 0
-            sz: 1
-            rz: 0
-            sx: 1
-            sy: 1
+        assembly:
           - x: 0
-            name: head
+            name: body
+            ry: 0
+            rx: 0.2617994
+            rz: 0
             y: 0
+            sx: 1
+            z: -0.8
+            sz: 1
+            sy: 1
+          - y: 0
             z: -0.2
             rx: 0
+            x: 0
             ry: 0
-            sx: 1
             rz: 0
+            sx: 1
             sy: 1
             sz: 1
+            name: head
           - name: leftArm
             x: -0.4
             y: 0
             z: 0
-            rx: 0
-            ry: 0
+            rx: 1.570796
+            ry: -0.08726647
             rz: 0
             sx: 1
             sy: 1
@@ -1353,7 +970,7 @@ frames:
             x: 0
             y: 0
             z: 0.4
-            rx: 0
+            rx: 1.570796
             ry: 0
             rz: 0
             sx: 1
@@ -1393,8 +1010,8 @@ frames:
             x: 0.4
             y: 0
             z: 0
-            rx: 0
-            ry: 0
+            rx: 1.570796
+            ry: 0.08726647
             rz: 0
             sx: 1
             sy: 1
@@ -1423,7 +1040,7 @@ frames:
             x: 0
             y: 0
             z: 0.4
-            rx: 0
+            rx: 0.08726647
             ry: 0
             rz: 0
             sx: 1
@@ -1460,7 +1077,7 @@ frames:
             sy: 1
             sz: 1
       - name: r2d2
-        objects:
+        assembly:
           - name: axle
             x: 1.5
             y: -1.4
@@ -1511,3 +1128,4 @@ frames:
             sx: 1
             sy: 1
             sz: 1
+    keyFrameNo: 4

@@ -31,6 +31,12 @@ void renderGL()
     // currentObject->draw();
 
 }
+GLFWwindow ** window2;
+void callBack()
+{
+        glfwPollEvents();
+        glfwSwapBuffers(*window2);
+}
 int main(int argc, char** argv)
 {
     std::cout << "Assignment1\n";
@@ -66,13 +72,14 @@ int main(int argc, char** argv)
 
      Env env(1);
      currentObject = &env;
+
+    window2 = &window;
     while(!glfwWindowShouldClose(window))
     {
+
         renderGL();
         env.draw();
-        glfwPollEvents();
-        glfwSwapBuffers(window);
-        
+        callBack();
     }
     glfwTerminate();
     return 0;

@@ -22,7 +22,7 @@ class Assembly
     virtual void rotateArm(glm::vec3 left,glm::vec3 right){};
     virtual  void rotateHand(double left,double right){};
     virtual  void translate(glm::vec3 del);
-
+    virtual void moveNext();
 };
 
 #endif

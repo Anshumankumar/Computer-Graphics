@@ -149,7 +149,7 @@ void Object::initVboVao()
     glGenBuffers (1, &vbo);
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
     glBufferData (GL_ARRAY_BUFFER, 
-            20000000,NULL, GL_STATIC_DRAW);
+           0,NULL, GL_STATIC_DRAW);
 
     glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
     if (texFlag >=1 )
@@ -389,13 +389,13 @@ void Object::moveNext()
 
 void Object::setNext(YAML::Node &node, float frames)
 {
-    xdel = (xtln-node["x"].as<float>())/frames;      
-    ydel = (ytln-node["y"].as<float>())/frames;      
-    zdel = (ztln-node["z"].as<float>())/frames;      
-    rxdel = (xrot-node["rx"].as<float>())/frames;      
-    rydel = (yrot-node["ry"].as<float>())/frames;      
-    rzdel = (zrot-node["rz"].as<float>())/frames;      
-    sxdel = (xscale-node["sx"].as<float>())/frames;      
-    sydel = (yscale-node["sy"].as<float>())/frames;      
-    szdel = (zscale-node["sz"].as<float>())/frames;      
+    xdel = -(xtln-node["x"].as<float>())/frames;      
+    ydel = -(ytln-node["y"].as<float>())/frames;      
+    zdel = -(ztln-node["z"].as<float>())/frames;      
+    rxdel = -(xrot-node["rx"].as<float>())/frames;      
+    rydel = -(yrot-node["ry"].as<float>())/frames;      
+    rzdel = -(zrot-node["rz"].as<float>())/frames;      
+    sxdel = -(xscale-node["sx"].as<float>())/frames;      
+    sydel = -(yscale-node["sy"].as<float>())/frames;      
+    szdel = -(zscale-node["sz"].as<float>())/frames;      
 }
