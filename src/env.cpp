@@ -1,9 +1,11 @@
 #include <env.hpp>
 extern int l1,l2,l3;
 
-#define NO_OF_FRAME 30.0
+#define NO_OF_FRAME 10.0
 void callBack();
 void renderGL();
+int writeImage(int frameNo , unsigned char *data , int width, int height);
+
 void Env::draw()
 {
     for (auto &obj:roboArray)
@@ -138,6 +140,11 @@ void Env::appendYaml(int frameNo)
 
 void Env::parseFrame()
 {
+    unsigned char * iRGB;
+    iRGB = new unsigned char [3 * 640 *640];
+    glReadBuffer(GL_LEFT);
+    glPixelStoref(GL_PACK_ALIGNMENT,2);
+    int frameNo = 0;
     initCam();
     YAML::Node mainNode =  YAML::LoadFile("../keyframes.yaml");
     std::cout << l1 << l2 << l3 <<"\n";
@@ -164,15 +171,20 @@ void Env::parseFrame()
         }
         for (int i =0;i<NO_OF_FRAME;i++)
         {
+            frameNo++;
             glfwSetTime(0);
             moveNext();
             for (auto &robots:roboArray)
             {
                 robots.second->moveNext();
             }
+
             renderGL();
             draw();
             callBack();
+            
+            glReadPixels(0, 0, 640, 640, GL_RGB, GL_UNSIGNED_BYTE, iRGB);
+            writeImage(frameNo,iRGB,640,640);
             while (glfwGetTime() < 1/NO_OF_FRAME){}
         } 
     }

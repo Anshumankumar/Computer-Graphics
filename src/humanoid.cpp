@@ -63,7 +63,7 @@ void Humanoid::walk()
     {
         case 1:
             walkFlag = 0;
-            objectMap["leftThigh"].rotate(M_PI/4,0,0);
+            objectMap["leftThigh"].rotate(M_PI/30,0,0);
             objectMap["rightLeg"].rotate(M_PI/20,0,0);
             objectMap["rightThigh"].rotate(-M_PI/30,0,0);
             break;
