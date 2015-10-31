@@ -4,9 +4,9 @@ extern GLuint shaderProgram;
 int l1 =1;
 int l2 =1;
 int l3 =1;
-Object::Object(std::string texImg)
+Object::Object(std::string texImg, std::string name_)
 {
-    if (texImg == "NOTHING")
+    if (texImg == "none")
     {
         
         texImage = "../texture.jpg";
@@ -14,7 +14,7 @@ Object::Object(std::string texImg)
     }
     else
     {
-        texImage = texImg;
+        texImage = "../textures/" + texImg;
         texFlag = 1;
     }
     xrot = 0; yrot = 0; zrot = 0;
@@ -22,7 +22,7 @@ Object::Object(std::string texImg)
     xtln = 0; ytln = 0; ztln = 0;
     lxtln = 0; lytln = 0; lztln = 0;
     currentZ = 0.0;
-    name = "default";
+    name = name_;
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
     initVboVao();
@@ -50,7 +50,7 @@ void Object::changeTexImage(std::string tname)
 }
 void Object::loadImage()
 { 
-  // std::cout << "Loading texture from: "<< texImage <<"\n"; 
+//  std::cout << "Loading texture from: "<< texImage <<"\n"; 
   int width, height;
   unsigned char* image = SOIL_load_image(texImage.c_str(),
                                          &width, &height, 0, SOIL_LOAD_RGB);
@@ -70,9 +70,11 @@ void Object::updateCentroid(glm::vec3 rPoint)
 
 void Object::addChild(Object *child,glm::vec3 pP, glm::vec3 cP)
 {
+        
     childArray.push_back(child);
     child->translate(-cP[0]+pP[0],-cP[1]+pP[1],-cP[2]+pP[2]);
     child->updateCentroid(cP);
+
 }
 void Object::applyOutsideTransform(glm::mat4 t)
 {
@@ -221,8 +223,10 @@ void Object::draw()
 #else
     glDrawArrays(GL_LINES,0,pointArray.size());
 #endif
+    
     for (auto& child:childArray)
     {
+         
         child->draw();
     }
 }
@@ -357,4 +361,41 @@ void Object::resize(float sx,float sy,float sz)
     yscale = sy;
     zscale = sz;
     createMat();
+}
+
+YAML::Node Object::getNode()
+{
+    YAML::Node node;
+    node["name"] = name;
+    node["x"] = xtln;
+    node["y"] = ytln;
+    node["z"] = ztln;
+    node["rx"] = xrot;
+    node["ry"] = yrot;
+    node["rz"] = zrot;
+    node["sx"] = xscale;
+    node["sy"] = yscale;
+    node["sz"] = zscale;
+    return node;
+}
+
+
+void Object::moveNext()
+{
+    translate(xdel,ydel,zdel);
+    rotate(rxdel,rydel,rzdel);
+    resize(xscale+sxdel,yscale+sydel,zscale+szdel);
+}
+
+void Object::setNext(YAML::Node &node, float frames)
+{
+    xdel = (xtln-node["x"].as<float>())/frames;      
+    ydel = (ytln-node["y"].as<float>())/frames;      
+    zdel = (ztln-node["z"].as<float>())/frames;      
+    rxdel = (xrot-node["rx"].as<float>())/frames;      
+    rydel = (yrot-node["ry"].as<float>())/frames;      
+    rzdel = (zrot-node["rz"].as<float>())/frames;      
+    sxdel = (xscale-node["sx"].as<float>())/frames;      
+    sydel = (yscale-node["sy"].as<float>())/frames;      
+    szdel = (zscale-node["sz"].as<float>())/frames;      
 }

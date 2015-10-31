@@ -10,11 +10,10 @@ void Env::draw()
 }
 void Env::addObject()
 {
-    Humanoid *robo1 =new Humanoid;
-    R2D2 *robo2 =new R2D2;
-    robo1->createHierarchy();
-    robo2->createHierarchy();
+    Humanoid *robo1;
+    robo1 =new Humanoid("../models/humanoid.yaml");
     robo1->translate({-1.5,-1.4,2});
+    R2D2 *robo2 =new R2D2("../models/r2d2.yaml");
     robo2->translate({1.5,-1.4,2});
     spotLight.translate(0,-3.4,0);
     spotLight.rotate(-M_PI/6,-M_PI/6,0);
@@ -85,5 +84,29 @@ Env::Env(int a):spotLight("../textures/spotLight.jpg")
     spotLight.readfile("../models/spotLight.raw");
     spotLight.startlight();
     initCam();
+}
+
+void Env::appendYaml(int frameNo)
+{
+    YAML::Node mainNode;
+    if (frameNo != 0)
+    {
+        mainNode =  YAML::LoadFile("../keyframes.yaml");
+    }
+    YAML::Node node;
+    for (auto &robo:roboArray)
+    {
+        YAML::Node rnode;
+        rnode["name"] = robo->name;
+        for (auto &obj:robo->objectMap)
+        {
+            rnode["objects"].push_back(obj.second.getNode());
+        }
+        node["frame"].push_back(rnode);
+        node["keyFrameNo"] = frameNo;
+    }
+    mainNode["frames"].push_back(node);
+    std::ofstream fout("../keyframes.yaml");
+    fout << mainNode;
 }
 

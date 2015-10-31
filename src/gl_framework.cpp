@@ -1,15 +1,16 @@
 #include "gl_framework.hpp"
 #include "object.hpp"
-#include "scene.hpp"
-#include "humanoid.hpp"
+#include "env.hpp"
+#include "assembly.hpp"
 
 #define MODE_INSPECTION 1
 #define MODE_MODELLING 2
 
 int mode = MODE_INSPECTION; 
-extern Object* currentObject;
+extern Env* currentObject;
 extern Object* currentObject2;
-extern Humanoid *robo;
+extern Assembly *robo;
+int frameNumber = 0; 
 extern int l1,l2,l3;
 namespace myglf
 {
@@ -35,20 +36,11 @@ namespace myglf
     {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
             glfwSetWindowShouldClose(window, GL_TRUE);
-        else if (key == GLFW_KEY_M  && action == GLFW_PRESS)
-        {
-            currentObject->reset();
-            std::cout << "Current Mode: Modelling\n";
-            mode = MODE_MODELLING;
-        }
-        else if (key == GLFW_KEY_I && action == GLFW_PRESS)
-        {
-            std::cout << "Current Mode: Inspection\n";
-            mode = MODE_INSPECTION;
-        }
         else if (key == GLFW_KEY_F && action == GLFW_PRESS)
         {
-            currentObject->zIncrease();
+            std::cout << "Appendind KeyFrame: " << frameNumber << "\n";
+            currentObject->appendYaml(frameNumber);
+            frameNumber++;
         }
         else if (key == GLFW_KEY_J && action == GLFW_PRESS)
         {
@@ -125,22 +117,6 @@ namespace myglf
     {
         if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
         {
-            if (mode == MODE_INSPECTION) 
-            {
-                std::cout << "Current Mode: INSPECTION\n";
-                return;
-            }
-            if (glfwGetKey (window,GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-            {
-                currentObject->pop();
-            }
-            else
-            {
-                double xpos,ypos;
-                glfwGetCursorPos (window,&xpos,&ypos);
-                currentObject->updateXY(window,xpos,ypos);
-                currentObject->push();
-            }
         }
     }
     void framebuffer_size_callback(GLFWwindow* window, int width,

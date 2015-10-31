@@ -1,0 +1,100 @@
+assemb:
+    name: humanoid
+    parts:
+        - name: torsal
+          parent: none
+          linkPC: [0,0,0]
+          linkCP: [0,0,0]
+          rFile: humanoid_torsal.raw
+          texture: texture.jpg
+        - name: body
+          parent: torsal
+          linkPC: [0,0,0]
+          linkCP: [0,0,0.8]
+          rFile: humanoid_body.raw
+          texture: texture2.jpg
+        - name: neck
+          parent: body
+          linkPC: [0,0,0]
+          linkCP: [0,0,0.1]
+          rFile: humanoid_neck.raw
+          texture: texture.jpg
+        - name: leftArm
+          parent: body
+          linkPC: [-0.3,0,0]
+          linkCP: [0.1,0,0]
+          rFile: humanoid_arm.raw
+          texture: texture.jpg
+        - name: rightArm
+          parent: body
+          linkPC: [0.3,0,0]
+          linkCP: [-0.1,0,0]
+          rFile: humanoid_arm.raw
+          texture: texture.jpg
+        - name: head
+          parent: neck
+          linkPC: [0,0,0]
+          linkCP: [0,0,0.2]
+          rFile: humanoid_head.raw
+          texture: texture3.jpg
+        - name: leftHand
+          parent: leftArm
+          linkPC: [0,0,0.4]
+          linkCP: [0,0,0]
+          rFile: humanoid_hand.raw
+          texture: texture2.jpg
+        - name: rightHand
+          parent: rightArm
+          linkPC: [0,0,0.4]
+          linkCP: [0,0,0]
+          rFile: humanoid_hand.raw
+          texture: texture2.jpg
+        - name: leftFist
+          parent: leftHand
+          linkPC: [0,0,0.4]
+          linkCP: [0,0,-0.15]
+          rFile: humanoid_fist.raw
+          texture: texture3.jpg
+        - name: rightFist
+          parent: rightHand
+          linkPC: [0,0,0.4]
+          linkCP: [0,0,-0.15]
+          rFile: humanoid_fist.raw
+          texture: texture3.jpg
+        - name: rightThigh
+          parent: torsal
+          linkPC: [-0.15,0,0.3]
+          linkCP: [0,0,0]
+          rFile: humanoid_thigh.raw
+          texture: texture.jpg
+        - name: leftThigh
+          parent: torsal
+          linkPC: [0.15,0,0.3]
+          linkCP: [0,0,0]
+          rFile: humanoid_thigh.raw
+          texture: texture.jpg
+        - name: leftLeg
+          parent: leftThigh
+          linkPC: [0,0,0.6]
+          linkCP: [0,0,0]
+          rFile: humanoid_leg.raw
+          texture: texture2.jpg
+        - name: rightLeg
+          parent: rightThigh
+          linkPC: [0,0,0.6]
+          linkCP: [0,0,0]
+          rFile: humanoid_leg.raw
+          texture: texture2.jpg
+        - name: leftFoot
+          parent: leftLeg
+          linkPC: [0,0,0.6]
+          linkCP: [0,0,-0.10]
+          rFile: humanoid_foot.raw
+          texture: texture3.jpg
+        - name: rightFoot
+          parent: rightLeg
+          linkPC: [0,0,0.6]
+          linkCP: [0,0,-0.10]
+          rFile: humanoid_foot.raw
+          texture: texture3.jpg
+
