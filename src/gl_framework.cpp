@@ -55,7 +55,9 @@ namespace myglf
             l3 =  abs(l3-1);
         }
         else if (key == GLFW_KEY_R && action == GLFW_PRESS)
-        {}
+        {
+            currentObject->parseFrame();
+        }
         else if (key == GLFW_KEY_1 && action == GLFW_PRESS)
            robo->bendFront();
         else if (key == GLFW_KEY_2 && action == GLFW_PRESS)

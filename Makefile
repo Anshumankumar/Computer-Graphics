@@ -3,14 +3,15 @@ GLEWLIB= -lGLEW
 GLFWLIB = `pkg-config glfw3 --libs --static`
 SOILLIB = -lSOIL
 YAMLLIB = -lyaml-cpp
-LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(SOILLIB) $(YAMLLIB)
+PNGLIB = -lpng
+LIBS=$(OPENGLLIB) $(GLEWLIB) $(GLFWLIB) $(SOILLIB) $(YAMLLIB) $(PNGLIB)
 LIBS_DIR = ./libs
 LDFLAGS=-L/usr/local/lib -L$(LIBS_DIR)
 IN_DIR= include/
 SRC_DIR = src/
 CPPFLAGS=-I/usr/local/include -I$(IN_DIR) -std=c++11  -w -g
 BIN1=build/assignment_04
-SRCS1= gl_framework.cpp shader_util.cpp object.cpp utils.cpp humanoid.cpp r2d2.cpp env.cpp assembly.cpp
+SRCS1= gl_framework.cpp shader_util.cpp object.cpp utils.cpp humanoid.cpp r2d2.cpp env.cpp assembly.cpp pngWrapper.cpp
 SRCS = $(SRCS1:%=$(SRC_DIR)%)
 INCLUDES1= gl_framework.hpp object.hpp shader_util.hpp utils.hpp humanoid.hpp env.hpp r2d2.hpp
 INCLUDES = $(INCLUDES1:%=$(IN_DIR)%)

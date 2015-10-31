@@ -11,8 +11,9 @@ extern Object *currentObject2;
 class Env:public Object
 {
     glm::vec3 cPos,cUp,cRot;
-    int currentRobo = 0;
-    std::vector<Assembly*> roboArray;
+    glm::vec3 cpdel,crdel;
+    std::map<std::string,Assembly*>::iterator currentRobo;
+    std::map<std::string,Assembly*> roboArray;
     public:
     Object env;
     Object spotLight;
@@ -24,6 +25,8 @@ class Env:public Object
     void translate(float delx , float dely ,float delz);
     void rotate(float delx, float dely, float delz);
     void appendYaml(int frameNo);
+    void parseFrame();
+    void moveNext();
     Env(int a);
 };
 #endif

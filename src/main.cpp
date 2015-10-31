@@ -1,12 +1,9 @@
 /*
- *Assignment 4
+ *Assignment 1
  *@author Anshuman Kumar
  */
 
-#include <chrono>
-#include <thread>
 #include "env.hpp"
-
 GLuint shaderProgram;
 
 Env * currentObject;
@@ -27,11 +24,14 @@ void initBufferGL()
     
 }
 
+GLFWwindow ** window2;
 void renderGL()
 {
-     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    currentObject->draw();
+    glfwPollEvents();
+    glfwSwapBuffers(*window2);
 
-    // currentObject->draw();
 
 }
 int main(int argc, char** argv)
@@ -42,9 +42,8 @@ int main(int argc, char** argv)
         std::cerr << "Unable to start GLFW\n";
         return 1;
     }
-    
-    GLFWwindow* window = glfwCreateWindow(640, 640, "OpenGL Assignment 4", NULL, NULL);
-
+    GLFWwindow* window = glfwCreateWindow  (640, 640,
+            "OpenGL Assignment4", NULL , NULL);
     glfwSetErrorCallback(myglf::error_callback);
 
     if(! window)
@@ -63,35 +62,19 @@ int main(int argc, char** argv)
     glfwSetKeyCallback(window, myglf::key_callback);
     glfwSetMouseButtonCallback(window, myglf::mouse_button_callback);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    glfwSetFramebufferSizeCallback(window, myglf::framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, 
+            myglf::framebuffer_size_callback);
     myglf::initGL();
     initBufferGL();
-    
-    double target_frame_rate = 30.0;
-    double frame_time = 1.0 / target_frame_rate;
-    double frame_start, draw_time;
-    int sleep_time_ms;
-    
+
     Env env(1);
     currentObject = &env;
+
+    window2 = &window;
     while(!glfwWindowShouldClose(window))
     {
-      frame_start = glfwGetTime();
 
-      renderGL();
-      env.draw();
-      glfwPollEvents();
-
-      draw_time = glfwGetTime() - frame_start;
-
-      sleep_time_ms = int(1000.0*(frame_time - draw_time));
-      if( sleep_time_ms > 0.0 )
-      {
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time_ms));
-      }
-
-      glfwSwapBuffers(window);
-
+        renderGL();
     }
     glfwTerminate();
     return 0;

@@ -62,3 +62,11 @@ void Assembly::draw()
 {
     mainObj->draw();
 }
+void Assembly::moveNext()
+{
+    for (auto &obj:objectMap)
+    {
+        obj.second.moveNext();
+    }
+}
+
