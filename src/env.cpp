@@ -146,7 +146,6 @@ void Env::parseFrame()
     int frameNo = 0;
     initCam();
     YAML::Node mainNode =  YAML::LoadFile("../keyframes.yaml");
-    std::cout << l1 << l2 << l3 <<"\n";
     for (auto frame:mainNode["frames"])
     {
         l1 = frame["light1"].as<int>();
