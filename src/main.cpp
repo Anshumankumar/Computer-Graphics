@@ -36,14 +36,14 @@ void renderGL()
 }
 int main(int argc, char** argv)
 {
-    std::cout << "Assignment1\n";
+    std::cout << "Assignment 4\n";
     if (!glfwInit())
     {
         std::cerr << "Unable to start GLFW\n";
         return 1;
     }
     
-    GLFWwindow* window = glfwCreateWindow(640, 640, "OpenGL Assignment4", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(640, 640, "OpenGL Assignment 4", NULL, NULL);
 
     glfwSetErrorCallback(myglf::error_callback);
 
