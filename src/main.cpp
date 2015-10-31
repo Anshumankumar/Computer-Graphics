@@ -24,18 +24,15 @@ void initBufferGL()
     
 }
 
+GLFWwindow ** window2;
 void renderGL()
 {
-     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    currentObject->draw();
+    glfwPollEvents();
+    glfwSwapBuffers(*window2);
 
-    // currentObject->draw();
 
-}
-GLFWwindow ** window2;
-void callBack()
-{
-        glfwPollEvents();
-        glfwSwapBuffers(*window2);
 }
 int main(int argc, char** argv)
 {
@@ -70,16 +67,14 @@ int main(int argc, char** argv)
     myglf::initGL();
     initBufferGL();
 
-     Env env(1);
-     currentObject = &env;
+    Env env(1);
+    currentObject = &env;
 
     window2 = &window;
     while(!glfwWindowShouldClose(window))
     {
 
         renderGL();
-        env.draw();
-        callBack();
     }
     glfwTerminate();
     return 0;

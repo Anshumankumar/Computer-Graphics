@@ -2,7 +2,6 @@
 extern int l1,l2,l3;
 
 #define NO_OF_FRAME 10.0
-void callBack();
 void renderGL();
 int writeImage(int frameNo , unsigned char *data , int width, int height);
 
@@ -180,8 +179,6 @@ void Env::parseFrame()
             }
 
             renderGL();
-            draw();
-            callBack();
             
             glReadPixels(0, 0, 640, 640, GL_RGB, GL_UNSIGNED_BYTE, iRGB);
             writeImage(frameNo,iRGB,640,640);

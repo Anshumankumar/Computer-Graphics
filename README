@@ -1,20 +1,24 @@
-#This file uses the c++11 for compilation. If you are using other version it may create problem
-# The executable is in build directory
-make #for compiling the code. 
+To build the code, use make:
+$ make
 
-chmod +x run.sh 
+c++11 is needed for proper compilation.
 
-./run.sh 0 For running the program
-./run.sh 1 For running the program using optirun (on optimus systems)
-./run.sh 2 For running tests
-./run.sh 3 For generate humanoid model
-./run.sh 4 For generate r2d2 model
+To run the code:
 
-Alternatively, you can cd into the `build' directory and run either
-./assignment_03
+$ ./run.sh 0 # run the program using default options
+$ ./run.sh 1 # run the program using optirun (on optimus systems)
+$ ./run.sh 2 # run tests
+$ ./run.sh 3 # generate humanoid model
+$ ./run.sh 4 # generate r2d2 model
+
+You may need give execute permissions to the run.sh script. 
+$ chmod +x run.sh 
+
+Alternatively, you can cd into the `build' directory and use either
+$ ./assignment_04
 or
-optirun ./assignment_03 
+$ optirun ./assignment_04
 
-For a full report please see:
-http://anshumankumar.github.io/CS475/assignment3.html
+For a full report (describing keybindings) please see:
+http://anshumankumar.github.io/CS475/assignment4.html
 
