@@ -38,7 +38,7 @@ namespace myglf
             glfwSetWindowShouldClose(window, GL_TRUE);
         else if (key == GLFW_KEY_F && action == GLFW_PRESS)
         {
-            std::cout << "Appendind KeyFrame: " << frameNumber << "\n";
+            std::cout << "Appending KeyFrame: " << frameNumber << "\n";
             currentObject->appendYaml(frameNumber);
             frameNumber++;
         }
