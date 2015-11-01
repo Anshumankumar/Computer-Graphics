@@ -25,6 +25,7 @@
 
 class Object
 {
+private:
     int rotationFlag;
     float xrot,yrot,zrot,xtln,ytln,ztln;
     float lxtln,lytln,lztln;
@@ -34,6 +35,7 @@ class Object
     float currentZ,currentX,currentY;
     glm::vec4 currentPosition;
     PointV  pointArray;
+    GLenum  mode; // drawing mode: GL_TRIANGLES, GL_LINES, GL_POINTS
     glm::vec3 centroid;
     int triangleArraySize;
     GLuint vbo, vao, tex;
@@ -41,13 +43,13 @@ class Object
     GLuint normalMatrix;
     GLuint viewMatrix;
     std::vector<Object*> childArray;
-    protected:
+protected:
     glm::mat4 transMatrix;
     glm::mat4 normalMat;
     glm::mat4 viewMat;
     glm::mat4 outsideTransform;
     std::string texImage;
-    public:
+public:
     std::string name;
     Object(std::string texImg = "none",std::string name_ ="default");
     void loadImage();
@@ -62,6 +64,7 @@ class Object
     void createTriangles();
     void initVboVao();
     void setVboVao();
+    void setDrawMode(GLenum draw_mode);
     virtual void draw();
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");

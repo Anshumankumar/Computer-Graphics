@@ -25,6 +25,7 @@ Object::Object(std::string texImg, std::string name_)
     name = name_;
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
+    mode = GL_TRIANGLES; // default drawing mode
     initVboVao();
 }
 
@@ -215,14 +216,23 @@ void Object::drawPointLines()
     glDrawArrays(GL_LINES,0,pointArray.size()-1);
     glDrawArrays(GL_POINTS,pointArray.size()-1,pointArray.size());
 }
+
+void Object::setDrawMode(GLenum draw_mode)
+{
+    mode = draw_mode;
+}
+
 void Object::draw()
 {
     setVboVao();
-#if DRAWLINES == 0
-    glDrawArrays(GL_TRIANGLES,0,pointArray.size());
-#else
-    glDrawArrays(GL_LINES,0,pointArray.size());
-#endif
+    if (mode == GL_TRIANGLES) // default mode set in ctor
+      glDrawArrays(GL_TRIANGLES, 0, pointArray.size());
+    
+    if (mode == GL_LINES)
+      glDrawArrays(GL_LINES, 0, pointArray.size());
+
+    if (mode == GL_POINTS)
+      glDrawArrays(GL_POINTS, 0, pointArray.size());
     
     for (auto& child:childArray)
     {
