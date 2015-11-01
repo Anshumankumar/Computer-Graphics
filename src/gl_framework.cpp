@@ -8,6 +8,7 @@
 
 int mode = MODE_INSPECTION; 
 extern Env* currentObject;
+extern Env* envObject;
 extern Object* currentObject2;
 extern Assembly *robo;
 int frameNumber = 0; 
@@ -85,7 +86,7 @@ namespace myglf
             robo->walk();
         
         else if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
-            currentObject->swap();
+            envObject->swap();
         else if (mode == MODE_MODELLING && action ==GLFW_PRESS)
             std::cout << "Current Mode: MODELLING\n";
         else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
@@ -104,10 +105,26 @@ namespace myglf
             currentObject2->ltranslate(0, -0.1,0.0);
         else if (key == GLFW_KEY_S && action == GLFW_PRESS)
             currentObject2->ltranslate(0, 0.1,0.0);
+        else if (key == GLFW_KEY_V && action == GLFW_PRESS)
+            currentObject2->ltranslate(-0.1,0,0.0);
+        else if (key == GLFW_KEY_B && action == GLFW_PRESS)
+            currentObject2->ltranslate(0.1,0,0.0);
+        else if (key == GLFW_KEY_N && action == GLFW_PRESS)
+            currentObject2->ltranslate(0,0,-0.1);
+        else if (key == GLFW_KEY_M && action == GLFW_PRESS)
+            currentObject2->ltranslate(0,0,0.1);
         else if (key == GLFW_KEY_A && action == GLFW_PRESS)
             currentObject2->rotate(0,0,M_PI/24);
         else if (key == GLFW_KEY_D && action == GLFW_PRESS)
             currentObject2->rotate(0,0,-M_PI/24);
+        else if (key == GLFW_KEY_Y && action == GLFW_PRESS)
+            currentObject2->rotate(M_PI/24,0,0);
+        else if (key == GLFW_KEY_U && action == GLFW_PRESS)
+            currentObject2->rotate(-M_PI/24,0,0);
+        else if (key == GLFW_KEY_I && action == GLFW_PRESS)
+            currentObject2->rotate(0,M_PI/24,0);
+        else if (key == GLFW_KEY_O && action == GLFW_PRESS)
+            currentObject2->rotate(0,-M_PI/24,0);
         else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
             currentObject->translate(0,0,-0.05);
         else if (key == GLFW_KEY_X && action == GLFW_PRESS)

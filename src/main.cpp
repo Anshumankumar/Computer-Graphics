@@ -7,6 +7,7 @@
 GLuint shaderProgram;
 
 Env * currentObject;
+Env * envObject;
 Object * currentObject2;
 Assembly* robo;
 
@@ -69,6 +70,7 @@ int main(int argc, char** argv)
 
     Env env(1);
     currentObject = &env;
+    envObject = &env;
 
     window2 = &window;
     while(!glfwWindowShouldClose(window))

@@ -13,6 +13,7 @@ void Env::draw()
     }
     env.draw();
     spotLight.draw();
+    bezierCamera.draw();
 }
 void Env::addObject()
 {
@@ -23,6 +24,8 @@ void Env::addObject()
     robo2->translate({1.5,-1.4,2});
     spotLight.translate(0,-3.4,0);
     spotLight.rotate(-M_PI/6,-M_PI/6,0);
+    bezierCamera.translate(0, -1.5, 2);
+    bezierCamera.resize(2.5, 2.5, 2.5);
     roboArray[robo1->name] = robo1;
     roboArray[robo2->name] = robo2;
     currentRobo = roboArray.begin();
@@ -31,16 +34,29 @@ void Env::addObject()
     addChild(robo2->mainObj,vec,vec);
     addChild(&env,vec,vec);
     addChild(&spotLight,vec,vec);
+    addChild(&bezierCamera,vec,vec);
 }
 void Env::swap()
 {
-    ++currentRobo;
-    if (currentRobo ==roboArray.end())
-    {
+    currObjIndx++;
+    currObjIndx %= numObjectsInEnv;
+    
+    if (currObjIndx < roboArray.size()) {
+      ++currentRobo;
+      if (currentRobo == roboArray.end()) {
         currentRobo = roboArray.begin();
+      }
+      robo = currentRobo->second;
+      currentObject2 = currentRobo->second->mainObj;
     }
-    robo = currentRobo->second;
-    currentObject2 = currentRobo->second->mainObj;
+
+    if (currObjIndx == roboArray.size()) {
+      currentObject2 = &bezierCamera;
+    }
+
+    if (currObjIndx == roboArray.size() + 1) {
+      currentObject2 = &spotLight;
+    }
 }
 
 void Env::createViewMat()
@@ -89,12 +105,17 @@ void Env::rotate(float delx, float dely, float delz)
 Env::Env(int a):spotLight("../textures/spotLight.jpg")
 {
     addObject();
-    swap();
+    robo = currentRobo->second;
+    currentObject2 = currentRobo->second->mainObj;
     env.readfile("../models/cube.raw");
     env.changeTexImage("../textures/outside_texture.jpg");
     spotLight.readfile("../models/spotLight.raw");
     spotLight.startlight();
+    bezierCamera.readfile("../models/bezierCamera.raw");
     initCam();
+
+    numObjectsInEnv = roboArray.size() + 2; // one spotlight, one bezierCamera
+    currObjIndx = 0;
 }
 
 void Env::moveNext()
@@ -182,6 +203,9 @@ void Env::parseFrame()
             glReadPixels(0, 0, 640, 640, GL_RGB, GL_UNSIGNED_BYTE, iRGB);
             writeImage(frameNo,iRGB,640,640);
             while (glfwGetTime() < 1/NO_OF_FRAME){}
+            // if (glfwGetTime() < 1/NO_OF_FRAME) { 
+            //   std::this_thread::sleep_for(std::chrono::milliseconds( int(1000.0*(1/NO_OF_FRAME - glfwGetTime() )) ));
+            // }
         } 
     }
 }

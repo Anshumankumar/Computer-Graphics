@@ -49,7 +49,21 @@ void createR2D2Parts()
     createLeg();
 }
 
+void createCamera()
+{
+    string filename = "../models/bezierCamera.raw";
+    vec3 color = {0.3, 0.3, 0.3};
+    vec3 c1, c2;
+    PointV pointV = shapes::cuboid(vec3(0,.05,.075), .06, .10, .15, color);
+    c1 = vec3(0, .05, .15); c2 = vec3(0, .05, .18);
+    appendV(pointV, shapes::frustum(c2, c1, .03, .03, color, color, color));
+    c1 = vec3(0, .05, .18); c2 = vec3(0, .05, .21);
+    appendV(pointV, shapes::frustum(c1, c2, .03, .05, color, color, color));
+    fileStoreV(filename,pointV);
+}
+
 int main()
 {
     createR2D2Parts();
+    createCamera();
 }

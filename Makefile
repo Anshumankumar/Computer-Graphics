@@ -38,15 +38,21 @@ build/main.o: src/main.cpp
 $(BIN1): $(OBJ) build/main.o
 	g++ $(CPPFLAGS) $(OBJ) src/main.cpp -o $(BIN1) $(LDFLAGS) $(LIBS)
 
-
-
-modelCreator: build/modelCreator.o build/utils.o
-	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) build/modelCreator.o build/utils.o -o build/modelCreator
+modelCreator: src/modelCreator.cpp src/utils.cpp
+	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) src/modelCreator.cpp src/utils.cpp -o build/modelCreator
 	(cd build; ./modelCreator);
 
-createR2D2: build/createR2D2.o build/utils.o
-	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) build/createR2D2.o build/utils.o -o build/createR2D2
+createR2D2: src/createR2D2.cpp src/utils.cpp
+	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) src/createR2D2.cpp src/utils.cpp -o build/createR2D2
 	(cd build; ./createR2D2); 
+
+# modelCreator: build/modelCreator.o build/utils.o
+# 	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) build/modelCreator.o build/utils.o -o build/modelCreator
+# 	(cd build; ./modelCreator);
+
+# createR2D2: build/createR2D2.o build/utils.o
+# 	g++ $(CPPFLAGS) $(LDFLAGS) $(LIBS) build/createR2D2.o build/utils.o -o build/createR2D2
+# 	(cd build; ./createR2D2); 
 
 clean:
 	rm -f build/*
