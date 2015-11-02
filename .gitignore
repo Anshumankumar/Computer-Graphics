@@ -3,6 +3,7 @@
 build
 .*.*
 *.raw
-images
+images/*.png
+images/*.mp4
 Images
 keyframes.yaml

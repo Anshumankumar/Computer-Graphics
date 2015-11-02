@@ -31,7 +31,7 @@ public:
     void translate(float delx , float dely ,float delz);
     void rotate(float delx, float dely, float delz);
     void appendYaml(int frameNo);
-    void parseFrame();
+    void parseFrame(int recordFlag = 0);
     void moveNext();
     Env(int a);
 };

@@ -158,7 +158,7 @@ void Env::appendYaml(int frameNo)
     fout << mainNode;
 }
 
-void Env::parseFrame()
+void Env::parseFrame(int recordFlag)
 {
     unsigned char * iRGB;
     iRGB = new unsigned char [3 * 640 *640];
@@ -199,9 +199,11 @@ void Env::parseFrame()
             }
 
             renderGL();
-            
-            glReadPixels(0, 0, 640, 640, GL_RGB, GL_UNSIGNED_BYTE, iRGB);
-            writeImage(frameNo,iRGB,640,640);
+            if (recordFlag ==1)
+            {       
+                glReadPixels(0, 0, 640, 640, GL_RGB, GL_UNSIGNED_BYTE, iRGB);
+                writeImage(frameNo,iRGB,640,640);
+            }
             while (glfwGetTime() < 1/NO_OF_FRAME){}
             // if (glfwGetTime() < 1/NO_OF_FRAME) { 
             //   std::this_thread::sleep_for(std::chrono::milliseconds( int(1000.0*(1/NO_OF_FRAME - glfwGetTime() )) ));
