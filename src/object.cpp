@@ -114,6 +114,19 @@ Point Object::getPoint()
     return point;
 }
 
+Point Object::getPose() // slightly abuses notation as it uses a Point to return object's current pose
+{
+    Point point;
+    point.x = xtln;
+    point.y = ytln;
+    point.z = ztln;
+    point.w = 1;
+    point.cx = xrot;
+    point.cy = yrot;
+    point.cz = zrot;
+    point.ca = 1;   
+    return point;
+}
 
 void Object::updateXY(GLFWwindow * window,double X,double Y)
 {
@@ -127,6 +140,12 @@ void Object::updateXY(GLFWwindow * window,double X,double Y)
 void Object::push()
 {
     pointArray.push_back(getPoint());
+    createTriangles();
+}
+
+void Object::push(Point point)
+{
+    pointArray.push_back(point);
     createTriangles();
 }
 
@@ -225,18 +244,10 @@ void Object::setDrawMode(GLenum draw_mode)
 void Object::draw()
 {
     setVboVao();
-    if (mode == GL_TRIANGLES) // default mode set in ctor
-      glDrawArrays(GL_TRIANGLES, 0, pointArray.size());
-    
-    if (mode == GL_LINES)
-      glDrawArrays(GL_LINES, 0, pointArray.size());
-
-    if (mode == GL_POINTS)
-      glDrawArrays(GL_POINTS, 0, pointArray.size());
+    glDrawArrays(mode, 0, pointArray.size()); // default mode set in ctor is GL_TRIANGLES
     
     for (auto& child:childArray)
     {
-         
         child->draw();
     }
 }

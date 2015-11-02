@@ -25,7 +25,7 @@ namespace myglf
         glDepthFunc(GL_LESS);
         //Enable depth testing
         glEnable(GL_DEPTH_TEST);
-        std::cout << "Current Mode is: INSPECTION\n";
+        // std::cout << "Current Mode is: INSPECTION\n";
     }
 
     void error_callback(int error, const char* description)
@@ -62,6 +62,15 @@ namespace myglf
         else if (key == GLFW_KEY_P && action == GLFW_PRESS)
         {
             currentObject->parseFrame(0);
+        }
+
+        else if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+        {
+          envObject->addBezierPoint();
+        }
+        else if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
+        {
+          envObject->removeLastBezierPoint();
         }
 
         else if (key == GLFW_KEY_1 && action == GLFW_PRESS)

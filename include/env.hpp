@@ -23,6 +23,8 @@ public:
     Object env;
     Object spotLight;
     Object bezierCamera;
+    Object bezierControlPoints;
+    Object bezierCurve;
     void draw();
     void addObject();
     void swap();
@@ -33,6 +35,8 @@ public:
     void appendYaml(int frameNo);
     void parseFrame(int recordFlag = 0);
     void moveNext();
+    void addBezierPoint();
+    void removeLastBezierPoint();
     Env(int a);
 };
-#endif
+#endif // ENV_HPP

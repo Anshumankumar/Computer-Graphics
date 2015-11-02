@@ -1,9 +1,32 @@
 #include <env.hpp>
+#include <iostream>
 extern int l1,l2,l3;
 
 #define NO_OF_FRAME 10.0
 void renderGL();
 int writeImage(int frameNo , unsigned char *data , int width, int height);
+
+Env::Env(int a):spotLight("../textures/spotLight.jpg")
+{
+    addObject();
+    robo = currentRobo->second;
+    currentObject2 = currentRobo->second->mainObj;
+    env.readfile("../models/cube.raw");
+    env.changeTexImage("../textures/outside_texture.jpg");
+    spotLight.readfile("../models/spotLight.raw");
+    spotLight.startlight();
+    bezierCamera.readfile("../models/bezierCamera.raw");
+
+    initCam();
+
+    numObjectsInEnv = roboArray.size() + 2; // one spotlight, one bezierCamera
+    currObjIndx = 0;
+    
+    glLineWidth(3.5);
+    glEnable(GL_LINE_SMOOTH);
+    bezierControlPoints.setDrawMode(GL_LINE_STRIP);
+    bezierCurve.setDrawMode(GL_LINE_STRIP);
+}
 
 void Env::draw()
 {
@@ -12,15 +35,15 @@ void Env::draw()
         obj.second->draw();
     }
     env.draw();
-    spotLight.draw();
+    spotLight.draw(); // TODO: investigate if spotlight, etc can be added as children of env
     bezierCamera.draw();
+    bezierControlPoints.draw();
 }
 void Env::addObject()
 {
-    Humanoid *robo1;
-    robo1 =new Humanoid("../models/humanoid.yaml");
+    Humanoid *robo1 = new Humanoid("../models/humanoid.yaml");
     robo1->translate({-1.5,-1.4,2});
-    R2D2 *robo2 =new R2D2("../models/r2d2.yaml");
+    R2D2 *robo2 = new R2D2("../models/r2d2.yaml");
     robo2->translate({1.5,-1.4,2});
     spotLight.translate(0,-3.4,0);
     spotLight.rotate(-M_PI/6,-M_PI/6,0);
@@ -35,7 +58,10 @@ void Env::addObject()
     addChild(&env,vec,vec);
     addChild(&spotLight,vec,vec);
     addChild(&bezierCamera,vec,vec);
+    addChild(&bezierControlPoints,vec,vec);
+    addChild(&bezierCurve,vec,vec);
 }
+
 void Env::swap()
 {
     currObjIndx++;
@@ -102,27 +128,12 @@ void Env::rotate(float delx, float dely, float delz)
     createViewMat();
 }
 
-Env::Env(int a):spotLight("../textures/spotLight.jpg")
-{
-    addObject();
-    robo = currentRobo->second;
-    currentObject2 = currentRobo->second->mainObj;
-    env.readfile("../models/cube.raw");
-    env.changeTexImage("../textures/outside_texture.jpg");
-    spotLight.readfile("../models/spotLight.raw");
-    spotLight.startlight();
-    bezierCamera.readfile("../models/bezierCamera.raw");
-    initCam();
-
-    numObjectsInEnv = roboArray.size() + 2; // one spotlight, one bezierCamera
-    currObjIndx = 0;
-}
-
 void Env::moveNext()
 {
     translate(cpdel[0],cpdel[1],cpdel[2]);
     rotate(crdel[0],crdel[1],crdel[2]);
 }
+
 void Env::appendYaml(int frameNo)
 {
     YAML::Node mainNode;
@@ -211,3 +222,19 @@ void Env::parseFrame(int recordFlag)
         } 
     }
 }
+
+void Env::addBezierPoint()
+{
+  Point point = bezierCamera.getPose();
+  point.cx = 0.8;
+  point.cy = 0;
+  point.cz = 0;
+  
+  bezierControlPoints.push(point);
+}
+
+void Env::removeLastBezierPoint()
+{
+  bezierControlPoints.pop();
+}
+

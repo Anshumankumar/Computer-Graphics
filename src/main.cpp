@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     myglf::initGL();
     initBufferGL();
 
-    Env env(1);
+    Env env(1); // TODO: Env also has a public object called env, causing a little confusion, refactor?
     currentObject = &env;
     envObject = &env;
 
