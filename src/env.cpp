@@ -1,6 +1,9 @@
 #include <env.hpp>
 #include <iostream>
+
 extern int l1,l2,l3;
+
+int bezierCameraToggle = 1;
 
 #define NO_OF_FRAME 10.0
 void renderGL();
@@ -24,8 +27,11 @@ Env::Env(int a):spotLight("../textures/spotLight.jpg")
     
     glLineWidth(3.5);
     glEnable(GL_LINE_SMOOTH);
-    bezierControlPoints.setDrawMode(GL_LINE_STRIP);
+    // glPointSize(4.5);
+
     bezierCurve.setDrawMode(GL_LINE_STRIP);
+    bezierControlVertices.setDrawMode(GL_LINE_STRIP);
+    // bezierCurve.setBufferUsage(GL_DYNAMIC_DRAW);
 }
 
 void Env::draw()
@@ -35,10 +41,15 @@ void Env::draw()
         obj.second->draw();
     }
     env.draw();
-    spotLight.draw(); // TODO: investigate if spotlight, etc can be added as children of env
-    bezierCamera.draw();
-    bezierControlPoints.draw();
+    spotLight.draw();
+
+    if(bezierCameraToggle) {
+      bezierCamera.draw();
+      bezierCurve.draw();
+      bezierControlVertices.draw();
+    }
 }
+
 void Env::addObject()
 {
     Humanoid *robo1 = new Humanoid("../models/humanoid.yaml");
@@ -58,8 +69,8 @@ void Env::addObject()
     addChild(&env,vec,vec);
     addChild(&spotLight,vec,vec);
     addChild(&bezierCamera,vec,vec);
-    addChild(&bezierControlPoints,vec,vec);
     addChild(&bezierCurve,vec,vec);
+    addChild(&bezierControlVertices,vec,vec);
 }
 
 void Env::swap()
@@ -224,17 +235,81 @@ void Env::parseFrame(int recordFlag)
 }
 
 void Env::addBezierPoint()
+
 {
   Point point = bezierCamera.getPose();
-  point.cx = 0.8;
+  point.cx = 1;
   point.cy = 0;
   point.cz = 0;
   
-  bezierControlPoints.push(point);
+  bezierControlVertices.push(point);
+  computeBezierCurve();
 }
 
 void Env::removeLastBezierPoint()
 {
-  bezierControlPoints.pop();
+  bezierControlVertices.pop();
+  computeBezierCurve();
 }
 
+double nCk(double n, double k)
+{
+  double r = 1;
+  for(double i=1; i<=k; i++) {
+    r *= (n+1-i)/i;
+  }
+  return r;
+}
+
+std::vector<double> binomials(double n)
+{
+  std::vector<double> b;
+  for(double k=0; k<=n; k++)
+    b.push_back(nCk(n,k));
+  return b;
+}
+
+void Env::computeBezierCurve()
+{
+  double kNPS = 3; // points per segment (2 consecutive control points)
+  
+  // compute Bernstein coefficients (Bernstein[i] = B[i]*Jn[i] as per notation in slides)
+  std::vector<glm::vec3> Bernstein;
+  PointV BCV = bezierControlVertices.getPointV();
+  double n = double(BCV.size() - 1);
+  std::vector<double> Jn = binomials(n);
+
+  // std::cout<<"\n Jn = (";
+  // for(int j=0; j<Jn.size(); j++) {
+  //   std::cout<<Jn[j]<<", ";
+  // }
+  // std::cout<<")\n";
+
+  glm::vec3 BCP;
+  for(int i=0; i<=n; i++ ) {
+    BCP = glm::vec3(BCV[i].x, BCV[i].y, BCV[i].z);
+    Bernstein.push_back(BCP*float(Jn[i]));
+  }
+  
+  // compute and add points to bezierCurve
+  bezierCurve.removeAllPoints();
+  Point curveVertex;
+  int i;
+  glm::vec3 P;
+  for(double t=0; t<=1; t += 1./(n*kNPS)) {
+    P = glm::vec3(0);
+    for(i=0; i<=n; i++ ) {
+      P += Bernstein[i]*float(std::pow(t,i)*std::pow(1-t, n-i));
+    }
+    curveVertex.x = P[0];
+    curveVertex.y = P[1];
+    curveVertex.z = P[2];
+    curveVertex.w = 1;
+    curveVertex.cx = 0;
+    curveVertex.cy = 1;
+    curveVertex.cz = 0;
+    curveVertex.ca = 1;
+    bezierCurve.push(curveVertex);
+  }
+
+}

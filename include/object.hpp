@@ -35,7 +35,8 @@ private:
     float currentZ,currentX,currentY;
     glm::vec4 currentPosition;
     PointV  pointArray;
-    GLenum  mode; // drawing mode: GL_TRIANGLES, GL_LINES, GL_POINTS, etc. as in glDrawArrays spec. 
+    GLenum  mode; // drawing mode: GL_TRIANGLES, GL_LINES, GL_POINTS, etc. as in glDrawArrays spec.
+    GLenum  usage; // glBufferData usage
     glm::vec3 centroid;
     int triangleArraySize;
     GLuint vbo, vao, tex;
@@ -62,11 +63,14 @@ public:
     void zIncrease();
     void zDecrease();
     Point getPoint();
+    PointV getPointV();
+    void removeAllPoints();
     Point getPose();
     void createTriangles();
     void initVboVao();
     void setVboVao();
     void setDrawMode(GLenum draw_mode);
+    void setBufferUsage(GLenum buffer_usage);
     virtual void draw();
     void savefile(std::string tempname = "NOTHING");
     void readfile(std::string tempname = "NOTHING");

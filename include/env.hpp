@@ -10,6 +10,10 @@
 
 extern Assembly *robo;
 extern Object *currentObject2;
+
+double nCk(double n, double k);
+std::vector<double> binomials(double n);
+
 class Env:public Object
 {
 private:
@@ -23,7 +27,7 @@ public:
     Object env;
     Object spotLight;
     Object bezierCamera;
-    Object bezierControlPoints;
+    Object bezierControlVertices;
     Object bezierCurve;
     void draw();
     void addObject();
@@ -37,6 +41,7 @@ public:
     void moveNext();
     void addBezierPoint();
     void removeLastBezierPoint();
+    void computeBezierCurve();
     Env(int a);
 };
 #endif // ENV_HPP

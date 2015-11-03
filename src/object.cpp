@@ -26,6 +26,7 @@ Object::Object(std::string texImg, std::string name_)
     outsideTransform = glm::mat4(1.0f);
     rotationFlag = 1;
     mode = GL_TRIANGLES; // default drawing mode
+    usage = GL_STATIC_DRAW; // default buffer usage hint
     initVboVao();
 }
 
@@ -100,6 +101,16 @@ void Object::zDecrease()
     if (currentZ <=-MAX_SIZE_Z) currentZ = -MAX_SIZE_Z;
 }
 
+PointV Object::getPointV()
+{
+  return pointArray;
+}
+
+void Object::removeAllPoints()
+{
+  pointArray.clear();
+}
+
 Point Object::getPoint()
 {
     Point point;
@@ -169,7 +180,7 @@ void Object::initVboVao()
     glGenBuffers (1, &vbo);
     glBindBuffer (GL_ARRAY_BUFFER, vbo);
     glBufferData (GL_ARRAY_BUFFER, 
-           0,NULL, GL_STATIC_DRAW);
+           0,NULL, usage);
 
     glUniform1i(glGetUniformLocation(shaderProgram, "texFlag"),texFlag);
     if (texFlag >=1 )
@@ -197,7 +208,7 @@ void Object::setVboVao()
     glUniform1i(glGetUniformLocation(shaderProgram, "l3Flag"),l3);
     glBindTexture(GL_TEXTURE_2D, tex);
     auto tempSize = sizeof(Point)*pointArray.size();
-    glBufferData( GL_ARRAY_BUFFER, tempSize, (void*)&pointArray[0],GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, tempSize, (void*)&pointArray[0], usage );
     uModelViewMatrix = glGetUniformLocation( shaderProgram, "uModelViewMatrix");
     normalMatrix = glGetUniformLocation( shaderProgram, "normalMatrix");
     viewMatrix = glGetUniformLocation( shaderProgram, "viewMatrix");
@@ -239,6 +250,11 @@ void Object::drawPointLines()
 void Object::setDrawMode(GLenum draw_mode)
 {
     mode = draw_mode;
+}
+
+void Object::setBufferUsage(GLenum buffer_usage)
+{
+  usage = buffer_usage;
 }
 
 void Object::draw()

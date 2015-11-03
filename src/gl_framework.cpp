@@ -13,6 +13,7 @@ extern Object* currentObject2;
 extern Assembly *robo;
 int frameNumber = 0; 
 extern int l1,l2,l3;
+extern int bezierCameraToggle;
 namespace myglf
 {
     void initGL(void)
@@ -64,6 +65,10 @@ namespace myglf
             currentObject->parseFrame(0);
         }
 
+        else if (key == GLFW_KEY_KP_MULTIPLY && action == GLFW_PRESS)
+        {
+            bezierCameraToggle =  abs(bezierCameraToggle-1);
+        }
         else if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
         {
           envObject->addBezierPoint();
