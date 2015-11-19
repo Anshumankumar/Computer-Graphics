@@ -78,75 +78,75 @@ namespace myglf
           envObject->removeLastBezierPoint();
         }
 
-        else if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_1 && (action == GLFW_PRESS || action == GLFW_REPEAT))
            robo->bendFront();
-        else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_2 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->bendBack();
-        else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_3 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateHand(M_PI/36,0);
-        else if (key == GLFW_KEY_4 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_4 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateHand(0,M_PI/36);
 
-        else if (key == GLFW_KEY_5 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_5 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateHand(-M_PI/36,0);
-        else if (key == GLFW_KEY_6 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_6 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateHand(0,-M_PI/36);
 
-        else if (key == GLFW_KEY_7 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_7 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateArm({-M_PI/36,0,0},{-M_PI/36,0,0});
-        else if (key == GLFW_KEY_8 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_8 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateArm({M_PI/36,0,0},{M_PI/36,0,0});
 
-        else if (key == GLFW_KEY_9 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_9 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateArm({0,-M_PI/36,0},{0,-M_PI/36,0});
-        else if (key == GLFW_KEY_0 && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_0 && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->rotateArm({0,M_PI/36,0},{0,M_PI/36,0});
-        else if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_Q && (action == GLFW_PRESS || action == GLFW_REPEAT))
             robo->walk();
         
-        else if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_TAB && (action == GLFW_PRESS || action == GLFW_REPEAT))
             envObject->swap();
         else if (mode == MODE_MODELLING && action ==GLFW_PRESS)
             std::cout << "Current Mode: MODELLING\n";
-        else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->rotate(0, -M_PI/24,0);
-        else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_RIGHT && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->rotate(0, +M_PI/24,0);
-        else if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_UP && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->rotate(-M_PI/24,0.0,0);
-        else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_DOWN && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->rotate(M_PI/24,0 ,0);
-        else if (key == GLFW_KEY_PAGE_UP && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_PAGE_UP && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->rotate(0,0,-M_PI/24);
-        else if (key == GLFW_KEY_PAGE_DOWN && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_PAGE_DOWN && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->rotate(0,0,M_PI/24);
-        else if (key == GLFW_KEY_W && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_W && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->ltranslate(0, -0.1,0.0);
-        else if (key == GLFW_KEY_S && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_S && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->ltranslate(0, 0.1,0.0);
-        else if (key == GLFW_KEY_V && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_V && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->ltranslate(-0.1,0,0.0);
-        else if (key == GLFW_KEY_B && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_B && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->ltranslate(0.1,0,0.0);
-        else if (key == GLFW_KEY_N && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_N && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->ltranslate(0,0,-0.1);
-        else if (key == GLFW_KEY_M && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_M && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->ltranslate(0,0,0.1);
-        else if (key == GLFW_KEY_A && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_A && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->rotate(0,0,M_PI/24);
-        else if (key == GLFW_KEY_D && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_D && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->rotate(0,0,-M_PI/24);
-        else if (key == GLFW_KEY_Y && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_Y && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->rotate(M_PI/24,0,0);
-        else if (key == GLFW_KEY_U && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_U && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->rotate(-M_PI/24,0,0);
-        else if (key == GLFW_KEY_I && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_I && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->rotate(0,M_PI/24,0);
-        else if (key == GLFW_KEY_O && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_O && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject2->rotate(0,-M_PI/24,0);
-        else if (key == GLFW_KEY_Z && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_Z && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->translate(0,0,-0.05);
-        else if (key == GLFW_KEY_X && action == GLFW_PRESS)
+        else if (key == GLFW_KEY_X && (action == GLFW_PRESS || action == GLFW_REPEAT))
             currentObject->translate(0,0,0.05);
     }
 
